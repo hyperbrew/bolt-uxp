@@ -8,18 +8,13 @@
     {
       "app": "PS",
       "minVersion": "23.3.0"
-    }
-  ],
-  "disabledHost": [
+    },
     {
       "app": "ID",
       "minVersion": "18.5"
-    },
-    {
-      "app": "XD",
-      "minVersion": "36.0.0"
     }
   ],
+  "disabledHost": [],
   "entrypoints": [
     {
       "type": "command",

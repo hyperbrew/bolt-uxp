@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@adobe/cc-ext-uxp-types@^7.3.1":
+  version "7.3.1"
+  resolved "https://registry.yarnpkg.com/@adobe/cc-ext-uxp-types/-/cc-ext-uxp-types-7.3.1.tgz#0fdbd42ca6bcd9fe660babae007c5c495af7a7b1"
+  integrity sha512-HLWYoqvDXOmVr9d7l4/hY7h+Ae6IJC1Rm8uIqUK28E8nlT36A23YUsAfnamh24LZC/Xkq5jsYNORW7wX44QEKg==
+
 "@ampproject/remapping@^2.2.1":
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/@ampproject/remapping/-/remapping-2.2.1.tgz#99e8e11851128b8702cd57c33684f1d0f260b630"
@@ -209,6 +214,11 @@
   integrity sha512-21TKHHh3eUHIi2MloeptJWALuCu5H7HQTdTrWIFReA8ad+aggoX+lRes3ex7/FtpC+sVUpFMQ+QTfYr74mruiQ==
   dependencies:
     undici-types "~5.25.1"
+
+"@types/photoshop@^25.0.2":
+  version "25.0.2"
+  resolved "https://registry.yarnpkg.com/@types/photoshop/-/photoshop-25.0.2.tgz#2cceaa794c6d20169769ecbab8a43982a5afd950"
+  integrity sha512-yCLUOD26ZPVZ3Q34reJW0YYlxTh/QZNsN7qHx5bZL2YqTt13+yzdcrRN8gxU+zc/hK0IwD4TPdF1P+EJGrQeLA==
 
 "@types/pug@^2.0.6":
   version "2.0.8"

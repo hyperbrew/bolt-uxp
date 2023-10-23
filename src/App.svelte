@@ -2,6 +2,22 @@
   import svelteLogo from "./assets/svelte.svg";
   import viteLogo from "/vite.svg";
   import Counter from "./lib/Counter.svelte";
+  import { uxp, indesign, photoshop, xd } from "./globals";
+  import { api } from "./api/api";
+  console.log("Welcome to Bolt UXP inside of: ", uxp.host.name);
+
+  if (uxp.host.name === "Photoshop") {
+    console.log("Hello from Photoshop", photoshop);
+  }
+  if (uxp.host.name === "InDesign") {
+    console.log("Hello from InDesign", indesign);
+  }
+
+  //@ts-ignore
+  window.api = api;
+  const helloWorld = () => {
+    api.notify("Hello World");
+  };
 </script>
 
 <main>
@@ -17,6 +33,7 @@
 
   <div class="card">
     <Counter />
+    <button on:click={helloWorld}>Hello World</button>
   </div>
 
   <p>
