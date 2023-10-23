@@ -1,0 +1,86 @@
+{
+  "id": "bolt.uxp.plugin",
+  "name": "Bolt UXP",
+  "version": "0.0.1",
+  "main": "index.html",
+  "manifestVersion": 5,
+  "host": [
+    {
+      "app": "PS",
+      "minVersion": "23.3.0"
+    }
+  ],
+  "disabledHost": [
+    {
+      "app": "ID",
+      "minVersion": "18.5"
+    },
+    {
+      "app": "XD",
+      "minVersion": "36.0.0"
+    }
+  ],
+  "entrypoints": [
+    {
+      "type": "command",
+      "id": "showAbout",
+      "label": {
+        "default": "Bolt UXP Command"
+      }
+    },
+    {
+      "type": "panel",
+      "id": "bolt.uxp.plugin.panel",
+      "label": {
+        "default": "Bolt UXP"
+      },
+      "minimumSize": { "width": 230, "height": 200 },
+      "maximumSize": { "width": 2000, "height": 2000 },
+      "preferredDockedSize": { "width": 230, "height": 300 },
+      "preferredFloatingSize": { "width": 230, "height": 300 },
+      "icons": [
+        {
+          "width": 23,
+          "height": 23,
+          "path": "icons/dark-panel.png",
+          "scale": [1, 2],
+          "theme": ["darkest", "dark", "medium"],
+          "species": ["chrome"]
+        },
+        {
+          "width": 23,
+          "height": 23,
+          "path": "icons/light-panel.png",
+          "scale": [1, 2],
+          "theme": ["lightest", "light"],
+          "species": ["chrome"]
+        }
+      ]
+    }
+  ],
+  "requiredPermissions": {
+    "localFileSystem": "fullAccess",
+    "launchProcess": {
+      "schemes": ["https", "slack", "file"],
+      "extensions": [".xd", ".psd", ".bat", ".cmd"]
+    },
+    "network": {
+      "domains": ["https://hyperbrew.co"]
+    },
+    "clipboard": "readAndWrite",
+    "webview": {
+      "allow": "yes",
+      "domains": ["https://*.hyperbrew.co"]
+    }
+  },
+  "icons": [
+    {
+      "width": 48,
+      "height": 48,
+      "path": "icons/plugin.png",
+      "scale": [1, 2],
+      "theme": ["darkest", "dark", "medium", "lightest", "light", "all"],
+      "species": ["pluginList"]
+    }
+  ]
+}
