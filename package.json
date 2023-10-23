@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "check": "svelte-check --tsconfig ./tsconfig.json"
+    "check": "svelte-check --tsconfig ./tsconfig.json",
+    "connect": "yarn cross-env ACTION=install vite",
+    "disconnect": "yarn cross-env ACTION=uninstall vite"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^2.4.2",
@@ -19,7 +21,10 @@
     "vite": "^4.4.5"
   },
   "dependencies": {
+    "@types/node": "^20.8.7",
+    "cross-env": "^7.0.3",
     "mutationobserver-polyfill": "^1.3.0",
+    "tar": "^6.2.0",
     "vite-plugin-banner": "^0.7.1"
   }
 }

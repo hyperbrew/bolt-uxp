@@ -1,0 +1,9 @@
+{
+  "name": "vite-uxp-plugin",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "ws": "^8.14.2"
+  }
+}
