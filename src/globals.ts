@@ -6,5 +6,5 @@ export const photoshop = (
 ) as typeof import("photoshop");
 
 export const indesign = (
-  hostName === "Indesign" ? require("indesign") : {}
+  hostName === "InDesign" ? require("indesign") : {}
 ) as any;

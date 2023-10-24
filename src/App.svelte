@@ -1,11 +1,15 @@
 <script lang="ts">
   import svelteLogo from "./assets/svelte.svg";
   import viteLogo from "/vite.svg";
-  import Counter from "./lib/Counter.svelte";
-  import { uxp, indesign, photoshop, xd } from "./globals";
+  import { uxp, indesign, photoshop } from "./globals";
   import { api } from "./api/api";
+
+  let count: number = 0;
+  const increment = () => (count += 1);
+
   console.log("Welcome to Bolt UXP inside of: ", uxp.host.name);
 
+  //* Call Functions Conditionally by App
   if (uxp.host.name === "Photoshop") {
     console.log("Hello from Photoshop", photoshop);
   }
@@ -13,8 +17,7 @@
     console.log("Hello from InDesign", indesign);
   }
 
-  //@ts-ignore
-  window.api = api;
+  //* Or call the unified API object directly and the correct app function will be used
   const helloWorld = () => {
     api.notify("Hello World");
   };
@@ -32,7 +35,9 @@
   <h1>Svelte + TypeScript in UXP ✨</h1>
 
   <div class="card">
-    <Counter />
+    <button on:click={increment}>
+      count is {count}
+    </button>
     <button on:click={helloWorld}>Hello World</button>
   </div>
 
