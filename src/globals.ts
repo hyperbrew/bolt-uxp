@@ -8,3 +8,9 @@ export const photoshop = (
 export const indesign = (
   hostName === "InDesign" ? require("indesign") : {}
 ) as any;
+export const premierepro = (
+  hostName === "PremierePro" ? require("premierepro") : {}
+) as any;
+export const illustrator = (
+  hostName === "Illustrator" ? require("illustrator") : {}
+) as any;
