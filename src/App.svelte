@@ -21,6 +21,17 @@
   const helloWorld = () => {
     api.notify("Hello World");
   };
+
+  const hybridTest = async () => {
+    try {
+      const addon = await require("sample-uxp-addon.uxpaddon");
+      const myFunctionResult = addon.my_function();
+      console.log(`myFunctionResult = `, myFunctionResult);
+      api.notify(`myFunctionResult = ${myFunctionResult}`);
+    } catch (err) {
+      console.log("Execute as testMyFunction command failed", err);
+    }
+  };
 </script>
 
 <main>
@@ -39,6 +50,7 @@
       count is {count}
     </button>
     <button on:click={helloWorld}>Hello World</button>
+    <button on:click={hybridTest}>Hybrid</button>
   </div>
 
   <p>

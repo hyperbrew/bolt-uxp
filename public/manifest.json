@@ -7,7 +7,10 @@
   "host": [
     {
       "app": "PS",
-      "minVersion": "23.3.0"
+      "minVersion": "23.3.0",
+      "data": {
+        "apiVersion": 2
+      }
     },
     {
       "app": "ID",
@@ -74,7 +77,11 @@
     "webview": {
       "allow": "yes",
       "domains": ["https://*.hyperbrew.co"]
-    }
+    },
+    "enableAddon": true
+  },
+  "addon": {
+    "name": "sample-uxp-addon.uxpaddon"
   },
   "icons": [
     {
