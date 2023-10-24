@@ -1,6 +1,6 @@
 <script lang="ts">
   import svelteLogo from "./assets/svelte.svg";
-  import viteLogo from "/vite.svg";
+  import viteLogo from "./assets/vite.svg";
   import { uxp, indesign, photoshop } from "./globals";
   import { api } from "./api/api";
 
