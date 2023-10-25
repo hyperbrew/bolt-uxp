@@ -11,7 +11,9 @@
       "data": {
         "apiVersion": 2
       }
-    },
+    }
+  ],
+  "disabledHost": [
     {
       "app": "ID",
       "minVersion": "18.5"
@@ -25,7 +27,6 @@
       "minVersion": "22.3"
     }
   ],
-  "disabledHost": [],
   "entrypoints": [
     {
       "type": "command",
