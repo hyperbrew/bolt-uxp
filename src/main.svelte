@@ -64,6 +64,11 @@
   <p class="read-the-docs">Click on the Vite and Svelte logos to learn more</p>
 </main>
 
+<uxp-panel panelid="bolt.uxp.plugin.settings">
+  <h1>Settings Panel</h1>
+  <p>count is: {count}</p>
+</uxp-panel>
+
 <style>
   .logo {
     height: 6em;
