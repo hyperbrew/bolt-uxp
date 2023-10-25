@@ -1,9 +1,29 @@
 {
   "name": "vite-uxp-plugin",
-  "version": "1.0.0",
-  "main": "index.js",
+  "version": "0.0.1",
+  "description": "A Vite Plugin for building Adobe UXP Plugin Panels",
+  "main": "lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hyperbrew/vite-uxp-plugin.git"
+  },
+  "homepage": "https://github.com/hyperbrew/vite-uxp-plugin",
   "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "prepare": "npm run build",
+    "publish": "npm publish --access public",
+    "publish-beta": "npm publish --access public --tag beta"
+  },
   "dependencies": {
+    "typescript": "^5.2.2",
     "ws": "^8.14.2"
-  }
+  },
+  "devDependencies": {
+    "@types/node": "^20.8.7",
+    "@types/ws": "^8.2.2"
+  },
+  "files": [
+    "lib/**/*"
+  ]
 }

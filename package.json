@@ -11,8 +11,8 @@
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "connect": "yarn cross-env ACTION=connect vite",
     "disconnect": "yarn cross-env ACTION=disconnect vite",
-    "install": "yarn cross-env ACTION=install vite",
-    "uninstall": "yarn cross-env ACTION=uninstall vite"
+    "ccx-install": "yarn cross-env ACTION=install vite",
+    "ccx-uninstall": "yarn cross-env ACTION=uninstall vite"
   },
   "devDependencies": {
     "@adobe/cc-ext-uxp-types": "^7.3.1",
@@ -30,6 +30,7 @@
     "tslib": "^2.6.0",
     "typescript": "^5.0.2",
     "vite": "^4.4.5",
+    "vite-uxp-plugin": "^0.0.1",
     "ws": "^8.14.2"
   },
   "dependencies": {}

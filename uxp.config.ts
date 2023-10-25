@@ -1,4 +1,4 @@
-import { UXP_Manifest, UXP_Config } from "./vite-uxp-plugin/types";
+import { UXP_Manifest, UXP_Config } from "vite-uxp-plugin";
 import { version } from "./package.json";
 
 const manifest: UXP_Manifest = {

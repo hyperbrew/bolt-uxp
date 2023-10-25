@@ -17,6 +17,7 @@
     "src/**/*.ts",
     "src/**/*.js",
     "src/**/*.svelte",
-    "./uxp.config.ts"
+    "./uxp.config.ts",
+    "package.json"
   ]
 }

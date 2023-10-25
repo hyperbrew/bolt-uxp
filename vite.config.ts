@@ -1,6 +1,6 @@
 import { defineConfig } from "vite";
 import { svelte } from "@sveltejs/vite-plugin-svelte";
-import { runAction, uxp, uxpSetup } from "./vite-uxp-plugin/index";
+import { runAction, uxp, uxpSetup } from "vite-uxp-plugin";
 import { sveltePreprocess } from "svelte-preprocess/dist/autoProcess";
 
 import { config } from "./uxp.config";

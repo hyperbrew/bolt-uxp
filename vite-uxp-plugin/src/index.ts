@@ -1,12 +1,14 @@
-import os from "os";
-import http from "http";
+import * as os from "os";
+import * as http from "http";
 import { execSync } from "child_process";
 import { WebSocketServer, WebSocket } from "ws";
 import type { OutputChunk } from "rollup";
 import type { Plugin } from "vite";
-import { UXP_Config, UXP_Manifest } from "./types";
 
-export const polyfills = `(function(){var t;null==window.MutationObserver&&(t=function(){function t(t){this.callBack=t}return t.prototype.observe=function(t,n){var e;return this.element=t,this.interval=setInterval((e=this,function(){var t;if((t=e.element.innerHTML)!==e.oldHtml)return e.oldHtml=t,e.callBack.apply(null)}),200)},t.prototype.disconnect=function(){return window.clearInterval(this.interval)},t}(),window.MutationObserver=t)}).call(this);`;
+import type { UXP_Config, UXP_Manifest } from "./types";
+export type { UXP_Config, UXP_Manifest };
+
+export const polyfills: string = `(function(){var t;null==window.MutationObserver&&(t=function(){function t(t){this.callBack=t}return t.prototype.observe=function(t,n){var e;return this.element=t,this.interval=setInterval((e=this,function(){var t;if((t=e.element.innerHTML)!==e.oldHtml)return e.oldHtml=t,e.callBack.apply(null)}),200)},t.prototype.disconnect=function(){return window.clearInterval(this.interval)},t}(),window.MutationObserver=t)}).call(this);`;
 
 const clients: Set<WebSocket> = new Set();
 const wsUpdate = (id: string) => {
@@ -44,6 +46,16 @@ export const uxpSetup = (config: UXP_Config) => {
   hotReloadServer(config.hotReloadPort);
 };
 
+const generateManifest = (config: UXP_Config) => {
+  const str = JSON.stringify(config.manifest, null, "\t");
+  return {
+    type: "asset",
+    source: str,
+    name: "UXP Manifest",
+    fileName: "manifest.json",
+  };
+};
+
 export const uxp = (config: UXP_Config): Plugin => {
   return {
     name: "vite-uxp-plugin",
@@ -54,6 +66,9 @@ export const uxp = (config: UXP_Config): Plugin => {
           const current = bundle[file] as OutputChunk;
           current.code = polyfills + "\n" + current.code;
         });
+      //@ts-ignore
+      this.emitFile(generateManifest(config));
+
       console.log("bundle generated");
 
       wsUpdate(config.manifest.id);
@@ -75,7 +90,7 @@ export const runAction = (opts: object, action: string) => {
   const outPath = process.cwd() + "/dist";
   console.log("outPath", outPath);
 
-  if (action === "install") {
+  if (action === "ccx-install") {
     //* Install a CCX Plugin Package
     console.log("install");
     const res = execSync(`"${upiaPath}" /install "${outPath}"`, {
@@ -83,7 +98,7 @@ export const runAction = (opts: object, action: string) => {
     });
     console.log("res", res);
     // makeSymlink(symlinkSrc, symlinkDst);
-  } else if (action === "uninstall") {
+  } else if (action === "ccx-uninstall") {
     //* Uninstall a CCX Plugin Package
     // removeSymlink(symlinkSrc, symlinkDst);
     const res = execSync(`"${upiaPath}" /remove "${outPath}"`, {

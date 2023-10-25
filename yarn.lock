@@ -1331,7 +1331,7 @@ type-is@~1.6.18:
     media-typer "0.3.0"
     mime-types "~2.1.24"
 
-typescript@^5.0.2, typescript@^5.0.3:
+typescript@^5.0.2, typescript@^5.0.3, typescript@^5.2.2:
   version "5.2.2"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.2.2.tgz#5ebb5e5a5b75f085f22bc3f8460fba308310fa78"
   integrity sha512-mI4WrpHsbCIcwT9cF4FZvr80QUeKvsUsUvKDoR+X/7XHQH98xYD8YHZg7ANtz2GtZt/CBq2QJ0thkGJMHfqc1w==
@@ -1355,6 +1355,14 @@ vary@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
   integrity sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==
+
+vite-uxp-plugin@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/vite-uxp-plugin/-/vite-uxp-plugin-0.0.1.tgz#208db5c73fe64d4951cfafd0c14e0e4cd81ced82"
+  integrity sha512-miroNqD8GRY5YAaWGI8mDt+FnmXzlQE/Lkzxuw737FizDQ9mk1zT+mLqq28rtqp4VlDUnKPg8Emke6YO/+Hmdw==
+  dependencies:
+    typescript "^5.2.2"
+    ws "^8.14.2"
 
 vite@^4.4.5:
   version "4.5.0"

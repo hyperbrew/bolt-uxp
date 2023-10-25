@@ -24,3 +24,4 @@ dist-ssr
 *.sw?
 _other-bundlers
 _dummy
+vite.config.ts.timestamp*
