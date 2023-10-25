@@ -10,8 +10,10 @@ export type { UXP_Config, UXP_Manifest };
 
 export const polyfills: string = `(function(){var t;null==window.MutationObserver&&(t=function(){function t(t){this.callBack=t}return t.prototype.observe=function(t,n){var e;return this.element=t,this.interval=setInterval((e=this,function(){var t;if((t=e.element.innerHTML)!==e.oldHtml)return e.oldHtml=t,e.callBack.apply(null)}),200)},t.prototype.disconnect=function(){return window.clearInterval(this.interval)},t}(),window.MutationObserver=t)}).call(this);`;
 
-const clients: Set<WebSocket> = new Set();
+let clients: Set<WebSocket> = new Set();
+let server: http.Server | null = null;
 const wsUpdate = (id: string) => {
+  console.log(`\n⚡ Trigger Hot Reload (for ${clients.size} clients)`);
   const message = JSON.stringify({
     id: id,
     status: "updated",
@@ -23,13 +25,13 @@ const wsUpdate = (id: string) => {
   }
 };
 const hotReloadServer = (hotReloadPort: number) => {
-  const server = http.createServer((req, res) => {
+  if (server) return;
+  server = http.createServer((req, res) => {
     res.writeHead(404, { "Content-Type": "text/plain" });
     res.end("Not Found");
   });
   const wss = new WebSocketServer({ server });
   wss.on("connection", (ws) => {
-    console.log("Client connected");
     clients.add(ws);
     ws.on("message", (message) => console.log("Received:", message));
     ws.on("close", () => {
@@ -38,12 +40,14 @@ const hotReloadServer = (hotReloadPort: number) => {
   });
 
   server.listen(hotReloadPort, () => {
-    console.log(`Hot Reload ws server started on port ${hotReloadPort}`);
+    console.log(`⚡ Hot Reload ws server started on port ${hotReloadPort}`);
   });
 };
 
-export const uxpSetup = (config: UXP_Config) => {
-  hotReloadServer(config.hotReloadPort);
+export const uxpSetup = (config: UXP_Config, mode?: string) => {
+  if (mode === "dev") {
+    hotReloadServer(config.hotReloadPort);
+  }
 };
 
 const generateManifest = (config: UXP_Config) => {
@@ -56,9 +60,17 @@ const generateManifest = (config: UXP_Config) => {
   };
 };
 
-export const uxp = (config: UXP_Config): Plugin => {
+const generateCCX = (config: UXP_Config) => {};
+
+export const uxp = (config: UXP_Config, mode?: string): Plugin => {
   return {
     name: "vite-uxp-plugin",
+    buildStart() {
+      uxpSetup(config, mode);
+    },
+    transformIndexHtml(html) {
+      return html.replace('<script type="module" crossorigin', "<script");
+    },
     generateBundle(output, bundle) {
       Object.keys(bundle)
         .filter((file) => file.indexOf(".js") > 0)
@@ -69,12 +81,12 @@ export const uxp = (config: UXP_Config): Plugin => {
       //@ts-ignore
       this.emitFile(generateManifest(config));
 
-      console.log("bundle generated");
-
       wsUpdate(config.manifest.id);
+      return;
     },
-    transformIndexHtml(html) {
-      return html.replace('<script type="module" crossorigin', "<script");
+    buildEnd(ar) {
+      console.log("AR", ar);
+      // generateCCX(config);
     },
   };
 };

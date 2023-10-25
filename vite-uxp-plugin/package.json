@@ -5,9 +5,9 @@
   "main": "lib/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/hyperbrew/vite-uxp-plugin.git"
+    "url": "https://github.com/hyperbrew/bolt-uxp.git"
   },
-  "homepage": "https://github.com/hyperbrew/vite-uxp-plugin",
+  "homepage": "https://github.com/hyperbrew/bolt-uxp",
   "license": "MIT",
   "scripts": {
     "build": "tsc",
