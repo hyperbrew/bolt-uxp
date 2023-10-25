@@ -1,8 +1,9 @@
 import { defineConfig } from "vite";
 import { svelte } from "@sveltejs/vite-plugin-svelte";
-// @ts-ignore
-import { runAction, uxp } from "./vite-uxp-plugin/index";
+import { runAction, uxp, uxpSetup } from "./vite-uxp-plugin/index";
 import { sveltePreprocess } from "svelte-preprocess/dist/autoProcess";
+
+import { config } from "./uxp.config";
 
 const action = process.env.ACTION;
 
@@ -11,15 +12,15 @@ if (action) {
   process.exit();
 }
 
-// https://vitejs.dev/config/
+uxpSetup(config);
+
 export default defineConfig({
   plugins: [
-    uxp(),
+    uxp(config),
     svelte({
       preprocess: sveltePreprocess({ typescript: true }),
     }),
   ],
-  // externals
   build: {
     rollupOptions: {
       external: ["uxp", "photoshop"],

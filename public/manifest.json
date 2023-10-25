@@ -3,11 +3,11 @@
   "name": "Bolt UXP",
   "version": "0.0.1",
   "main": "index.html",
-  "manifestVersion": 5,
+  "manifestVersion": 6,
   "host": [
     {
       "app": "PS",
-      "minVersion": "23.3.0",
+      "minVersion": "24.2.0",
       "data": {
         "apiVersion": 2
       }

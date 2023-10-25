@@ -12,5 +12,11 @@
     "isolatedModules": true,
     "types": ["@adobe/cc-ext-uxp-types", "@types/photoshop", "@types/node"]
   },
-  "include": ["src/**/*.d.ts", "src/**/*.ts", "src/**/*.js", "src/**/*.svelte"]
+  "include": [
+    "src/**/*.d.ts",
+    "src/**/*.ts",
+    "src/**/*.js",
+    "src/**/*.svelte",
+    "./uxp.config.ts"
+  ]
 }

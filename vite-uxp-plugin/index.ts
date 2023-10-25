@@ -1,65 +1,50 @@
 import os from "os";
+import http from "http";
 import { execSync } from "child_process";
-
+import { WebSocketServer, WebSocket } from "ws";
 import type { OutputChunk } from "rollup";
 import type { Plugin } from "vite";
+import { UXP_Config, UXP_Manifest } from "./types";
 
 export const polyfills = `(function(){var t;null==window.MutationObserver&&(t=function(){function t(t){this.callBack=t}return t.prototype.observe=function(t,n){var e;return this.element=t,this.interval=setInterval((e=this,function(){var t;if((t=e.element.innerHTML)!==e.oldHtml)return e.oldHtml=t,e.callBack.apply(null)}),200)},t.prototype.disconnect=function(){return window.clearInterval(this.interval)},t}(),window.MutationObserver=t)}).call(this);`;
 
-// ws server
-// ws server
-// ws server
-// ws server
-// ws server
-// ws server
-// ws server
-
-import http from "http";
-import express from "express";
-import { WebSocketServer, WebSocket } from "ws";
-const app = express();
-const server = http.createServer(app);
-const wss = new WebSocketServer({ server });
-
-// Store all connected clients
 const clients: Set<WebSocket> = new Set();
-
-wss.on("connection", (ws) => {
-  console.log("Client connected");
-  clients.add(ws);
-  ws.on("message", (message) => console.log("Received:", message));
-  ws.on("close", () => {
-    console.log("Client disconnected"), clients.delete(ws);
+const wsUpdate = (id: string) => {
+  const message = JSON.stringify({
+    id: id,
+    status: "updated",
   });
-});
-
-server.listen(8080, () => {
-  console.log("Server started on http://localhost:8080");
-});
-
-function wsUpdate() {
-  console.log("Broadcasting!");
-  console.log("\n");
-  console.log({ clients });
-  console.log("\n");
   for (let client of clients) {
-    // if (client.readyState === WebSocket.OPEN) {
-    client.send("com.id", {
-      status: "updated",
-    });
-    // }
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(message);
+    }
   }
-}
+};
+const hotReloadServer = (hotReloadPort: number) => {
+  const server = http.createServer((req, res) => {
+    res.writeHead(404, { "Content-Type": "text/plain" });
+    res.end("Not Found");
+  });
+  const wss = new WebSocketServer({ server });
+  wss.on("connection", (ws) => {
+    console.log("Client connected");
+    clients.add(ws);
+    ws.on("message", (message) => console.log("Received:", message));
+    ws.on("close", () => {
+      clients.delete(ws);
+    });
+  });
 
-// ws server
-// ws server
-// ws server
-// ws server
-// ws server
-// ws server
-// ws server
+  server.listen(hotReloadPort, () => {
+    console.log(`Hot Reload ws server started on port ${hotReloadPort}`);
+  });
+};
 
-export const uxp = (): Plugin => {
+export const uxpSetup = (config: UXP_Config) => {
+  hotReloadServer(config.hotReloadPort);
+};
+
+export const uxp = (config: UXP_Config): Plugin => {
   return {
     name: "vite-uxp-plugin",
     generateBundle(output, bundle) {
@@ -71,10 +56,7 @@ export const uxp = (): Plugin => {
         });
       console.log("bundle generated");
 
-      // Define an endpoint to broadcast the message to all clients
-      wsUpdate();
-
-      // TODO send websocket message
+      wsUpdate(config.manifest.id);
     },
     transformIndexHtml(html) {
       return html.replace('<script type="module" crossorigin', "<script");
@@ -108,6 +90,8 @@ export const runAction = (opts: object, action: string) => {
       encoding: "utf-8",
     });
     console.log("res", res);
+  } else if (action === "connect") {
+  } else if (action === "disconnect") {
   } else if (action === "startdebug") {
     //* Start Debugging a development Plugin Package
   } else if (action === "stopdebug") {
