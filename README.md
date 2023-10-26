@@ -9,9 +9,9 @@
 ## Quickstart
 
 1. `yarn` - Install Dependencies
-2. `yarn build` - Build the plugin
-3. `yarn dev` - Run the plugin in the UXP Developer Tool
-4. `yarn pack` - Package the plugin for delivery
+2. `yarn dev` - Run the plugin in hot reload mode for development with UDT (see below)
+3. `yarn build` - Build the plugin
+4. `yarn ccx` - Build & Package the plugin as a CCX for delivery (separate CCX files for each host are generated due to current UXP requirements)
 
 ## UDT Setup
 
