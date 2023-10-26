@@ -25,3 +25,5 @@ dist-ssr
 _other-bundlers
 _dummy
 vite.config.ts.timestamp*
+
+ccx

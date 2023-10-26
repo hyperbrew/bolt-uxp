@@ -15,18 +15,18 @@ const manifest: UXP_Manifest = {
         apiVersion: 2,
       },
     },
-    // {
-    //   app: "ID",
-    //   minVersion: "18.5",
-    // },
-    // {
-    //   app: "AI",
-    //   minVersion: "18.5",
-    // },
-    // {
-    //   app: "premierepro",
-    //   minVersion: "22.3",
-    // },
+    {
+      app: "ID",
+      minVersion: "18.5",
+    },
+    {
+      app: "AI",
+      minVersion: "18.5",
+    },
+    {
+      app: "premierepro",
+      minVersion: "22.3",
+    },
   ],
   entrypoints: [
     {

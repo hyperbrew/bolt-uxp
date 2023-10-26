@@ -13,8 +13,6 @@ if (action) {
   process.exit();
 }
 
-// uxpSetup(config);
-
 export default defineConfig({
   plugins: [
     uxp(config, mode),
