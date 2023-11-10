@@ -1,6 +1,8 @@
 import { UXP_Manifest, UXP_Config } from "vite-uxp-plugin";
 import { version } from "./package.json";
 
+const hotReloadPort = 8080;
+
 const manifest: UXP_Manifest = {
   id: "bolt.uxp.plugin",
   name: "Bolt UXP",
@@ -30,13 +32,6 @@ const manifest: UXP_Manifest = {
   ],
   entrypoints: [
     {
-      type: "command",
-      id: "showAbout",
-      label: {
-        default: "Bolt UXP Command",
-      },
-    },
-    {
       type: "panel",
       id: "bolt.uxp.plugin.panel",
       label: {
@@ -65,35 +60,48 @@ const manifest: UXP_Manifest = {
         },
       ],
     },
-    {
-      type: "panel",
-      id: "bolt.uxp.plugin.settings",
-      label: {
-        default: "Bolt UXP Settings",
-      },
-      minimumSize: { width: 230, height: 200 },
-      maximumSize: { width: 2000, height: 2000 },
-      preferredDockedSize: { width: 230, height: 300 },
-      preferredFloatingSize: { width: 230, height: 300 },
-      icons: [
-        {
-          width: 23,
-          height: 23,
-          path: "icons/dark-panel.png",
-          scale: [1, 2],
-          theme: ["darkest", "dark", "medium"],
-          species: ["chrome"],
-        },
-        {
-          width: 23,
-          height: 23,
-          path: "icons/light-panel.png",
-          scale: [1, 2],
-          theme: ["lightest", "light"],
-          species: ["chrome"],
-        },
-      ],
-    },
+
+    // * Example of a UXP Secondary panel
+    // * Must also enable the <uxp-panel panelid="bolt.uxp.plugin.settings">
+    //* tag in your entrypoint (.tsx, .vue, or .svelte) file
+    // {
+    //   type: "panel",
+    //   id: "bolt.uxp.plugin.settings",
+    //   label: {
+    //     default: "Bolt UXP Settings",
+    //   },
+    //   minimumSize: { width: 230, height: 200 },
+    //   maximumSize: { width: 2000, height: 2000 },
+    //   preferredDockedSize: { width: 230, height: 300 },
+    //   preferredFloatingSize: { width: 230, height: 300 },
+    //   icons: [
+    //     {
+    //       width: 23,
+    //       height: 23,
+    //       path: "icons/dark-panel.png",
+    //       scale: [1, 2],
+    //       theme: ["darkest", "dark", "medium"],
+    //       species: ["chrome"],
+    //     },
+    //     {
+    //       width: 23,
+    //       height: 23,
+    //       path: "icons/light-panel.png",
+    //       scale: [1, 2],
+    //       theme: ["lightest", "light"],
+    //       species: ["chrome"],
+    //     },
+    //   ],
+    // },
+
+    // * Example of a UXP Command
+    // {
+    //   type: "command",
+    //   id: "showAbout",
+    //   label: {
+    //     default: "Bolt UXP Command",
+    //   },
+    // },
   ],
   requiredPermissions: {
     localFileSystem: "fullAccess",
@@ -102,7 +110,10 @@ const manifest: UXP_Manifest = {
       extensions: [".xd", ".psd", ".bat", ".cmd"],
     },
     network: {
-      domains: ["https://hyperbrew.co", "ws://localhost:8080"],
+      domains: [
+        "https://hyperbrew.co",
+        `ws://localhost:${hotReloadPort}`, // Required for hot reload
+      ],
     },
     clipboard: "readAndWrite",
     webview: {
@@ -128,5 +139,5 @@ const manifest: UXP_Manifest = {
 
 export const config: UXP_Config = {
   manifest,
-  hotReloadPort: 8080,
+  hotReloadPort,
 };

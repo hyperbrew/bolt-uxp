@@ -15,13 +15,20 @@
 
 ## UDT Setup
 
-1. Open the Adobe UXP Developer Tool
+_Install Note: The Adobe UXP Developer Tools (UDT) can be downloaded from the Adobe CC app_
+
+### Add Plugin
+
+1. Open the Adobe UXP Developer Tool (2.0 or later)
 2. Click the `Add Plugin` button in the top right corner
 3. Select the `manifest.json` file in the `dist` folder
-4. Click the 3 dot menu to the right of the listed plugin and select `Load Plugin`
-5. Click the 3 dot menu to the right of the listed plugin and select `Watch`
-6. Click the 3 dot menu to the right of the listed plugin and select `More`
-7. Type in the "assets" folder into the Plugin Bulid Folder field
+
+### Load and Debug Plugin
+
+1. Click `Load` button on your plugin item
+2. Click `Debug` button on your plugin item
+
+_Note: You only need to "Load" a plugin, do not use the "Load and Watch" feature. The bulit-in UDT file watcher aka "Load and Watch" does not reliably update on changes so we recommend avoiding it. Instead, Bolt UXP comes with it's own built-in WebSocket system to trigger a reload on each update which is more consistent and less error-prone._
 
 ## Hybrid Plugin Development
 
@@ -32,3 +39,12 @@ Since Hybrid Plugins are application specific, you will need to compile the macO
 More info on Hybrid Plugins can be found here: https://developer.adobe.com/photoshop/uxp/2022/guides/hybrid-plugins/
 
 Currently, hybrid plugins are only supported in Photoshop.
+
+## Multi-Window panels
+
+To add additional windows to a UXP Plugin, you'll need to do 2 things:
+
+1. Add an additional panel in the `uxp.config.ts` (see the settings example commented out)
+2. Add a `<uxp-panel panelid="bolt.uxp.plugin.settings">` tag to your main entrypoint file (.tsx, .vue, or .svelte). Note that the `panelid` must match the panelid in the `uxp.config.ts` file.
+
+Note: Unlike CEP Extensions which multi-panel extensions behave as separate isolated panels/websites, a multi-panel UXP plugin is all in 1 space with certain sections of the markup rendered in different panels (identified by the `<uxp-panel />` tag)
