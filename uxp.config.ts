@@ -112,6 +112,11 @@ const manifest: UXP_Manifest = {
     network: {
       domains: [
         "https://hyperbrew.co",
+        "https://github.com",
+        "https://vitejs.dev",
+        "https://svelte.dev",
+        "https://reactjs.org",
+        "https://vuejs.org/",
         `ws://localhost:${hotReloadPort}`, // Required for hot reload
       ],
     },

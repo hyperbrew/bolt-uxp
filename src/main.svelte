@@ -1,7 +1,12 @@
 <script lang="ts">
-  import svelteLogo from "./assets/svelte.svg";
-  import viteLogo from "./assets/vite.svg";
+  import boltUxpLogo from "./assets/bolt-uxp.png";
+  import viteLogo from "./assets/vite.png";
+  import tsLogo from "./assets/typescript.png";
+  import sassLogo from "./assets/sass.png";
+  import svelteLogo from "./assets/svelte.png";
+
   import { uxp, indesign, photoshop } from "./globals";
+  const { openExternal } = uxp.shell;
   import { api } from "./api/api";
 
   let count: number = 0;
@@ -36,54 +41,41 @@
 
 <main>
   <div>
-    <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-      <img src={viteLogo} class="logo" alt="Vite Logo" />
-    </a>
-    <a href="https://svelte.dev" target="_blank" rel="noreferrer">
-      <img src={svelteLogo} class="logo svelte" alt="Svelte Logo" />
-    </a>
+    <img class="logo-lg" src={boltUxpLogo} alt="" />
   </div>
-  <h1>Svelte + TypeScript in UXP ✨</h1>
-
-  <div class="card">
+  <div class="stack-icons">
+    <img src={viteLogo} class="logo" alt="" />
+    <span> + </span>
+    <img src={svelteLogo} class="logo" alt="" />
+    <span> + </span>
+    <img src={tsLogo} class="logo" alt="" />
+    <span> + </span>
+    <img src={sassLogo} class="logo" alt="" />
+  </div>
+  <div class="button-group">
     <button on:click={increment}>
       count is {count}
     </button>
     <button on:click={helloWorld}>Hello World</button>
     <button on:click={hybridTest}>Hybrid</button>
   </div>
-
-  <p>
-    Check out <a
-      href="https://github.com/sveltejs/kit#readme"
-      target="_blank"
-      rel="noreferrer">SvelteKit</a
-    >, the official Svelte app framework powered by Vite!
-  </p>
-
-  <p class="read-the-docs">Click on the Vite and Svelte logos to learn more</p>
+  <div>
+    <p>
+      Edit <span class="code">main.svelte</span> and save to test HMR updates.
+    </p>
+  </div>
+  <div class="button-group">
+    <a href="https://github.com/hyperbrew/bolt-uxp/">Bolt UXP Docs</a>
+    <a href="https://svelte.dev">Svelte Docs</a>
+    <a href="https://vitejs.dev/">Vite Docs</a>
+  </div>
 </main>
 
 <!-- Example of a secondary panel entrypoint -->
 <!-- <uxp-panel panelid="bolt.uxp.plugin.settings">
-  <h1>Settings Panel</h1>
-  <p>count is: {count}</p>
+  <h1>Settings Panel</h1><p>count is: {count}</p>
 </uxp-panel> -->
 
-<style>
-  .logo {
-    height: 6em;
-    padding: 1.5em;
-    will-change: filter;
-    transition: filter 300ms;
-  }
-  .logo:hover {
-    filter: drop-shadow(0 0 2em #646cffaa);
-  }
-  .logo.svelte:hover {
-    filter: drop-shadow(0 0 2em #ff3e00aa);
-  }
-  .read-the-docs {
-    color: #888;
-  }
+<style lang="scss">
+  @import "./variables.scss";
 </style>
