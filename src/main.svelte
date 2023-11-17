@@ -29,7 +29,7 @@
 
   const hybridTest = async () => {
     try {
-      const addon = await require("sample-uxp-addon.uxpaddon");
+      const addon = await require("bolt-uxp-hybrid.uxpaddon");
       const myFunctionResult = addon.my_function();
       console.log(`myFunctionResult = `, myFunctionResult);
       api.notify(`myFunctionResult = ${myFunctionResult}`);
@@ -61,7 +61,7 @@
   </div>
   <div>
     <p>
-      Edit <span class="code">main.svelte</span> and save to test HMR updates.
+      Edittttt <span class="code">main.svelte</span> and save to test HMR updates.
     </p>
   </div>
   <div class="button-group">

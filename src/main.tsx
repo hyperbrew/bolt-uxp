@@ -31,7 +31,7 @@ export const App = () => {
 
   const hybridTest = async () => {
     try {
-      const addon = await require("sample-uxp-addon.uxpaddon");
+      const addon = await require("bolt-uxp-hybrid.uxpaddon");
       const myFunctionResult = addon.my_function();
       console.log(`myFunctionResult = `, myFunctionResult);
       api.notify(`myFunctionResult = ${myFunctionResult}`);
