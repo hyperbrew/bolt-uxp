@@ -1,10 +1,28 @@
-# Bolt UXP
+<img src="src/assets/bolt-uxp.svg" alt="Bolt CEP" title="Bolt CEP" width="400" />
+
+A lightning-fast boilerplate for building Adobe UXP Plugins in Svelte, React, or Vue built on Vite + TypeScript + Sass
+
+![npm](https://img.shields.io/npm/v/bolt-uxp)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/hyperbrew/bolt-cep/blob/master/LICENSE)
+[![Chat](https://img.shields.io/badge/chat-discord-7289da.svg)](https://discord.gg/PC3EvvuRbc)
+
+## Features
+
+- Lightning Fast Hot Reloading on changes
+- Setup with TypeScript Definitions for UXP and Photoshop APIs
+- Easily configure in uxp.config.ts
+- Setup for single or multi-panel extensions
+- Comes with multi-host-app configuration
+- Optimized Build Size
+- Easy Publish to CCX for Distribution
+- Easy Package to ZIP archive with sidecar assets (pending)
+- GitHub Actions ready-to-go for ZXP Releases
 
 ## Prerequisites
 
-- Node.js 18 or later
-- Adobe UXP Developer Tool
-- yarn classic
+- [Node.js 18](https://nodejs.org/en/) or later
+- [Adobe UXP Developer Tool (aka UDT)](https://developer.adobe.com/photoshop/uxp/2022/guides/devtool/installation/)
+- [Yarn](https://classic.yarnpkg.com/lang/en/docs/install/) (ensure by running `yarn set version classic`)
 
 ## Quickstart
 
@@ -30,16 +48,6 @@ _Install Note: The Adobe UXP Developer Tools (UDT) can be downloaded from the Ad
 
 _Note: You only need to "Load" a plugin, do not use the "Load and Watch" feature. The bulit-in UDT file watcher aka "Load and Watch" does not reliably update on changes so we recommend avoiding it. Instead, Bolt UXP comes with it's own built-in WebSocket system to trigger a reload on each update which is more consistent and less error-prone._
 
-## Hybrid Plugin Development
-
-UXP Hybrid Plugins allow you to write C++ functions and call them from UXP. This is useful for performance critical operations and accessing system methods not yet part of the UXP APIs.
-
-Since Hybrid Plugins are application specific, you will need to compile the macOS binary with XCode on macOS and the Windows binary with Visual Studio 2019 on Windows. The hybrid plugin project files are located in `src/hybrid`, and they compile to `public/hybrid`, which ends up in `dist/mac` and `dist/pc` after build.
-
-More info on Hybrid Plugins can be found here: https://developer.adobe.com/photoshop/uxp/2022/guides/hybrid-plugins/
-
-Currently, hybrid plugins are only supported in Photoshop.
-
 ## Multi-Window panels
 
 To add additional windows to a UXP Plugin, you'll need to do 2 things:
@@ -48,3 +56,33 @@ To add additional windows to a UXP Plugin, you'll need to do 2 things:
 2. Add a `<uxp-panel panelid="bolt.uxp.plugin.settings">` tag to your main entrypoint file (.tsx, .vue, or .svelte). Note that the `panelid` must match the panelid in the `uxp.config.ts` file.
 
 Note: Unlike CEP Extensions which multi-panel extensions behave as separate isolated panels/websites, a multi-panel UXP plugin is all in 1 space with certain sections of the markup rendered in different panels (identified by the `<uxp-panel />` tag)
+
+## Hybrid Plugin Development
+
+UXP Hybrid Plugins allow you to write C++ functions and call them from UXP. This is useful for performance critical operations and accessing system methods not yet part of the UXP APIs.
+
+Since Hybrid Plugins are application specific, you will need to compile the macOS binary with XCode on macOS and the Windows binary with Visual Studio 2019 on Windows. The hybrid plugin project files are located in `./src/hybrid`, and they compile to `./public-hybrid`, which ends up in `./dist/mac` and `./dist/pc` after build.
+
+**Xcode Notes**
+
+The Xcode project is designed to build a universal binary from an arm64 (M1, M2, M3) machine that works for both arm machines and x64 machines. If you are not on an arm machine, you will need to change the copy build settings to only build for x64, and note that your hybrid plugin will not work on arm machines.
+
+**Visual Studio Notes**
+
+The project is set up for Visual Studio 2019. A post-build action will copy the resulting `.uxpaddon` binary to the `./public-hybrid` folder. If you are using a different version of Visual Studio, you may need to update settings for this to work, but Adobe recommends 2019 currently.
+
+**Build Scripts**
+
+You can easily rebuild a binary from the commandline without opening XCode or Visual Studio with `yarn mac-build` and `yarn win-build`. You'll need to ensure msbuild for Windows and xcodebuild for MacOS are in your system's environment variables.
+
+**Hot Reloading Notes**
+
+While Bolt UXP supports hot reloading, this does not extend to the C++ Hybrid plugin portion of the project. If you only make changes to the frontend code, hot reloading will work as expected, however if you make changes to the MacOS or Windows binaries, you will see a warning in the console that you need to unload and load the plugin since the binaries are locked during debug. You can do this in UDT by selecting "Unload", building the binary, then selecting "Load" again.
+
+Currently there is no way to automate this process in UDT, but we have requested that the Adobe UXP team add this feature.
+
+**Additional Notes**
+
+More info on Hybrid Plugins can be found here: https://developer.adobe.com/photoshop/uxp/2022/guides/hybrid-plugins/
+
+Currently, hybrid plugins are only supported in Photoshop.
