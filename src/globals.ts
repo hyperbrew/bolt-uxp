@@ -1,3 +1,8 @@
+declare module "*.png";
+declare module "*.gif";
+declare module "*.jpg";
+declare module "*.svg";
+
 export const uxp = require("uxp") as typeof import("uxp");
 const hostName = uxp.host.name;
 

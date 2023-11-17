@@ -1,6 +1,15 @@
+@import "./variables.scss";
+html,
+body {
+  height: 100vh;
+  background-color: #242424;
+}
+
 main {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   > * {
     margin-top: 1rem;
   }
@@ -14,12 +23,14 @@ button {
   background-color: transparent;
   outline: none;
   border: none;
+  padding: 0.6em 1.2em;
 }
 button:hover {
   border: none;
 }
 p {
   font-size: 1rem;
+  color: $font;
 }
 .app {
   background-color: #282c34;
@@ -27,6 +38,7 @@ p {
 }
 
 .stack-icons {
+  color: $font;
   display: flex;
   justify-content: center;
   align-items: center;
