@@ -170,29 +170,20 @@ export const uxp = (config: UXP_Config, mode?: string): Plugin => {
       wsUpdate(config.manifest.id);
       return;
     },
-    async buildEnd() {
+    async closeBundle() {
       if (mode !== "dev" && config.manifest.addon) {
-        setTimeout(() => {
-          copyHybridBinaries(config, false);
-        }, 1000);
-        // await wait(1000);
+        copyHybridBinaries(config, false);
       }
       if (mode === "package" || mode === "zip") {
-        setTimeout(() => {
-          generateCCX(config);
-        }, 2000);
-        // await wait(2000);
+        generateCCX(config);
       }
       if (mode === "zip") {
-        setTimeout(() => {
-          console.log("zip time!");
-          const zipDir = path.join(process.cwd(), "zip");
-          const ccxDir = path.join(process.cwd(), "ccx");
-          const src = process.cwd();
-          mkdirSync(zipDir, { recursive: true });
-          metaPackage(config, zipDir, ccxDir, src, config.copyZipAssets);
-        }, 3000);
-        // await wait(3000);
+        console.log("zip time!");
+        const zipDir = path.join(process.cwd(), "zip");
+        const ccxDir = path.join(process.cwd(), "ccx");
+        const src = process.cwd();
+        mkdirSync(zipDir, { recursive: true });
+        metaPackage(config, zipDir, ccxDir, src, config.copyZipAssets);
       }
     },
   };
