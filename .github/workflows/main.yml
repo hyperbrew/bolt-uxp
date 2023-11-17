@@ -34,4 +34,4 @@ jobs:
           SOURCE_BRANCH: ${{ steps.extract_names.outputs.SOURCE_BRANCH }}
           SOURCE_TAG: ${{ steps.extract_names.outputs.SOURCE_TAG }}
         with:
-          files: "./ccx/*"
+          files: "ccx/*"
