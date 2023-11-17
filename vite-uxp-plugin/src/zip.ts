@@ -22,20 +22,21 @@ const createZip = (src: string, dst: string, name: string): Promise<string> => {
   });
 };
 
-export const metaPackage = async (
+export const zipPackage = async (
   config: UXP_Config,
   dest: string,
   ccx: string,
   src: string,
   assets?: string[]
 ) => {
+  fs.mkdirSync(dest, { recursive: true });
   const tmpDir = path.join(dest, "tmp");
-  console.log({
-    dest,
-    ccx,
-    src,
-    assets,
-  });
+  // console.log({
+  //   dest,
+  //   ccx,
+  //   src,
+  //   assets,
+  // });
   fs.mkdirSync(tmpDir, { recursive: true });
   fs.readdirSync(ccx).map((file) => {
     fs.cpSync(path.join(ccx, file), path.join(tmpDir, file), {

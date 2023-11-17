@@ -6,6 +6,7 @@ import type { UXP_Config, UXP_Manifest } from "./types";
 export type { UXP_Config, UXP_Manifest };
 
 export const generateCCX = async (config: UXP_Config) => {
+  fs.mkdirSync("ccx", { recursive: true });
   const createZip = (src: string, dst: string, name: string) => {
     return new Promise((resolve, reject) => {
       const archive = archiver("zip", { zlib: { level: 9 } });

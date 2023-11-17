@@ -18,7 +18,7 @@ import {
   unlinkSync,
 } from "fs";
 import path = require("path");
-import { metaPackage } from "./zip";
+import { zipPackage } from "./zip";
 export type { UXP_Config, UXP_Manifest };
 
 export const uxpSetup = (config: UXP_Config, mode?: string) => {
@@ -178,12 +178,10 @@ export const uxp = (config: UXP_Config, mode?: string): Plugin => {
         generateCCX(config);
       }
       if (mode === "zip") {
-        console.log("zip time!");
         const zipDir = path.join(process.cwd(), "zip");
         const ccxDir = path.join(process.cwd(), "ccx");
         const src = process.cwd();
-        mkdirSync(zipDir, { recursive: true });
-        metaPackage(config, zipDir, ccxDir, src, config.copyZipAssets);
+        zipPackage(config, zipDir, ccxDir, src, config.copyZipAssets);
       }
     },
   };
