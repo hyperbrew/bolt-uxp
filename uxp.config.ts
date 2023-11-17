@@ -1,7 +1,10 @@
 import { UXP_Manifest, UXP_Config } from "vite-uxp-plugin";
 import { version } from "./package.json";
 
-const hotReloadPort = 8080;
+const extraPrefs = {
+  hotReloadPort: 8080,
+  copyZipAssets: ["public-zip/*"],
+};
 
 const manifest: UXP_Manifest = {
   id: "bolt.uxp.plugin",
@@ -117,7 +120,7 @@ const manifest: UXP_Manifest = {
         "https://svelte.dev",
         "https://reactjs.org",
         "https://vuejs.org/",
-        `ws://localhost:${hotReloadPort}`, // Required for hot reload
+        `ws://localhost:${extraPrefs.hotReloadPort}`, // Required for hot reload
       ],
     },
     clipboard: "readAndWrite",
@@ -149,5 +152,5 @@ const manifest: UXP_Manifest = {
 
 export const config: UXP_Config = {
   manifest,
-  hotReloadPort,
+  ...extraPrefs,
 };

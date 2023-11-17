@@ -18,6 +18,7 @@ import {
   unlinkSync,
 } from "fs";
 import path = require("path");
+import { metaPackage } from "./zip";
 export type { UXP_Config, UXP_Manifest };
 
 export const uxpSetup = (config: UXP_Config, mode?: string) => {
@@ -25,6 +26,8 @@ export const uxpSetup = (config: UXP_Config, mode?: string) => {
     hotReloadServer(config.hotReloadPort);
   }
 };
+
+const wait = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
 const deleteExistingBinaries = (config: UXP_Config) => {
   try {
@@ -167,16 +170,29 @@ export const uxp = (config: UXP_Config, mode?: string): Plugin => {
       wsUpdate(config.manifest.id);
       return;
     },
-    buildEnd() {
+    async buildEnd() {
       if (mode !== "dev" && config.manifest.addon) {
         setTimeout(() => {
           copyHybridBinaries(config, false);
         }, 1000);
+        // await wait(1000);
       }
-      if (mode === "package") {
+      if (mode === "package" || mode === "zip") {
         setTimeout(() => {
           generateCCX(config);
         }, 2000);
+        // await wait(2000);
+      }
+      if (mode === "zip") {
+        setTimeout(() => {
+          console.log("zip time!");
+          const zipDir = path.join(process.cwd(), "zip");
+          const ccxDir = path.join(process.cwd(), "ccx");
+          const src = process.cwd();
+          mkdirSync(zipDir, { recursive: true });
+          metaPackage(config, zipDir, ccxDir, src, config.copyZipAssets);
+        }, 3000);
+        // await wait(3000);
       }
     },
   };
