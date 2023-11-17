@@ -26,10 +26,11 @@ A lightning-fast boilerplate for building Adobe UXP Plugins in Svelte, React, or
 
 ## Quickstart
 
-1. `yarn` - Install Dependencies
-2. `yarn dev` - Run the plugin in hot reload mode for development with UDT (see below)
-3. `yarn build` - Build the plugin
-4. `yarn ccx` - Build & Package the plugin as a CCX for delivery (separate CCX files for each host are generated due to current UXP requirements)
+`yarn` - Install Dependencies
+`yarn dev` - Run the plugin in hot reload mode for development with UDT (see below)
+`yarn build` - Build the plugin
+`yarn ccx` - Build & Package the plugin as a CCX for delivery (separate CCX files for each host are generated due to current UXP requirements)
+`yarn zip` - Bundles your packaged ccx file(s) and specified assets from `copyZipAssets` to a zip archive in the `./zip` folder
 
 ## UDT Setup
 
