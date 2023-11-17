@@ -27,3 +27,5 @@ _dummy
 vite.config.ts.timestamp*
 
 ccx
+
+src/hybrid/win/.vs

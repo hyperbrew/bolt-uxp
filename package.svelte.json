@@ -20,13 +20,7 @@
     "ccx-install": "yarn cross-env ACTION=install vite",
     "ccx-uninstall": "yarn cross-env ACTION=uninstall vite"
   },
-  "dependencies": {
-    "@vitejs/plugin-react": "^4.2.0",
-    "@vitejs/plugin-vue": "^4.5.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "vue": "^3.2.45"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@adobe/cc-ext-uxp-types": "^7.3.1",
     "@sveltejs/vite-plugin-svelte": "^2.4.2",
@@ -45,8 +39,6 @@
     "typescript": "^5.0.2",
     "vite": "^4.4.5",
     "vite-uxp-plugin": "^0.0.1",
-    "ws": "^8.14.2",
-    "@types/react": "^18.0.24",
-    "@types/react-dom": "^18.0.8"
+    "ws": "^8.14.2"
   }
 }

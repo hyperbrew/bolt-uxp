@@ -1,9 +1,9 @@
 import { defineConfig } from "vite";
-import { svelte } from "@sveltejs/vite-plugin-svelte";
 import { runAction, uxp, uxpSetup } from "vite-uxp-plugin";
-import { sveltePreprocess } from "svelte-preprocess/dist/autoProcess";
-import react from "@vitejs/plugin-react"; // BOLT-CEP_REACT-ONLY
-import vue from "@vitejs/plugin-vue"; // BOLT-CEP_VUE-ONLY
+import { svelte } from "@sveltejs/vite-plugin-svelte"; // BOLT-UXP_SVELTE-ONLY
+import { sveltePreprocess } from "svelte-preprocess/dist/autoProcess"; // BOLT-UXP_SVELTE-ONLY
+import react from "@vitejs/plugin-react"; // BOLT-UXP_REACT-ONLY
+import vue from "@vitejs/plugin-vue"; // BOLT-UXP_VUE-ONLY
 
 import { config } from "./uxp.config";
 
@@ -18,11 +18,9 @@ if (action) {
 export default defineConfig({
   plugins: [
     uxp(config, mode),
-    react(), // BOLT-CEP_REACT-ONLY
-    vue(), // BOLT-CEP_VUE-ONLY
-    svelte({
-      preprocess: sveltePreprocess({ typescript: true }),
-    }),
+    react(), // BOLT-UXP_REACT-ONLY
+    vue(), // BOLT-UXP_VUE-ONLY
+    svelte({ preprocess: sveltePreprocess({ typescript: true }) }), // BOLT-UXP_SVELTE-ONLY
   ],
   build: {
     rollupOptions: {

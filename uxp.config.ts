@@ -133,7 +133,7 @@ const manifest: UXP_Manifest = {
     // enableAddon: true,
   },
   // addon: {
-  //   name: "sample-uxp-addon.uxpaddon",
+  //   name: "bolt-uxp-hybrid.uxpaddon",
   // },
   icons: [
     {
