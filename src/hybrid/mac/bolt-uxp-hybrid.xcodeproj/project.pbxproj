@@ -16,7 +16,33 @@
 		607D928B2947C3220068B86D /* UxpAddon.h in Headers */ = {isa = PBXBuildFile; fileRef = 607D92852947C3220068B86D /* UxpAddon.h */; };
 		607D928C2947C3220068B86D /* UxpTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 607D92862947C3220068B86D /* UxpTask.cpp */; };
 		C47E25D727A2B3F8002EE081 /* module.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C47E25D627A2B3F8002EE081 /* module.cpp */; };
+		D0D35EA82B07D2430038B57D /* bolt-uxp-hybrid.uxpaddon in Copy Files */ = {isa = PBXBuildFile; fileRef = C47E25BC27A2B22A002EE081 /* bolt-uxp-hybrid.uxpaddon */; };
+		D0D35EAA2B07D4880038B57D /* bolt-uxp-hybrid.uxpaddon in CopyFiles */ = {isa = PBXBuildFile; fileRef = C47E25BC27A2B22A002EE081 /* bolt-uxp-hybrid.uxpaddon */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		D0D35EA72B07D21C0038B57D /* Copy Files */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(SRCROOT)/../../../public/mac/arm64";
+			dstSubfolderSpec = 0;
+			files = (
+				D0D35EA82B07D2430038B57D /* bolt-uxp-hybrid.uxpaddon in Copy Files */,
+			);
+			name = "Copy Files";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D0D35EA92B07D47A0038B57D /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(SRCROOT)/../../../public/mac/x64";
+			dstSubfolderSpec = 0;
+			files = (
+				D0D35EAA2B07D4880038B57D /* bolt-uxp-hybrid.uxpaddon in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		607D927D2947C31B0068B86D /* UxpAddonShared.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UxpAddonShared.h; path = ../src/api/UxpAddonShared.h; sourceTree = "<group>"; };
@@ -27,7 +53,7 @@
 		607D92842947C3220068B86D /* UxpAddon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UxpAddon.cpp; path = ../src/utilities/UxpAddon.cpp; sourceTree = "<group>"; };
 		607D92852947C3220068B86D /* UxpAddon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UxpAddon.h; path = ../src/utilities/UxpAddon.h; sourceTree = "<group>"; };
 		607D92862947C3220068B86D /* UxpTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UxpTask.cpp; path = ../src/utilities/UxpTask.cpp; sourceTree = "<group>"; };
-		C47E25BC27A2B22A002EE081 /* sample-uxp-addon.uxpaddon */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = "sample-uxp-addon.uxpaddon"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C47E25BC27A2B22A002EE081 /* bolt-uxp-hybrid.uxpaddon */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = "bolt-uxp-hybrid.uxpaddon"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C47E25D627A2B3F8002EE081 /* module.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = module.cpp; path = ../src/module.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -77,7 +103,7 @@
 		C47E25BD27A2B22A002EE081 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C47E25BC27A2B22A002EE081 /* sample-uxp-addon.uxpaddon */,
+				C47E25BC27A2B22A002EE081 /* bolt-uxp-hybrid.uxpaddon */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -100,21 +126,23 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		C47E25BB27A2B22A002EE081 /* sample-1 */ = {
+		C47E25BB27A2B22A002EE081 /* bolt-uxp-hybrid */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C47E25C527A2B22A002EE081 /* Build configuration list for PBXNativeTarget "sample-1" */;
+			buildConfigurationList = C47E25C527A2B22A002EE081 /* Build configuration list for PBXNativeTarget "bolt-uxp-hybrid" */;
 			buildPhases = (
 				C47E25B827A2B22A002EE081 /* Headers */,
 				C47E25B927A2B22A002EE081 /* Sources */,
 				C47E25BA27A2B22A002EE081 /* Frameworks */,
+				D0D35EA72B07D21C0038B57D /* Copy Files */,
+				D0D35EA92B07D47A0038B57D /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = "sample-1";
+			name = "bolt-uxp-hybrid";
 			productName = "sample-1";
-			productReference = C47E25BC27A2B22A002EE081 /* sample-uxp-addon.uxpaddon */;
+			productReference = C47E25BC27A2B22A002EE081 /* bolt-uxp-hybrid.uxpaddon */;
 			productType = "com.apple.product-type.library.dynamic";
 		};
 /* End PBXNativeTarget section */
@@ -131,7 +159,7 @@
 					};
 				};
 			};
-			buildConfigurationList = C47E25B727A2B22A002EE081 /* Build configuration list for PBXProject "sample-1" */;
+			buildConfigurationList = C47E25B727A2B22A002EE081 /* Build configuration list for PBXProject "bolt-uxp-hybrid" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -144,7 +172,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				C47E25BB27A2B22A002EE081 /* sample-1 */,
+				C47E25BB27A2B22A002EE081 /* bolt-uxp-hybrid */,
 			);
 		};
 /* End PBXProject section */
@@ -285,7 +313,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				EXECUTABLE_EXTENSION = uxpaddon;
 				EXECUTABLE_PREFIX = "";
-				PRODUCT_NAME = "sample-uxp-addon";
+				PRODUCT_NAME = "bolt-uxp-hybrid";
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
@@ -300,7 +328,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				EXECUTABLE_EXTENSION = uxpaddon;
 				EXECUTABLE_PREFIX = "";
-				PRODUCT_NAME = "sample-uxp-addon";
+				PRODUCT_NAME = "bolt-uxp-hybrid";
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
@@ -308,7 +336,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C47E25B727A2B22A002EE081 /* Build configuration list for PBXProject "sample-1" */ = {
+		C47E25B727A2B22A002EE081 /* Build configuration list for PBXProject "bolt-uxp-hybrid" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C47E25C327A2B22A002EE081 /* Debug */,
@@ -317,7 +345,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C47E25C527A2B22A002EE081 /* Build configuration list for PBXNativeTarget "sample-1" */ = {
+		C47E25C527A2B22A002EE081 /* Build configuration list for PBXNativeTarget "bolt-uxp-hybrid" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C47E25C627A2B22A002EE081 /* Debug */,
