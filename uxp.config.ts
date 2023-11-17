@@ -130,11 +130,11 @@ const manifest: UXP_Manifest = {
     },
     allowCodeGenerationFromStrings: true,
 
-    // enableAddon: true,
+    enableAddon: true,
   },
-  // addon: {
-  //   name: "bolt-uxp-hybrid.uxpaddon",
-  // },
+  addon: {
+    name: "bolt-uxp-hybrid.uxpaddon",
+  },
   icons: [
     {
       width: 48,
