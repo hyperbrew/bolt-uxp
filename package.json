@@ -20,7 +20,7 @@
     "ccx-install": "yarn cross-env ACTION=install vite",
     "ccx-uninstall": "yarn cross-env ACTION=uninstall vite",
     "mac-build": "xcodebuild -project src/hybrid/mac/bolt-uxp-hybrid.xcodeproj",
-    "win-build": "msbuild src/hybrid/win/bolt-uxp-hybrid.sln /p:Configuration=Release"
+    "win-build": "msbuild src/hybrid/win/bolt-uxp-hybrid.sln"
   },
   "dependencies": {
     "@vitejs/plugin-react": "^4.2.0",

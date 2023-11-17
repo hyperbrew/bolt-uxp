@@ -80,7 +80,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <TargetName>$(Project)</TargetName>
-    <OutDir>../../../public/win/$(Platform)</OutDir>
+    <OutDir>build</OutDir>
     <TargetExt>.uxpaddon</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -135,6 +135,10 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
     </Link>
+    <PostBuildEvent>
+      <Message>Copy Binary to Target</Message>
+      <Command>xcopy "$(SolutionDir)build\bolt-uxp-hybrid.uxpaddon" "$(SolutionDir)..\..\..\public\win\$(Platform)" /Y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
