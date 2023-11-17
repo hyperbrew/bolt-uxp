@@ -51,6 +51,7 @@ p {
   display: flex;
   justify-content: center;
   align-items: center;
-  // row-gap: 1rem;
-  // column-gap: 1rem;
+  > * {
+    margin-right: 0.5rem;
+  }
 }

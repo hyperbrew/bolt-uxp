@@ -26,7 +26,7 @@
     "directory": "packages/create-vite"
   },
   "bugs": {
-    "url": "https://github.com//hyper-brew/bolt-uxp/issues"
+    "url": "https://github.com/hyper-brew/bolt-uxp/issues"
   },
   "dependencies": {
     "@clack/prompts": "^0.7.0",

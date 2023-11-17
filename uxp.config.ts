@@ -125,6 +125,11 @@ const manifest: UXP_Manifest = {
       allow: "yes",
       domains: ["https://*.hyperbrew.co"],
     },
+    ipc: {
+      enablePluginCommunication: true,
+    },
+    allowCodeGenerationFromStrings: true,
+
     // enableAddon: true,
   },
   // addon: {
