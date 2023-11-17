@@ -79,8 +79,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <TargetName>sample-uxp-addon</TargetName>
-    <OutDir>../</OutDir>
+    <TargetName>$(Project)</TargetName>
+    <OutDir>../../../public/win/$(Platform)</OutDir>
     <TargetExt>.uxpaddon</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
