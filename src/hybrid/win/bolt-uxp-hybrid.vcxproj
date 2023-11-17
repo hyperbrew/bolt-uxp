@@ -137,7 +137,7 @@
     </Link>
     <PostBuildEvent>
       <Message>Copy Binary to Target</Message>
-      <Command>xcopy "$(SolutionDir)build\bolt-uxp-hybrid.uxpaddon" "$(SolutionDir)..\..\..\public\win\$(Platform)" /Y</Command>
+      <Command>xcopy "$(SolutionDir)build\bolt-uxp-hybrid.uxpaddon" "$(SolutionDir)..\..\..\public-hybrid\win\$(Platform)" /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

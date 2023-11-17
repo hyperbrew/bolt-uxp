@@ -15,6 +15,9 @@ if (action) {
   process.exit();
 }
 
+const shouldNotEmptyDir =
+  mode === "dev" && config.manifest.requiredPermissions?.enableAddon;
+
 export default defineConfig({
   plugins: [
     uxp(config, mode),
@@ -23,8 +26,10 @@ export default defineConfig({
     svelte({ preprocess: sveltePreprocess({ typescript: true }) }), // BOLT-UXP_SVELTE-ONLY
   ],
   build: {
+    emptyOutDir: !shouldNotEmptyDir,
     rollupOptions: {
       external: ["uxp", "photoshop", "indesign"],
     },
   },
+  publicDir: "public",
 });

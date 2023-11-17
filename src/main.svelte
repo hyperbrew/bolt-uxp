@@ -61,7 +61,7 @@
   </div>
   <div>
     <p>
-      Edit <span class="code">main.svelte</span> and save to test HMR updates.
+      Edittttt <span class="code">main.svelte</span> and save to test HMR updates.
     </p>
   </div>
   <div class="button-group">
