@@ -16,30 +16,40 @@
 		607D928B2947C3220068B86D /* UxpAddon.h in Headers */ = {isa = PBXBuildFile; fileRef = 607D92852947C3220068B86D /* UxpAddon.h */; };
 		607D928C2947C3220068B86D /* UxpTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 607D92862947C3220068B86D /* UxpTask.cpp */; };
 		C47E25D727A2B3F8002EE081 /* module.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C47E25D627A2B3F8002EE081 /* module.cpp */; };
-		D0D35EA82B07D2430038B57D /* bolt-uxp-hybrid.uxpaddon in Copy Files */ = {isa = PBXBuildFile; fileRef = C47E25BC27A2B22A002EE081 /* bolt-uxp-hybrid.uxpaddon */; };
-		D0D35EAA2B07D4880038B57D /* bolt-uxp-hybrid.uxpaddon in CopyFiles */ = {isa = PBXBuildFile; fileRef = C47E25BC27A2B22A002EE081 /* bolt-uxp-hybrid.uxpaddon */; };
+		D0CCA2782B0BC740008E2725 /* UxpAddonShared.h in Headers */ = {isa = PBXBuildFile; fileRef = 607D927D2947C31B0068B86D /* UxpAddonShared.h */; };
+		D0CCA2792B0BC740008E2725 /* UxpAddon.h in Headers */ = {isa = PBXBuildFile; fileRef = 607D92852947C3220068B86D /* UxpAddon.h */; };
+		D0CCA27A2B0BC740008E2725 /* UxpAddonTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 607D927E2947C31B0068B86D /* UxpAddonTypes.h */; };
+		D0CCA27B2B0BC740008E2725 /* UxpValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 607D92812947C3220068B86D /* UxpValue.h */; };
+		D0CCA27C2B0BC740008E2725 /* UxpTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 607D92832947C3220068B86D /* UxpTask.h */; };
+		D0CCA27E2B0BC740008E2725 /* UxpTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 607D92862947C3220068B86D /* UxpTask.cpp */; };
+		D0CCA27F2B0BC740008E2725 /* module.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C47E25D627A2B3F8002EE081 /* module.cpp */; };
+		D0CCA2802B0BC740008E2725 /* UxpAddon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 607D92842947C3220068B86D /* UxpAddon.cpp */; };
+		D0CCA2812B0BC740008E2725 /* UxpValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 607D92822947C3220068B86D /* UxpValue.cpp */; };
+		D0CCA2892B0BC93A008E2725 /* x64.uxpaddon in Copy Files */ = {isa = PBXBuildFile; fileRef = D0CCA2882B0BC740008E2725 /* x64.uxpaddon */; };
+		D0D35EA82B07D2430038B57D /* arm64.uxpaddon in Copy Files */ = {isa = PBXBuildFile; fileRef = C47E25BC27A2B22A002EE081 /* arm64.uxpaddon */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		D0D35EA72B07D21C0038B57D /* Copy Files */ = {
+		D0CCA2832B0BC740008E2725 /* Copy Files */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = "$(SRCROOT)/../../../public/mac/arm64";
+			dstPath = "$(SRCROOT)/../../../public-hybrid/mac/x64";
 			dstSubfolderSpec = 0;
 			files = (
-				D0D35EA82B07D2430038B57D /* bolt-uxp-hybrid.uxpaddon in Copy Files */,
+				D0CCA2892B0BC93A008E2725 /* x64.uxpaddon in Copy Files */,
 			);
 			name = "Copy Files";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D0D35EA92B07D47A0038B57D /* CopyFiles */ = {
+		D0D35EA72B07D21C0038B57D /* Copy Files */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = "$(SRCROOT)/../../../public/mac/x64";
+			dstPath = "$(SRCROOT)/../../../public-hybrid/mac/arm64";
 			dstSubfolderSpec = 0;
 			files = (
-				D0D35EAA2B07D4880038B57D /* bolt-uxp-hybrid.uxpaddon in CopyFiles */,
+				D0D35EA82B07D2430038B57D /* arm64.uxpaddon in Copy Files */,
 			);
+			name = "Copy Files";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -53,12 +63,20 @@
 		607D92842947C3220068B86D /* UxpAddon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UxpAddon.cpp; path = ../src/utilities/UxpAddon.cpp; sourceTree = "<group>"; };
 		607D92852947C3220068B86D /* UxpAddon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UxpAddon.h; path = ../src/utilities/UxpAddon.h; sourceTree = "<group>"; };
 		607D92862947C3220068B86D /* UxpTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UxpTask.cpp; path = ../src/utilities/UxpTask.cpp; sourceTree = "<group>"; };
-		C47E25BC27A2B22A002EE081 /* bolt-uxp-hybrid.uxpaddon */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = "bolt-uxp-hybrid.uxpaddon"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C47E25BC27A2B22A002EE081 /* arm64.uxpaddon */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = arm64.uxpaddon; sourceTree = BUILT_PRODUCTS_DIR; };
 		C47E25D627A2B3F8002EE081 /* module.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = module.cpp; path = ../src/module.cpp; sourceTree = "<group>"; };
+		D0CCA2882B0BC740008E2725 /* x64.uxpaddon */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = x64.uxpaddon; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		C47E25BA27A2B22A002EE081 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D0CCA2822B0BC740008E2725 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -103,7 +121,8 @@
 		C47E25BD27A2B22A002EE081 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C47E25BC27A2B22A002EE081 /* bolt-uxp-hybrid.uxpaddon */,
+				C47E25BC27A2B22A002EE081 /* arm64.uxpaddon */,
+				D0CCA2882B0BC740008E2725 /* x64.uxpaddon */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -123,26 +142,57 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D0CCA2772B0BC740008E2725 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D0CCA2782B0BC740008E2725 /* UxpAddonShared.h in Headers */,
+				D0CCA2792B0BC740008E2725 /* UxpAddon.h in Headers */,
+				D0CCA27A2B0BC740008E2725 /* UxpAddonTypes.h in Headers */,
+				D0CCA27B2B0BC740008E2725 /* UxpValue.h in Headers */,
+				D0CCA27C2B0BC740008E2725 /* UxpTask.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		C47E25BB27A2B22A002EE081 /* bolt-uxp-hybrid */ = {
+		C47E25BB27A2B22A002EE081 /* arm64 */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C47E25C527A2B22A002EE081 /* Build configuration list for PBXNativeTarget "bolt-uxp-hybrid" */;
+			buildConfigurationList = C47E25C527A2B22A002EE081 /* Build configuration list for PBXNativeTarget "arm64" */;
 			buildPhases = (
 				C47E25B827A2B22A002EE081 /* Headers */,
 				C47E25B927A2B22A002EE081 /* Sources */,
 				C47E25BA27A2B22A002EE081 /* Frameworks */,
 				D0D35EA72B07D21C0038B57D /* Copy Files */,
-				D0D35EA92B07D47A0038B57D /* CopyFiles */,
+				D0CCA28B2B0BCC04008E2725 /* ShellScript */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = "bolt-uxp-hybrid";
+			name = arm64;
 			productName = "sample-1";
-			productReference = C47E25BC27A2B22A002EE081 /* bolt-uxp-hybrid.uxpaddon */;
+			productReference = C47E25BC27A2B22A002EE081 /* arm64.uxpaddon */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
+		D0CCA2762B0BC740008E2725 /* x64 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D0CCA2852B0BC740008E2725 /* Build configuration list for PBXNativeTarget "x64" */;
+			buildPhases = (
+				D0CCA2772B0BC740008E2725 /* Headers */,
+				D0CCA27D2B0BC740008E2725 /* Sources */,
+				D0CCA2822B0BC740008E2725 /* Frameworks */,
+				D0CCA2832B0BC740008E2725 /* Copy Files */,
+				D0CCA28A2B0BC9C0008E2725 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = x64;
+			productName = "sample-1";
+			productReference = D0CCA2882B0BC740008E2725 /* x64.uxpaddon */;
 			productType = "com.apple.product-type.library.dynamic";
 		};
 /* End PBXNativeTarget section */
@@ -172,10 +222,48 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				C47E25BB27A2B22A002EE081 /* bolt-uxp-hybrid */,
+				C47E25BB27A2B22A002EE081 /* arm64 */,
+				D0CCA2762B0BC740008E2725 /* x64 */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		D0CCA28A2B0BC9C0008E2725 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "resolved_path=$(readlink -f \"$SRCROOT/../../../public-hybrid/mac/x64\")\nmv  \"$resolved_path/x64.uxpaddon\" \"$resolved_path/$PROJECT.uxpaddon\"\n";
+		};
+		D0CCA28B2B0BCC04008E2725 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "resolved_path=$(readlink -f \"$SRCROOT/../../../public-hybrid/mac/arm64\")\nmv  \"$resolved_path/arm64.uxpaddon\" \"$resolved_path/$PROJECT.uxpaddon\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		C47E25B927A2B22A002EE081 /* Sources */ = {
@@ -186,6 +274,17 @@
 				C47E25D727A2B3F8002EE081 /* module.cpp in Sources */,
 				607D928A2947C3220068B86D /* UxpAddon.cpp in Sources */,
 				607D92882947C3220068B86D /* UxpValue.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D0CCA27D2B0BC740008E2725 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D0CCA27E2B0BC740008E2725 /* UxpTask.cpp in Sources */,
+				D0CCA27F2B0BC740008E2725 /* module.cpp in Sources */,
+				D0CCA2802B0BC740008E2725 /* UxpAddon.cpp in Sources */,
+				D0CCA2812B0BC740008E2725 /* UxpValue.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -306,7 +405,7 @@
 		C47E25C627A2B22A002EE081 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
+				ARCHS = arm64;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 65L2SK86D2;
@@ -314,7 +413,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				EXECUTABLE_EXTENSION = uxpaddon;
 				EXECUTABLE_PREFIX = "";
-				PRODUCT_NAME = "bolt-uxp-hybrid";
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
@@ -322,7 +421,7 @@
 		C47E25C727A2B22A002EE081 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
+				ARCHS = arm64;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 65L2SK86D2;
@@ -330,7 +429,41 @@
 				DYLIB_CURRENT_VERSION = 1;
 				EXECUTABLE_EXTENSION = uxpaddon;
 				EXECUTABLE_PREFIX = "";
-				PRODUCT_NAME = "bolt-uxp-hybrid";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		D0CCA2862B0BC740008E2725 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = x86_64;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 65L2SK86D2;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				EXECUTABLE_EXTENSION = uxpaddon;
+				EXECUTABLE_PREFIX = "";
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		D0CCA2872B0BC740008E2725 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = x86_64;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 65L2SK86D2;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				EXECUTABLE_EXTENSION = uxpaddon;
+				EXECUTABLE_PREFIX = "";
+				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
@@ -347,11 +480,20 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C47E25C527A2B22A002EE081 /* Build configuration list for PBXNativeTarget "bolt-uxp-hybrid" */ = {
+		C47E25C527A2B22A002EE081 /* Build configuration list for PBXNativeTarget "arm64" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C47E25C627A2B22A002EE081 /* Debug */,
 				C47E25C727A2B22A002EE081 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D0CCA2852B0BC740008E2725 /* Build configuration list for PBXNativeTarget "x64" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D0CCA2862B0BC740008E2725 /* Debug */,
+				D0CCA2872B0BC740008E2725 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
