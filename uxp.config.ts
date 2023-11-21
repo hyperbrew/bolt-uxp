@@ -13,6 +13,7 @@ const manifest: UXP_Manifest = {
   main: "index.html",
   manifestVersion: 6,
   host: [
+    // BOLT-UXP_PHOTOSHOP_START
     {
       app: "PS",
       minVersion: "24.2.0",
@@ -20,18 +21,25 @@ const manifest: UXP_Manifest = {
         apiVersion: 2,
       },
     },
+    // BOLT-UXP_PHOTOSHOP_END
+    // BOLT-UXP_INDESIGN_START
     {
       app: "ID",
       minVersion: "18.5",
     },
+    // BOLT-UXP_INDESIGN_END
+    // BOLT-UXP_ILLUSTRATOR_START
     {
       app: "AI",
       minVersion: "18.5",
     },
+    // BOLT-UXP_ILLUSTRATOR_END
+    // BOLT-UXP_PREMIEREPRO_START
     {
       app: "premierepro",
       minVersion: "22.3",
     },
+    // BOLT-UXP_PREMIEREPRO_END
   ],
   entrypoints: [
     {
@@ -132,12 +140,15 @@ const manifest: UXP_Manifest = {
       enablePluginCommunication: true,
     },
     allowCodeGenerationFromStrings: true,
-
+    // BOLT-UXP_HYBRID_START
     enableAddon: true,
+    // BOLT-UXP_HYBRID_END
   },
+  // BOLT-UXP_HYBRID_START
   addon: {
     name: "bolt-uxp-hybrid.uxpaddon",
   },
+  // BOLT-UXP_HYBRID_END
   icons: [
     {
       width: 48,
