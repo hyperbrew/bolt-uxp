@@ -3,6 +3,8 @@ import * as fs from "fs";
 import * as fg from "fast-glob";
 
 import { appOptions, frameworkOptions } from ".";
+import {execAsync} from './utils'
+import{spinner} from "@clack/prompts";
 
 export type Opt = {
   value: string;
@@ -20,30 +22,35 @@ type Args = {
 
 const getJSRegex = (variable: string) =>
   new RegExp(
-    `.*\/\/ BOLT-UXP_${variable}_START[\\s\\S]*?\/\/ BOLT-UXP_${variable}_END.*(\r?\n|\r)`,
+    `.*\/\/ BOLT-UXP_${variable}_START[\\s\\S]*?\/\/ BOLT-UXP_${variable}_END`,
     "g"
   );
 const allCommentsRegex = /\/\/ BOLT-UXP_.*_(START|END)/g;
 
 const getHTMLRegex = (variable: string) =>
   new RegExp(
-    `.*<!-- BOLT-UXP_${variable}_START -->[\\s\\S]*?<!-- BOLT-UXP_${variable}_END -->.*(\r?\n|\r)`,
+    `.*<!-- BOLT-UXP_${variable}_START -->[\\s\\S]*?<!-- BOLT-UXP_${variable}_END -->`,
     "g"
   );
 
-const allHTMLCommentsRegex = /.*<!-- BOLT-UXP_.*_(START|END) -->.*(\r?\n|\r)/g;
+const allHTMLCommentsRegex = /.*<!-- BOLT-UXP_.*_(START|END) -->/g;
 const htmlDisabledScriptTagRegexStart = /.*<!-- <script/g;
-const htmlDisabledScriptTagRegexEnd = /<\/script> -->.*(\r?\n|\r)/g;
+const htmlDisabledScriptTagRegexEnd = /<\/script> -->/g;
 
 export const buildBoltUXP = async (args: Args) => {
-  console.log(args);
+  // console.log(args);
 
   const fullPath = path.join(process.cwd(), args.folder);
-  console.log(fullPath);
+  // console.log(fullPath);
+
+  if(fs.existsSync(fullPath)) {
+    fs.rmSync(fullPath, {recursive: true})
+  }
+  
   fs.mkdirSync(fullPath, { recursive: true });
 
   const boltUxpFolder = path.join(__dirname, "..", "node_modules", "bolt-uxp");
-  console.log(boltUxpFolder);
+  // console.log(boltUxpFolder);
 
   let includes: string[] = ["*", "src/**/*", "public/**/*"];
   let excludes: string[] = [];
@@ -84,7 +91,7 @@ export const buildBoltUXP = async (args: Args) => {
       followSymbolicLinks: true, // Set to false to not follow symlinks
     }
   );
-  console.log(files);
+  // console.log(files);
 
   files.map((file) => {
     // const fileName = path.basename(file);
@@ -140,7 +147,7 @@ export const buildBoltUXP = async (args: Args) => {
   removeApps.map((app) => {
     const upper = app.toUpperCase();
     const regex = getJSRegex(upper);
-    console.log(regex);
+    // console.log(regex);
     uxpConfigData = uxpConfigData.replace(regex, "");
   });
 
@@ -165,7 +172,7 @@ export const buildBoltUXP = async (args: Args) => {
 
   excludedFrameworks.map((framework) => {
     const regex = getHTMLRegex(framework.toUpperCase());
-    console.log(regex);
+    // console.log(regex);
     indexHtmlData = indexHtmlData.replace(regex, "");
   });
 
@@ -200,4 +207,13 @@ export const buildBoltUXP = async (args: Args) => {
   viteConfigData = viteConfigData.replace(allCommentsRegex, "");
 
   fs.writeFileSync(viteConfig, viteConfigData, "utf8");
+
+    // * Dependencies
+
+    if (args.installDeps) {
+      const s = spinner();
+      s.start("Installing dependencies...");
+      await execAsync(`cd ${fullPath} && yarn`);
+      s.stop("Dependencies installed!");
+    }
 };
