@@ -1,6 +1,7 @@
 {
   "name": "vite-uxp-plugin",
-  "version": "0.0.4",
+  "version": "0.0.5",
+  "license": "MIT",
   "description": "A Vite Plugin for building Adobe UXP Plugin Panels",
   "main": "lib/index.js",
   "repository": {
@@ -8,7 +9,6 @@
     "url": "https://github.com/hyperbrew/bolt-uxp.git"
   },
   "homepage": "https://github.com/hyperbrew/bolt-uxp",
-  "license": "MIT",
   "scripts": {
     "build": "tsc",
     "prepare": "npm run build",

@@ -1,5 +1,7 @@
 import { execSync, exec } from "child_process";
 
+export const posix = (str: string) => str.replace(/\\/g, "/");
+
 export const execAsync = (cmd: string) => {
   return new Promise((resolve, reject) => {
     exec(cmd, (err, stdout, stderr) => {

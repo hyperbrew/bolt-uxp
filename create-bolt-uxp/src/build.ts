@@ -6,7 +6,7 @@ import * as color from "picocolors";
 import * as prettier from "prettier";
 
 import { appOptions, frameworkOptions } from ".";
-import { execAsync } from "./utils";
+import { execAsync, posix } from "./utils";
 import { spinner, note } from "@clack/prompts";
 
 import { capitalize } from "radash";
@@ -49,7 +49,10 @@ export const buildBoltUXP = async (args: Args) => {
   // console.log(args);
 
   const fullPath = path.join(process.cwd(), args.folder);
-  // console.log(fullPath);
+  // note(`Creating Bolt UXP in ${color.green(color.bold(fullPath))}`, "Info");
+
+  const stem = posix(path.join(__dirname, "..", `/node_modules/bolt-uxp/`));
+  // note(`Copying files from ${color.green(color.bold(stem))}`, "Info");
 
   if (fs.existsSync(fullPath)) {
     fs.rmSync(fullPath, { recursive: true });
@@ -62,7 +65,6 @@ export const buildBoltUXP = async (args: Args) => {
 
   let includes: string[] = ["*", "src/**/*", "public/**/*"];
   let excludes: string[] = [];
-  const stem = `./node_modules/bolt-uxp/`;
 
   const reactFiles = [
     "src/index-react.tsx",

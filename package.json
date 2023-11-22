@@ -1,6 +1,7 @@
 {
   "name": "bolt-uxp",
-  "version": "0.0.4",
+  "version": "0.0.5",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/hyperbrew/bolt-uxp.git"
@@ -46,7 +47,7 @@
     "svelte-check": "^3.4.6",
     "typescript": "^5.0.2",
     "vite": "^4.4.5",
-    "vite-uxp-plugin": "^0.0.3",
+    "vite-uxp-plugin": "^0.0.5",
     "ws": "^8.14.2"
   },
   "files": [
