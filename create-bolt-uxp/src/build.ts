@@ -49,9 +49,26 @@ export const buildBoltUXP = async (args: Args) => {
   // console.log(args);
 
   const fullPath = path.join(process.cwd(), args.folder);
-  // note(`Creating Bolt UXP in ${color.green(color.bold(fullPath))}`, "Info");
+  note(`Creating Bolt UXP in ${color.green(color.bold(fullPath))}`, "Info");
 
-  const stem = posix(path.join(__dirname, "..", `/node_modules/bolt-uxp/`));
+  const localStem = posix(
+    path.join(__dirname, "..", `/node_modules/bolt-uxp/`)
+  );
+  const globalStem = posix(path.join(__dirname, `../../bolt-uxp`));
+  const stem = fs.existsSync(globalStem) ? globalStem : localStem;
+
+  // note(
+  //   `Local Stem ${color.green(color.bold(localStem))} exists ${fs.existsSync(
+  //     localStem
+  //   )}`,
+  //   "Info"
+  // );
+  // note(
+  //   `Global Stem ${color.green(color.bold(globalStem))} exists ${fs.existsSync(
+  //     globalStem
+  //   )}`,
+  //   "Info"
+  // );
   // note(`Copying files from ${color.green(color.bold(stem))}`, "Info");
 
   if (fs.existsSync(fullPath)) {
@@ -63,7 +80,7 @@ export const buildBoltUXP = async (args: Args) => {
   const boltUxpFolder = path.join(__dirname, "..", "node_modules", "bolt-uxp");
   // console.log(boltUxpFolder);
 
-  let includes: string[] = ["*", "src/**/*", "public/**/*"];
+  let includes: string[] = ["*", "src/**/*", "public/**/*", "public-zip/**/*"];
   let excludes: string[] = [];
 
   const reactFiles = [
@@ -95,12 +112,22 @@ export const buildBoltUXP = async (args: Args) => {
   }
 
   const files = await fg(
-    [...includes.map((i) => stem + i), ...excludes.map((i) => `!` + stem + i)],
+    [
+      ...includes.map((i) => posix(path.join(stem, i))),
+      ...excludes.map((i) => `!` + posix(path.join(stem, i))),
+    ],
     {
       onlyFiles: true,
       followSymbolicLinks: true, // Set to false to not follow symlinks
     }
   );
+  // note(
+  //   `Copying ${color.green(
+  //     color.bold(files.length.toString())
+  //   )} files to ${color.green(color.bold(fullPath))}`,
+  //   "Info"
+  // );
+  // note(files.map((file) => file.replace(stem, "")).join("\n"), "Info");
   // console.log(files);
 
   files.map((file) => {
