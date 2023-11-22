@@ -8,7 +8,7 @@ let clients: Set<WebSocket> = new Set();
 let server: http.Server | null = null;
 
 export const wsUpdate = (id: string) => {
-  console.log(`\n⚡ Trigger Hot Reload (for ${clients.size} clients)`);
+  console.log(`\n⚡ Trigger hot reload (for ${clients.size} clients)`);
   const message = JSON.stringify({
     id: id,
     status: "updated",
@@ -36,6 +36,6 @@ export const hotReloadServer = (hotReloadPort: number) => {
   });
 
   server.listen(hotReloadPort, () => {
-    console.log(`⚡ Hot Reload ws server started on port ${hotReloadPort}`);
+    console.log(`⚡ Hot reload ws server started on port ${hotReloadPort}`);
   });
 };

@@ -1,12 +1,15 @@
 import * as path from "path";
 import * as fs from "fs";
 import * as fg from "fast-glob";
+import * as color from "picocolors";
 
 import * as prettier from "prettier";
 
 import { appOptions, frameworkOptions } from ".";
 import { execAsync } from "./utils";
-import { spinner } from "@clack/prompts";
+import { spinner, note } from "@clack/prompts";
+
+import { capitalize } from "radash";
 
 export type Opt = {
   value: string;
@@ -238,4 +241,31 @@ export const buildBoltUXP = async (args: Args) => {
     await execAsync(`cd ${fullPath} && yarn`);
     s.stop("Dependencies installed!");
   }
+
+  note(
+    [
+      `panel      ${args.displayName}`,
+      `id         ${args.id}`,
+      `framework  ${args.framework}`,
+      `apps       ${args.apps}`,
+      `hybrid     ${args.enableHybrid}`,
+    ].join("\n"),
+    "Inputs"
+  );
+
+  let summary = [
+    `Bolt UXP generated with ${capitalize(args?.framework)}` +
+      `: ${color.green(color.bold(fullPath))}`,
+  ];
+  if (!args.installDeps) {
+    summary = [
+      ...summary,
+      "",
+      `Dependencies not installed. To install, run: ${color.yellow(
+        `cd ${path.basename(fullPath)} && yarn )`
+      )}`,
+    ];
+  }
+
+  note(summary.join("\n"), "Summary");
 };

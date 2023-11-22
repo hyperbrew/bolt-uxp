@@ -102,12 +102,12 @@ const copyHybridBinaries = (config: UXP_Config, onlyChanged: boolean) => {
       }
     } else {
       readdirSync(hybridPublic).map((file) => {
-        console.log(
-          "copy",
-          path.join(hybridPublic, file),
-          "TO",
-          path.join(dist, file)
-        );
+        // console.log(
+        //   "copy",
+        //   path.join(hybridPublic, file),
+        //   "TO",
+        //   path.join(dist, file)
+        // );
         cpSync(path.join(hybridPublic, file), path.join(dist, file), {
           recursive: true,
         });
@@ -160,7 +160,7 @@ export const uxp = (config: UXP_Config, mode?: string): Plugin => {
           current.code = polyfills + "\n" + current.code;
           console.log("file", file);
           if (mode === "dev" && file.indexOf("index") > 0) {
-            console.log("Add WS Snippet");
+            // console.log("Add WS Snippet");
             current.code = wsListener(config) + "\n" + current.code;
           }
         });
