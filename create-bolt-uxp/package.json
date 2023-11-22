@@ -1,6 +1,6 @@
 {
   "name": "create-bolt-uxp",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "license": "MIT",
   "bin": {
     "create-bolt-cep": "dist/index.js"
