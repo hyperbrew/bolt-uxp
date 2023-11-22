@@ -1,9 +1,15 @@
 import { defineConfig } from "vite";
 import { runAction, uxp, uxpSetup } from "vite-uxp-plugin";
-import { svelte } from "@sveltejs/vite-plugin-svelte"; // BOLT-UXP_SVELTE-ONLY
-import { sveltePreprocess } from "svelte-preprocess/dist/autoProcess"; // BOLT-UXP_SVELTE-ONLY
-import react from "@vitejs/plugin-react"; // BOLT-UXP_REACT-ONLY
-import vue from "@vitejs/plugin-vue"; // BOLT-UXP_VUE-ONLY
+// BOLT-UXP_SVELTE_START
+import { svelte } from "@sveltejs/vite-plugin-svelte";
+import { sveltePreprocess } from "svelte-preprocess/dist/autoProcess";
+// BOLT-UXP_SVELTE_END
+// BOLT-UXP_REACT_START
+import react from "@vitejs/plugin-react";
+// BOLT-UXP_REACT_END
+// BOLT-UXP_VUE_START
+import vue from "@vitejs/plugin-vue";
+// BOLT-UXP_VUE_END
 
 import { config } from "./uxp.config";
 
@@ -21,9 +27,15 @@ const shouldNotEmptyDir =
 export default defineConfig({
   plugins: [
     uxp(config, mode),
-    react(), // BOLT-UXP_REACT-ONLY
-    vue(), // BOLT-UXP_VUE-ONLY
-    svelte({ preprocess: sveltePreprocess({ typescript: true }) }), // BOLT-UXP_SVELTE-ONLY
+    // BOLT-UXP_REACT_START
+    react(),
+    // BOLT-UXP_REACT_END
+    // BOLT-UXP_VUE_START
+    vue(),
+    // BOLT-UXP_VUE_END
+    // BOLT-UXP_SVELTE_START
+    svelte({ preprocess: sveltePreprocess({ typescript: true }) }),
+    // BOLT-UXP_SVELTE_END
   ],
   build: {
     emptyOutDir: !shouldNotEmptyDir,

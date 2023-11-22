@@ -2,27 +2,31 @@ import { buildBoltUXP } from "./build";
 
 describe("create-bolt-uxp", () => {
   it("TEST SVELTE", async () => {
-    // const res = await buildBoltUXP({
-    //   folder: ".test-svelte",
-    //   displayName: "test",
-    //   id: "test",
-    //   framework: "svelte",
-    //   apps: ["photoshop"],
-    //   enableHybrid: false,
-    //   installDeps: false,
-    // });
-    // expect(res).toBeTruthy();
-    // const res2 = await buildBoltUXP({
-    //   folder: ".test-vue",
-    //   displayName: "test",
-    //   id: "test",
-    //   framework: "vue",
-    //   apps: ["photoshop"],
-    //   enableHybrid: true,
-    //   installDeps: false,
-    // });
-    // expect(res).toBeTruthy();
-    const res3 = await buildBoltUXP({
+    const svelte = await buildBoltUXP({
+      folder: ".test-svelte",
+      displayName: "test",
+      id: "test",
+      framework: "svelte",
+      apps: ["photoshop"],
+      enableHybrid: false,
+      installDeps: false,
+      pretty: false,
+    });
+    expect(svelte).toBeFalsy();
+
+    const vue = await buildBoltUXP({
+      folder: ".test-vue",
+      displayName: "test",
+      id: "test",
+      framework: "vue",
+      apps: ["photoshop"],
+      enableHybrid: true,
+      installDeps: false,
+      pretty: false,
+    });
+    expect(vue).toBeFalsy();
+
+    const react = await buildBoltUXP({
       folder: ".test-react",
       displayName: "test",
       id: "test",
@@ -30,7 +34,8 @@ describe("create-bolt-uxp", () => {
       apps: ["photoshop"],
       enableHybrid: true,
       installDeps: false,
+      pretty: false,
     });
-    expect(res3).toBeTruthy();
+    expect(react).toBeFalsy();
   });
 });

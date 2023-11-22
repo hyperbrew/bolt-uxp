@@ -2,9 +2,11 @@ import * as path from "path";
 import * as fs from "fs";
 import * as fg from "fast-glob";
 
+import * as prettier from "prettier";
+
 import { appOptions, frameworkOptions } from ".";
-import {execAsync} from './utils'
-import{spinner} from "@clack/prompts";
+import { execAsync } from "./utils";
+import { spinner } from "@clack/prompts";
 
 export type Opt = {
   value: string;
@@ -18,24 +20,27 @@ type Args = {
   apps: string[];
   enableHybrid: boolean;
   installDeps: boolean;
+  pretty?: boolean;
 };
+
+const multiBlankLineRegex = /(\r?\n\s*){1,}/g;
 
 const getJSRegex = (variable: string) =>
   new RegExp(
-    `.*\/\/ BOLT-UXP_${variable}_START[\\s\\S]*?\/\/ BOLT-UXP_${variable}_END`,
+    `\/\/ BOLT-UXP_${variable}_START[\\s\\S]*?\/\/ BOLT-UXP_${variable}_END.*`,
     "g"
   );
 const allCommentsRegex = /\/\/ BOLT-UXP_.*_(START|END)/g;
 
 const getHTMLRegex = (variable: string) =>
   new RegExp(
-    `.*<!-- BOLT-UXP_${variable}_START -->[\\s\\S]*?<!-- BOLT-UXP_${variable}_END -->`,
+    `<!-- BOLT-UXP_${variable}_START -->[\\s\\S]*?<!-- BOLT-UXP_${variable}_END -->.*`,
     "g"
   );
 
-const allHTMLCommentsRegex = /.*<!-- BOLT-UXP_.*_(START|END) -->/g;
-const htmlDisabledScriptTagRegexStart = /.*<!-- <script/g;
-const htmlDisabledScriptTagRegexEnd = /<\/script> -->/g;
+const allHTMLCommentsRegex = /<!-- BOLT-UXP_.*_(START|END) -->/g;
+const htmlDisabledScriptTagRegexStart = /<!-- <script/g;
+const htmlDisabledScriptTagRegexEnd = /<\/script> -->.*/g;
 
 export const buildBoltUXP = async (args: Args) => {
   // console.log(args);
@@ -43,10 +48,10 @@ export const buildBoltUXP = async (args: Args) => {
   const fullPath = path.join(process.cwd(), args.folder);
   // console.log(fullPath);
 
-  if(fs.existsSync(fullPath)) {
-    fs.rmSync(fullPath, {recursive: true})
+  if (fs.existsSync(fullPath)) {
+    fs.rmSync(fullPath, { recursive: true });
   }
-  
+
   fs.mkdirSync(fullPath, { recursive: true });
 
   const boltUxpFolder = path.join(__dirname, "..", "node_modules", "bolt-uxp");
@@ -160,7 +165,14 @@ export const buildBoltUXP = async (args: Args) => {
   // cleanup
   uxpConfigData = uxpConfigData.replace(allCommentsRegex, "");
 
-  fs.writeFileSync(uxpConfig, uxpConfigData, "utf8");
+  const uxpConfigDataFormatted = !args.pretty
+    ? uxpConfigData
+    : await prettier.format(uxpConfigData, {
+        parser: "typescript",
+      });
+  fs.writeFileSync(uxpConfig, uxpConfigDataFormatted, "utf8");
+
+  //* update index.html
 
   const indexHtml = path.join(fullPath, "index.html");
   let indexHtmlData = fs.readFileSync(indexHtml, "utf8");
@@ -192,8 +204,14 @@ export const buildBoltUXP = async (args: Args) => {
     "<!-- Uncomment to debug the desired template -->",
     ""
   );
+  indexHtmlData = indexHtmlData.replace(multiBlankLineRegex, "\n");
 
-  fs.writeFileSync(indexHtml, indexHtmlData, "utf8");
+  const indexHtmlFormatted = !args.pretty
+    ? indexHtmlData
+    : await prettier.format(indexHtmlData, {
+        parser: "html",
+      });
+  fs.writeFileSync(indexHtml, indexHtmlFormatted, "utf8");
 
   const viteConfig = path.join(fullPath, "vite.config.ts");
   let viteConfigData = fs.readFileSync(viteConfig, "utf8");
@@ -205,15 +223,19 @@ export const buildBoltUXP = async (args: Args) => {
 
   // cleanup
   viteConfigData = viteConfigData.replace(allCommentsRegex, "");
+  const viteConfigFormatted = !args.pretty
+    ? viteConfigData
+    : await prettier.format(viteConfigData, {
+        parser: "typescript",
+      });
+  fs.writeFileSync(viteConfig, viteConfigFormatted, "utf8");
 
-  fs.writeFileSync(viteConfig, viteConfigData, "utf8");
+  // * Dependencies
 
-    // * Dependencies
-
-    if (args.installDeps) {
-      const s = spinner();
-      s.start("Installing dependencies...");
-      await execAsync(`cd ${fullPath} && yarn`);
-      s.stop("Dependencies installed!");
-    }
+  if (args.installDeps) {
+    const s = spinner();
+    s.start("Installing dependencies...");
+    await execAsync(`cd ${fullPath} && yarn`);
+    s.stop("Dependencies installed!");
+  }
 };
