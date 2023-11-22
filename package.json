@@ -35,7 +35,6 @@
     "@adobe/cc-ext-uxp-types": "^7.3.1",
     "@sveltejs/vite-plugin-svelte": "^2.4.2",
     "@tsconfig/svelte": "^5.0.0",
-    "@types/express": "^4.17.20",
     "@types/node": "^20.8.7",
     "@types/photoshop": "^25.0.2",
     "@types/react": "^18.0.24",

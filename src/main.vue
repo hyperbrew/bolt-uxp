@@ -4,8 +4,7 @@ import { uxp, indesign, photoshop } from "./globals";
 const { openExternal } = uxp.shell;
 import { api } from "./api/api";
 
-let count: number = 0;
-const increment = () => (count += 1);
+let count = ref(0);
 
 console.log("Welcome to Bolt UXP inside of: ", uxp.host.name);
 
@@ -49,7 +48,7 @@ const hybridTest = async () => {
       <img src="./assets/sass.png" class="logo" alt="" /> -->
     </div>
     <div class="button-group">
-      <button @click="increment">count is {{ count }}</button>
+      <button @click="count++">count is {{ count }}</button>
       <button @click="helloWorld">Hello World</button>
       <button @click="hybridTest">Hybrid</button>
     </div>
