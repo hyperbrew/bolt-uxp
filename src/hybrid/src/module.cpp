@@ -16,11 +16,69 @@
 #include <iostream>
 #include <vector>
 
+#ifdef _WIN32
+#include <windows.h>
+#endif
+
 #include "../src/utilities/UxpAddon.h"
 #include "../src/utilities/UxpTask.h"
 #include "../src/utilities/UxpValue.h"
 
 namespace {
+
+    std::string execWin(const char* cmd) {
+        std::string result;
+        HANDLE hPipeRead, hPipeWrite;
+
+        SECURITY_ATTRIBUTES saAttr = { sizeof(SECURITY_ATTRIBUTES) };
+        saAttr.bInheritHandle = TRUE;  // Ensure the read handle to the pipe for STDOUT is inherited.
+        saAttr.lpSecurityDescriptor = NULL;
+
+        // Create a pipe for the child process's STDOUT.
+        if (!CreatePipe(&hPipeRead, &hPipeWrite, &saAttr, 0))
+            throw std::runtime_error("Failed to create pipe");
+
+        STARTUPINFOA si = { sizeof(STARTUPINFOA) };
+        si.dwFlags = STARTF_USESHOWWINDOW | STARTF_USESTDHANDLES;
+        si.hStdOutput = hPipeWrite;
+        si.hStdError = hPipeWrite;
+        si.wShowWindow = SW_HIDE;  // Prevents cmd window from flashing.
+                                   // Requires STARTF_USESHOWWINDOW in dwFlags.
+
+        PROCESS_INFORMATION pi = { 0 };
+
+        // Create a child process that uses the previously created pipes for STDOUT.
+        if (!CreateProcessA(NULL, (LPSTR)cmd, NULL, NULL, TRUE, 0, NULL, NULL, &si, &pi)) {
+            CloseHandle(hPipeWrite);
+            CloseHandle(hPipeRead);
+            throw std::runtime_error("Failed to create process");
+        }
+
+        CloseHandle(hPipeWrite);  // Close the write end of the pipe before reading from the read end of the pipe.
+
+        // Read output from the child process's pipe for STDOUT and write to the parent process's pipe for STDOUT.
+        DWORD dwRead;
+        CHAR chBuf[4096];
+        bool bSuccess = FALSE;
+        for (;;) {
+            bSuccess = ReadFile(hPipeRead, chBuf, 4096, &dwRead, NULL);
+            if (!bSuccess || dwRead == 0) break;
+
+            std::string part(chBuf, dwRead);
+            result += part;
+        }
+
+        CloseHandle(hPipeRead);
+
+        // Wait for the child process to exit.
+        WaitForSingleObject(pi.hProcess, INFINITE);
+
+        // Close process and thread handles.
+        CloseHandle(pi.hProcess);
+        CloseHandle(pi.hThread);
+
+        return result;
+    }
 
 std::string exec(const char* cmd) {
     char buffer[128];
@@ -89,7 +147,7 @@ addon_value ExecSync(addon_env env, addon_callback_info info)
     // Mac Code
     output = exec(name);
 #elif _WIN32
-    output = exec(name);
+    output = execWin(name);
 #else
 
 #endif
