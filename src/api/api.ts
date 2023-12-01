@@ -4,7 +4,6 @@ import * as premierepro from "./premierepro"; // BOLT-UXP_PREMIEREPRO_ONLY
 import * as illustrator from "./illustrator"; // BOLT-UXP_ILLUSTRATOR_ONLY
 
 const hostName = require("uxp").host.name.toLowerCase() as string;
-console.log("hostName", hostName);
 
 // prettier-ignore
 let host = {} as 

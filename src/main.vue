@@ -1,20 +1,33 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { ref } from "vue";
 import { uxp, indesign, photoshop } from "./globals";
-const { openExternal } = uxp.shell;
 import { api } from "./api/api";
 
 let count = ref(0);
 
-console.log("Welcome to Bolt UXP inside of: ", uxp.host.name);
+const hostName = (uxp.host.name as string).toLowerCase();
 
 //* Call Functions Conditionally by App
-if (uxp.host.name === "Photoshop") {
+// BOLT-UXP_PHOTOSHOP_START
+if (hostName === "photoshop") {
   console.log("Hello from Photoshop", photoshop);
 }
-if (uxp.host.name === "InDesign") {
+// BOLT-UXP_PHOTOSHOP_END
+// BOLT-UXP_INDESIGN_START
+if (hostName === "indesign") {
   console.log("Hello from InDesign", indesign);
 }
+// BOLT-UXP_INDESIGN_END
+// BOLT-UXP_PREMIEREPRO_START
+if (hostName === "premierepro") {
+  console.log("Hello from Premiere Pro", indesign);
+}
+// BOLT-UXP_PREMIEREPRO_END
+// BOLT-UXP_ILLUSTRATOR_START
+if (hostName === "illustrator") {
+  console.log("Hello from Illustrator", indesign);
+}
+// BOLT-UXP_ILLUSTRATOR_END
 
 //* Or call the unified API object directly and the correct app function will be used
 const helloWorld = () => {

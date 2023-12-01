@@ -6,17 +6,14 @@
   import svelteLogo from "./assets/svelte.png";
 
   import { uxp, indesign, photoshop } from "./globals";
-  const { openExternal } = uxp.shell;
   import { api } from "./api/api";
 
   let count: number = 0;
   const increment = () => (count += 1);
 
   const hostName = (uxp.host.name as string).toLowerCase();
-  console.log("Welcome to Bolt UXP inside of: ", hostName);
 
   //* Call Functions Conditionally by App
-
   // BOLT-UXP_PHOTOSHOP_START
   if (hostName === "photoshop") {
     console.log("Hello from Photoshop", photoshop);
