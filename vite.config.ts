@@ -1,15 +1,9 @@
 import { defineConfig } from "vite";
 import { runAction, uxp, uxpSetup } from "vite-uxp-plugin";
-// BOLT-UXP_SVELTE_START
-import { svelte } from "@sveltejs/vite-plugin-svelte";
-import { sveltePreprocess } from "svelte-preprocess/dist/autoProcess";
-// BOLT-UXP_SVELTE_END
-// BOLT-UXP_REACT_START
-import react from "@vitejs/plugin-react";
-// BOLT-UXP_REACT_END
-// BOLT-UXP_VUE_START
-import vue from "@vitejs/plugin-vue";
-// BOLT-UXP_VUE_END
+import { svelte } from "@sveltejs/vite-plugin-svelte"; // BOLT-UXP_SVELTE_ONLY
+import { sveltePreprocess } from "svelte-preprocess/dist/autoProcess"; // BOLT-UXP_SVELTE_ONLY
+import react from "@vitejs/plugin-react"; // BOLT-UXP_REACT_ONLY
+import vue from "@vitejs/plugin-vue"; // BOLT-UXP_VUE_ONLY
 
 import { config } from "./uxp.config";
 
@@ -27,20 +21,20 @@ const shouldNotEmptyDir =
 export default defineConfig({
   plugins: [
     uxp(config, mode),
-    // BOLT-UXP_REACT_START
-    react(),
-    // BOLT-UXP_REACT_END
-    // BOLT-UXP_VUE_START
-    vue(),
-    // BOLT-UXP_VUE_END
-    // BOLT-UXP_SVELTE_START
-    svelte({ preprocess: sveltePreprocess({ typescript: true }) }),
-    // BOLT-UXP_SVELTE_END
+    react(), // BOLT-UXP_REACT_ONLY
+    vue(), // BOLT-UXP_VUE_ONLY
+    svelte({ preprocess: sveltePreprocess({ typescript: true }) }), // BOLT-UXP_SVELTE_ONLY
   ],
   build: {
     emptyOutDir: !shouldNotEmptyDir,
     rollupOptions: {
-      external: ["uxp", "photoshop", "indesign"],
+      external: [
+        "uxp",
+        "photoshop", // BOLT-UXP_PHOTOSHOP_ONLY
+        "indesign", // BOLT-UXP_INDESIGN_ONLY
+        "premierepro", // BOLT-UXP_PREMIEREPRO_ONLY
+        "illustrator", // BOLT-UXP_ILLUSTRATOR_ONLY
+      ],
     },
   },
   publicDir: "public",

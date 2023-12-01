@@ -11,26 +11,30 @@ A lightning-fast boilerplate for building Adobe UXP Plugins in Svelte, React, or
 - Lightning Fast Hot Reloading on changes
 - Setup with TypeScript Definitions for UXP and Photoshop APIs
 - Easily configure in uxp.config.ts
-- Setup for single or multi-panel extensions
 - Comes with multi-host-app configuration
 - Optimized Build Size
+- Template for UXP Hybrid C++ Plugins
 - Easy Publish to CCX for Distribution
-- Easy Package to ZIP archive with sidecar assets (pending)
-- GitHub Actions ready-to-go for ZXP Releases
+- Easy Package to ZIP archive with sidecar assets
+- GitHub Actions ready-to-go for CCX Releases
 
 ## Prerequisites
 
 - [Node.js 18](https://nodejs.org/en/) or later
 - [Adobe UXP Developer Tool (aka UDT)](https://developer.adobe.com/photoshop/uxp/2022/guides/devtool/installation/)
-- [Yarn](https://classic.yarnpkg.com/lang/en/docs/install/) (ensure by running `yarn set version classic`)
+- [Yarn](https://classic.yarnpkg.com/lang/en/docs/install/) ( ensure by running `yarn set version classic` )
 
 ## Quickstart
 
-`yarn` - Install Dependencies
+`yarn create bolt-uxp` - Create new project
+
+`cd project` - Create new project
+
+`yarn` - Install Dependencies (if not already done by create command)
+
+`yarn build` - Build the plugin (must run before `yarn dev`, can also run after for panel to work statically without the process)
 
 `yarn dev` - Run the plugin in hot reload mode for development with UDT (see below)
-
-`yarn build` - Build the plugin
 
 `yarn ccx` - Build & Package the plugin as a CCX for delivery (separate CCX files for each host are generated due to
 current UXP requirements)
@@ -92,3 +96,9 @@ Currently there is no way to automate this process in UDT, but we have requested
 More info on Hybrid Plugins can be found here: https://developer.adobe.com/photoshop/uxp/2022/guides/hybrid-plugins/
 
 Currently, hybrid plugins are only supported in Photoshop.
+
+---
+
+---
+
+If you're interested in updating `bolt-uxp` core, please see the [./readme_dev.md](readme_dev.md)

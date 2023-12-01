@@ -28,18 +28,18 @@ const manifest: UXP_Manifest = {
       minVersion: "18.5",
     },
     // BOLT-UXP_INDESIGN_END
-    // BOLT-UXP_ILLUSTRATOR_START
-    {
-      app: "AI",
-      minVersion: "18.5",
-    },
-    // BOLT-UXP_ILLUSTRATOR_END
     // BOLT-UXP_PREMIEREPRO_START
     {
       app: "premierepro",
       minVersion: "22.3",
     },
     // BOLT-UXP_PREMIEREPRO_END
+    // BOLT-UXP_ILLUSTRATOR_START
+    {
+      app: "AI",
+      minVersion: "18.5",
+    },
+    // BOLT-UXP_ILLUSTRATOR_END
   ],
   entrypoints: [
     {
@@ -140,9 +140,8 @@ const manifest: UXP_Manifest = {
       enablePluginCommunication: true,
     },
     allowCodeGenerationFromStrings: true,
-    // BOLT-UXP_HYBRID_START
-    enableAddon: true,
-    // BOLT-UXP_HYBRID_END
+
+    enableAddon: true, // BOLT-UXP_HYBRID_ONLY
   },
   // BOLT-UXP_HYBRID_START
   addon: {

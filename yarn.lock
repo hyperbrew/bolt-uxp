@@ -1625,10 +1625,10 @@ util-deprecate@^1.0.1, util-deprecate@~1.0.1:
   resolved "https://registry.yarnpkg.com/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
   integrity sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==
 
-vite-uxp-plugin@^0.0.3:
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/vite-uxp-plugin/-/vite-uxp-plugin-0.0.3.tgz#086364b94c5d91aeee17c4bed095747e728f956b"
-  integrity sha512-DmHR0sryasht0NfXNP+VazMSvPDyJUh+mjOURKx3pzRSmow2SVSWGx14UqvFf8rGiIf/nhb3mNEEioGqtwiL3w==
+vite-uxp-plugin@^0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/vite-uxp-plugin/-/vite-uxp-plugin-0.0.5.tgz#9361d36439107b978e98194a2f8f647479134c72"
+  integrity sha512-WYzDc2Z1ypi5JPA+EkwmB6aOW/n9x11CR3nk2cl6kscO3Bu9W7Ska0pYz6JK0u4ildZlRLbvC+KIYfh3TW0RbA==
   dependencies:
     archiver "5.3.0"
     typescript "^5.2.2"

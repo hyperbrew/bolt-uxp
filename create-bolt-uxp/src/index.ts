@@ -14,7 +14,9 @@ import {
   confirm,
 } from "@clack/prompts";
 import { dash } from "radash";
-import { Opt, buildBoltUXP } from "./build";
+import { buildBoltUXP } from "./build";
+
+import { frameworkOptions, appOptions } from "./data";
 
 main();
 
@@ -24,19 +26,6 @@ const handleCancel = (value: unknown) => {
     return process.exit(0);
   }
 };
-
-export const frameworkOptions = [
-  { value: "svelte", label: "Svelte" },
-  { value: "react", label: "React" },
-  { value: "vue", label: "Vue" },
-];
-
-export const appOptions = [
-  { value: "photoshop", label: "Photoshop" },
-  { value: "indesign", label: "InDesign" },
-  { value: "illustrator", label: "Illustrator (Beta)" },
-  { value: "premierepro", label: "Premiere Pro (Beta)" },
-];
 
 async function main() {
   console.clear();
