@@ -22,7 +22,7 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@adobe/cc-ext-uxp-types": "^7.3.1",
+    "@adobe/cc-ext-uxp-types": "https://github.com/justintaylor-dev/cc-ext-uxp-types.git",
     "@sveltejs/vite-plugin-svelte": "^2.4.2",
     "@tsconfig/svelte": "^5.0.0",
     "@types/node": "^20.8.7",

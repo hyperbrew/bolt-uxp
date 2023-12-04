@@ -24,7 +24,7 @@
     "vue": "^3.2.45"
   },
   "devDependencies": {
-    "@adobe/cc-ext-uxp-types": "^7.3.1",
+    "@adobe/cc-ext-uxp-types": "https://github.com/justintaylor-dev/cc-ext-uxp-types.git",
     "@sveltejs/vite-plugin-svelte": "^2.4.2",
     "@types/node": "^20.8.7",
     "@types/photoshop": "^25.0.2",

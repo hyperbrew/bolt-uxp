@@ -25,7 +25,7 @@
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.2.0",
-    "@adobe/cc-ext-uxp-types": "^7.3.1",
+    "@adobe/cc-ext-uxp-types": "https://github.com/justintaylor-dev/cc-ext-uxp-types.git",
     "@types/node": "^20.8.7",
     "@types/photoshop": "^25.0.2",
     "@types/ws": "^8.5.8",
