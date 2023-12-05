@@ -2,10 +2,9 @@
 # yarn lockfile v1
 
 
-"@adobe/cc-ext-uxp-types@^7.3.1":
+"@adobe/cc-ext-uxp-types@https://github.com/justintaylor-dev/cc-ext-uxp-types.git":
   version "7.3.1"
-  resolved "https://registry.yarnpkg.com/@adobe/cc-ext-uxp-types/-/cc-ext-uxp-types-7.3.1.tgz#0fdbd42ca6bcd9fe660babae007c5c495af7a7b1"
-  integrity sha512-HLWYoqvDXOmVr9d7l4/hY7h+Ae6IJC1Rm8uIqUK28E8nlT36A23YUsAfnamh24LZC/Xkq5jsYNORW7wX44QEKg==
+  resolved "https://github.com/justintaylor-dev/cc-ext-uxp-types.git#13c8078061aaece0d662e8f63901bb6ef228125a"
 
 "@ampproject/remapping@^2.2.0", "@ampproject/remapping@^2.2.1":
   version "2.2.1"
@@ -1625,10 +1624,10 @@ util-deprecate@^1.0.1, util-deprecate@~1.0.1:
   resolved "https://registry.yarnpkg.com/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
   integrity sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==
 
-vite-uxp-plugin@^0.0.5:
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/vite-uxp-plugin/-/vite-uxp-plugin-0.0.5.tgz#9361d36439107b978e98194a2f8f647479134c72"
-  integrity sha512-WYzDc2Z1ypi5JPA+EkwmB6aOW/n9x11CR3nk2cl6kscO3Bu9W7Ska0pYz6JK0u4ildZlRLbvC+KIYfh3TW0RbA==
+vite-uxp-plugin@^0.0.7:
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/vite-uxp-plugin/-/vite-uxp-plugin-0.0.7.tgz#f678bbd8cd50f71b1dfe486ec63d2aeb4e418c1c"
+  integrity sha512-fF+Az7851RUQRlOWnFbrbHqPXrcP4Ac85lMnurBKcEWbB4Lt1vbNVgaA3QowUW/8N3s9LL/DA691wrq7oqRUKQ==
   dependencies:
     archiver "5.3.0"
     typescript "^5.2.2"

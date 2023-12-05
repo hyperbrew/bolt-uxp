@@ -11,6 +11,10 @@ export type UXP_PANEL = {
   label: {
     default: string;
   };
+  hostUIContext?: {
+    hideFromMenu?: boolean;
+    hideFromPluginsPanel?: boolean;
+  };
   minimumSize?: {
     width: number;
     height: number;
@@ -65,6 +69,10 @@ export type UXP_Manifest = {
       allow?: string;
       domains?: string[];
     };
+    ipc?: {
+      enablePluginCommunication?: boolean;
+    };
+    allowCodeGenerationFromStrings?: boolean;
     enableAddon?: boolean;
   };
   addon?: {
