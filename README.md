@@ -26,9 +26,9 @@ A lightning-fast boilerplate for building Adobe UXP Plugins in Svelte, React, or
 
 ## Quickstart
 
-`yarn create bolt-uxp` - Create new project
+`yarn create bolt-uxp` - Create your new Bolt UXP project (follow CLI prompts)
 
-`cd project` - Create new project
+`cd project` - Change directory to the new project
 
 `yarn` - Install Dependencies (if not already done by create command)
 
