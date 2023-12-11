@@ -48,7 +48,7 @@ const manifest: UXP_Manifest = {
       minimumSize: { width: 230, height: 200 },
       maximumSize: { width: 2000, height: 2000 },
       preferredDockedSize: { width: 230, height: 300 },
-      preferredFloatingSize: { width: 230, height: 300 },
+      preferredFloatingSize: { width: 450, height: 400 },
       icons: [
         {
           width: 23,

@@ -9,7 +9,7 @@ import { appOptions, frameworkOptions } from "./data";
 import { execAsync, posix } from "./utils";
 import { spinner, note } from "@clack/prompts";
 
-import { capitalize } from "radash";
+import { capitalize, replace } from "radash";
 
 type Args = {
   folder: string;
@@ -55,6 +55,23 @@ const allHTMLCommentsRegex =
 const htmlDisabledScriptTagRegexStart = /<!-- <script/g;
 const htmlDisabledScriptTagRegexEnd = /<\/script> -->.*/g;
 
+const replaceAll = (txt: string, variable: string, replace: string) => {
+  const rangeRegexJS = getJSRangeRegex(variable);
+  const onlyRegexJS = getJSOnlyRegex(variable);
+  const rangeRegexHTML = getHTMLRegex(variable);
+  const onlyRegexHTML = getHTMLRegex(variable);
+  const rangeRegexJSX = getJSXRegex(variable);
+
+  txt = txt
+    .replace(rangeRegexJS, replace)
+    .replace(onlyRegexJS, replace)
+    .replace(rangeRegexHTML, replace)
+    .replace(onlyRegexHTML, replace)
+    .replace(rangeRegexJSX, replace);
+
+  return txt;
+};
+
 const formatFile = async (
   txt: string,
   ext: string,
@@ -73,33 +90,38 @@ const formatFile = async (
   [...removeApps, ...removeFrameworks].map((app) => {
     const upper = app.toUpperCase();
 
-    const rangeRegex = getJSRangeRegex(upper);
-    const onlyRegex = getJSOnlyRegex(upper);
-    const rangeRegexHTML = getHTMLRegex(upper);
-    const onlyRegexHTML = getHTMLRegex(upper);
+    txt = replaceAll(txt, upper, "");
 
-    txt = txt
-      .replace(rangeRegex, "")
-      .replace(onlyRegex, "")
-      .replace(rangeRegexHTML, "")
-      .replace(onlyRegexHTML, "");
+    // const rangeRegex = getJSRangeRegex(upper);
+    // const onlyRegex = getJSOnlyRegex(upper);
+    // const rangeRegexHTML = getHTMLRegex(upper);
+    // const onlyRegexHTML = getHTMLRegex(upper);
+
+    // txt = txt
+    //   .replace(rangeRegex, "")
+    //   .replace(onlyRegex, "")
+    //   .replace(rangeRegexHTML, "")
+    //   .replace(onlyRegexHTML, "");
   });
   if (!enableHybrid) {
-    const rangeRegex = getJSRangeRegex("HYBRID");
-    const onlyRegex = getJSOnlyRegex("HYBRID");
-    txt = txt.replace(rangeRegex, "").replace(onlyRegex, "");
+    txt = replaceAll(txt, "HYBRID", "");
+    // const rangeRegex = getJSRangeRegex("HYBRID");
+    // const onlyRegex = getJSOnlyRegex("HYBRID");
+    // txt = txt.replace(rangeRegex, "").replace(onlyRegex, "");
   }
   if (!keepSampleCode) {
-    console.log("REMOVING SAMPLE CODE");
-    const rangeRegex = getJSRangeRegex("SAMPLECODE");
-    const onlyRegex = getJSOnlyRegex("SAMPLECODE");
-    txt = txt.replace(rangeRegex, "").replace(onlyRegex, "");
+    txt = replaceAll(txt, "SAMPLECODE", "");
 
-    const rangeRegexHtml = getHTMLRegex("SAMPLECODE");
-    txt = txt.replace(rangeRegexHtml, "");
+    // console.log("REMOVING SAMPLE CODE");
+    // const rangeRegex = getJSRangeRegex("SAMPLECODE");
+    // const onlyRegex = getJSOnlyRegex("SAMPLECODE");
+    // txt = txt.replace(rangeRegex, "").replace(onlyRegex, "");
 
-    const rangeRegexJSX = getJSXRegex("SAMPLECODE");
-    txt = txt.replace(rangeRegexJSX, "");
+    // const rangeRegexHtml = getHTMLRegex("SAMPLECODE");
+    // txt = txt.replace(rangeRegexHtml, "");
+
+    // const rangeRegexJSX = getJSXRegex("SAMPLECODE");
+    // txt = txt.replace(rangeRegexJSX, "");
   }
   // cleanup
   txt = txt.replace(allCommentsRegex, "");
