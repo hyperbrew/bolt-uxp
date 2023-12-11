@@ -1,6 +1,6 @@
 {
   "name": "create-bolt-uxp",
-  "version": "0.0.17",
+  "version": "0.1.0",
   "license": "MIT",
   "bin": {
     "create-bolt-uxp": "dist/index.js"
@@ -28,7 +28,7 @@
   "dependencies": {
     "@clack/prompts": "^0.7.0",
     "@types/prettier": "^3.0.0",
-    "bolt-uxp": "^0.0.7",
+    "bolt-uxp": "^0.1.0",
     "execa": "^5.1.1",
     "fast-glob": "^3.3.2",
     "fs-extra": "^10.0.1",
