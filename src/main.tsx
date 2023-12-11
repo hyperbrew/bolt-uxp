@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 
+// BOLT-UXP_SAMPLECODE_START
 import boltUxpLogo from "./assets/bolt-uxp.png";
 import viteLogo from "./assets/vite.png";
 import tsLogo from "./assets/typescript.png";
@@ -8,8 +9,10 @@ import reactLogo from "./assets/react.png";
 
 import { uxp, indesign, photoshop } from "./globals";
 import { api } from "./api/api";
+// BOLT-UXP_SAMPLECODE_END
 
 export const App = () => {
+  // BOLT-UXP_SAMPLECODE_START
   const [count, setCount] = useState(0);
   const increment = () => setCount(count + 1);
 
@@ -52,36 +55,48 @@ export const App = () => {
       console.log("Execute as testMyFunction command failed", err);
     }
   };
+  // BOLT-UXP_SAMPLECODE_END
   return (
-    <main>
-      <div>
-        <img className="logo-lg" src={boltUxpLogo} alt="" />
-      </div>
-      <div className="stack-icons">
-        <img src={viteLogo} className="logo" alt="" />
-        <span> + </span>
-        <img src={reactLogo} className="logo" alt="" />
-        <span> + </span>
-        <img src={tsLogo} className="logo" alt="" />
-        <span> + </span>
-        <img src={sassLogo} className="logo" alt="" />
-      </div>
-      <div className="button-group">
-        <button onClick={increment}>count is {count}</button>
-        <button onClick={helloWorld}>Hello World</button>
-        <button onClick={hybridTest}>Hybrid</button>
-      </div>
-      <div>
-        <p>
-          Edit <span className="code">main.svelte</span> and save to test HMR
-          updates.
-        </p>
-      </div>
-      <div className="button-group">
-        <a href="https://github.com/hyperbrew/bolt-uxp/">Bolt UXP Docs</a>
-        <a href="https://svelte.dev">Svelte Docs</a>
-        <a href="https://vitejs.dev/">Vite Docs</a>
-      </div>
-    </main>
+    <>
+      <main>
+        {/* BOLT-UXP_SAMPLECODE_START */}
+        <div>
+          <img className="logo-lg" src={boltUxpLogo} alt="" />
+        </div>
+        <div className="stack-icons">
+          <img src={viteLogo} className="logo" alt="" />
+          <span> + </span>
+          <img src={reactLogo} className="logo" alt="" />
+          <span> + </span>
+          <img src={tsLogo} className="logo" alt="" />
+          <span> + </span>
+          <img src={sassLogo} className="logo" alt="" />
+        </div>
+        <div className="button-group">
+          <button onClick={increment}>count is {count}</button>
+          <button onClick={helloWorld}>Hello World</button>
+          <button onClick={hybridTest}>Hybrid</button>
+        </div>
+        <div>
+          <p>
+            Edit <span className="code">main.svelte</span> and save to test HMR
+            updates.
+          </p>
+        </div>
+        <div className="button-group">
+          <a href="https://github.com/hyperbrew/bolt-uxp/">Bolt UXP Docs</a>
+          <a href="https://svelte.dev">Svelte Docs</a>
+          <a href="https://vitejs.dev/">Vite Docs</a>
+        </div>
+        {/* BOLT-UXP_SAMPLECODE_END */}
+      </main>
+      {/* BOLT-UXP_SAMPLECODE_START */}
+      {/* Example of a secondary panel entrypoint */}
+      {/* <uxp-panel panelid="bolt.uxp.plugin.settings">
+        <h1>Settings Panel</h1>
+        <p>count is: {{ count }}</p>
+      </uxp-panel> */}
+      {/* BOLT-UXP_SAMPLECODE_END */}
+    </>
   );
 };

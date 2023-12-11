@@ -1,12 +1,12 @@
 <script lang="ts">
+  // BOLT-UXP_SAMPLECODE_START
+  import { uxp, indesign, photoshop } from "./globals";
+  import { api } from "./api/api";
   import boltUxpLogo from "./assets/bolt-uxp.png";
   import viteLogo from "./assets/vite.png";
   import tsLogo from "./assets/typescript.png";
   import sassLogo from "./assets/sass.png";
   import svelteLogo from "./assets/svelte.png";
-
-  import { uxp, indesign, photoshop } from "./globals";
-  import { api } from "./api/api";
 
   let count: number = 0;
   const increment = () => (count += 1);
@@ -50,9 +50,11 @@
       console.log("Execute as testMyFunction command failed", err);
     }
   };
+  // BOLT-UXP_SAMPLECODE_END
 </script>
 
 <main>
+  <!-- BOLT-UXP_SAMPLECODE_START -->
   <div>
     <img class="logo-lg" src={boltUxpLogo} alt="" />
   </div>
@@ -82,12 +84,15 @@
     <a href="https://svelte.dev">Svelte Docs</a>
     <a href="https://vitejs.dev/">Vite Docs</a>
   </div>
+  <!-- BOLT-UXP_SAMPLECODE_END -->
 </main>
 
+<!-- BOLT-UXP_SAMPLECODE_START -->
 <!-- Example of a secondary panel entrypoint -->
 <!-- <uxp-panel panelid="bolt.uxp.plugin.settings">
   <h1>Settings Panel</h1><p>count is: {count}</p>
 </uxp-panel> -->
+<!-- BOLT-UXP_SAMPLECODE_END -->
 
 <style lang="scss">
   @import "./variables.scss";

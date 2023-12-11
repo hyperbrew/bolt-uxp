@@ -17,9 +17,6 @@ const manifest: UXP_Manifest = {
     {
       app: "PS",
       minVersion: "24.2.0",
-      data: {
-        apiVersion: 2,
-      },
     },
     // BOLT-UXP_PHOTOSHOP_END
     // BOLT-UXP_INDESIGN_START
@@ -72,6 +69,8 @@ const manifest: UXP_Manifest = {
       ],
     },
 
+    // BOLT-UXP_SAMPLECODE_START
+
     // * Example of a UXP Secondary panel
     // * Must also enable the <uxp-panel panelid="bolt.uxp.plugin.settings">
     //* tag in your entrypoint (.tsx, .vue, or .svelte) file
@@ -113,6 +112,8 @@ const manifest: UXP_Manifest = {
     //     default: "Bolt UXP Command",
     //   },
     // },
+
+    // BOLT-UXP_SAMPLECODE_END
   ],
   requiredPermissions: {
     localFileSystem: "fullAccess",
@@ -122,12 +123,14 @@ const manifest: UXP_Manifest = {
     },
     network: {
       domains: [
+        // BOLT-UXP_SAMPLECODE_START
         "https://hyperbrew.co",
         "https://github.com",
         "https://vitejs.dev",
         "https://svelte.dev",
         "https://reactjs.org",
         "https://vuejs.org/",
+        // BOLT-UXP_SAMPLECODE_END
         `ws://localhost:${extraPrefs.hotReloadPort}`, // Required for hot reload
       ],
     },
@@ -150,11 +153,11 @@ const manifest: UXP_Manifest = {
   // BOLT-UXP_HYBRID_END
   icons: [
     {
-      width: 48,
-      height: 48,
+      width: 24,
+      height: 24,
       path: "icons/plugin.png",
       scale: [1, 2],
-      theme: ["darkest", "dark", "medium", "lightest", "light", "all"],
+      theme: ["all"],
       species: ["pluginList"],
     },
   ],

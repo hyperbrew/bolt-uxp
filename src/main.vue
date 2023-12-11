@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// BOLT-UXP_SAMPLECODE_START
 import { ref } from "vue";
 import { uxp, indesign, photoshop } from "./globals";
 import { api } from "./api/api";
@@ -44,10 +45,12 @@ const hybridTest = async () => {
     console.log("Execute as testMyFunction command failed", err);
   }
 };
+// BOLT-UXP_SAMPLECODE_END
 </script>
 
 <template>
   <main>
+    <!-- BOLT-UXP_SAMPLECODE_START -->
     <div>
       <img class="logo-lg" src="./assets/bolt-uxp.png" alt="" />
     </div>
@@ -75,12 +78,15 @@ const hybridTest = async () => {
       <a href="https://v3.vuejs.org/">Vue Docs</a>
       <!-- <a href="https://vitejs.dev">Vite Docs</a> -->
     </div>
+    <!-- BOLT-UXP_SAMPLECODE_END -->
   </main>
 
+  <!-- BOLT-UXP_SAMPLECODE_START -->
   <!-- Example of a secondary panel entrypoint -->
   <!-- <uxp-panel panelid="bolt.uxp.plugin.settings">
   <h1>Settings Panel</h1><p>count is: {{count}}</p>
 </uxp-panel> -->
+  <!-- BOLT-UXP_SAMPLECODE_END -->
 </template>
 
 <style lang="scss">

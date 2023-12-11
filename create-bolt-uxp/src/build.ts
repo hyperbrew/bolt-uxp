@@ -18,6 +18,7 @@ type Args = {
   framework: string;
   apps: string[];
   enableHybrid: boolean;
+  keepSampleCode: boolean;
   installDeps: boolean;
   pretty?: boolean;
 };
@@ -33,6 +34,15 @@ const getJSOnlyRegex = (variable: string) =>
   new RegExp(`^.*\/\/ BOLT-UXP_${variable}_ONLY.*(\n|\r\n)?`, "gm");
 
 const allCommentsRegex = /\/\/ BOLT-UXP_.*_(START|END|ONLY).*(\n|\r\n)?/gm;
+
+const getJSXRegex = (variable: string) =>
+  new RegExp(
+    `\\{\\/\\* BOLT-UXP_${variable}_START \\*\\/\\}([\\s\\S]*?)\\{\\/\\* BOLT-UXP_${variable}_END \\*\\/\\}.*`,
+    "gm"
+  );
+
+const allJSXCommentsRegex =
+  /\{\/\* BOLT-UXP_.*_(START|END|ONLY) \*\/\}.*(\n|\r\n)?/gm;
 
 const getHTMLRegex = (variable: string) =>
   new RegExp(
@@ -50,10 +60,12 @@ const formatFile = async (
   ext: string,
   {
     enableHybrid,
+    keepSampleCode,
     removeApps,
     removeFrameworks,
   }: {
     enableHybrid: boolean;
+    keepSampleCode: boolean;
     removeApps: string[];
     removeFrameworks: string[];
   }
@@ -77,9 +89,22 @@ const formatFile = async (
     const onlyRegex = getJSOnlyRegex("HYBRID");
     txt = txt.replace(rangeRegex, "").replace(onlyRegex, "");
   }
+  if (!keepSampleCode) {
+    console.log("REMOVING SAMPLE CODE");
+    const rangeRegex = getJSRangeRegex("SAMPLECODE");
+    const onlyRegex = getJSOnlyRegex("SAMPLECODE");
+    txt = txt.replace(rangeRegex, "").replace(onlyRegex, "");
+
+    const rangeRegexHtml = getHTMLRegex("SAMPLECODE");
+    txt = txt.replace(rangeRegexHtml, "");
+
+    const rangeRegexJSX = getJSXRegex("SAMPLECODE");
+    txt = txt.replace(rangeRegexJSX, "");
+  }
   // cleanup
   txt = txt.replace(allCommentsRegex, "");
   txt = txt.replace(allHTMLCommentsRegex, "");
+  txt = txt.replace(allJSXCommentsRegex, "");
   if (ext === ".html") {
     txt = txt.replace("<!-- Uncomment to debug the desired template -->", "");
     // txt = txt.replace(multiBlankLineRegex, "\n");
@@ -161,6 +186,7 @@ export const buildBoltUXP = async (args: Args) => {
 
       const newTxt = await formatFile(txt, ext, {
         enableHybrid: args.enableHybrid,
+        keepSampleCode: args.keepSampleCode,
         removeApps,
         removeFrameworks,
       });

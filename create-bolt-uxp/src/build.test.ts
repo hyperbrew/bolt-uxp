@@ -9,6 +9,7 @@ describe("create-bolt-uxp", () => {
       framework: "svelte",
       apps: ["photoshop"],
       enableHybrid: false,
+      keepSampleCode: true,
       installDeps: false,
       pretty: false,
     });
@@ -21,6 +22,7 @@ describe("create-bolt-uxp", () => {
       framework: "vue",
       apps: ["photoshop"],
       enableHybrid: true,
+      keepSampleCode: true,
       installDeps: false,
       pretty: false,
     });
@@ -33,6 +35,7 @@ describe("create-bolt-uxp", () => {
       framework: "react",
       apps: ["photoshop"],
       enableHybrid: true,
+      keepSampleCode: true,
       installDeps: false,
       pretty: false,
     });

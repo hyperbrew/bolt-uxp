@@ -74,6 +74,11 @@ async function main() {
     initialValue: true,
   });
   handleCancel(enableHybrid);
+  const keepSampleCode = await confirm({
+    message: `Do you want to keep sample code and buttons?`,
+    initialValue: true,
+  });
+  handleCancel(keepSampleCode);
   const recommended = color.gray("(recommended)");
   const installDeps = await confirm({
     message: `Do you want to install dependencies? ${recommended}`,
@@ -88,7 +93,8 @@ async function main() {
     typeof framework !== "symbol" &&
     typeof apps !== "symbol" &&
     typeof installDeps !== "symbol" &&
-    typeof enableHybrid !== "symbol"
+    typeof enableHybrid !== "symbol" &&
+    typeof keepSampleCode !== "symbol"
   ) {
     //@ts-ignore
     buildBoltUXP({
@@ -98,6 +104,7 @@ async function main() {
       framework: framework as string,
       apps: apps as string[],
       enableHybrid,
+      keepSampleCode,
       installDeps,
     });
   }
