@@ -21,6 +21,7 @@ type Args = {
   keepSampleCode: boolean;
   installDeps: boolean;
   pretty?: boolean;
+  verbose?: boolean;
 };
 
 const multiBlankLineRegex = /(\r?\n\s*){1,}/g;
@@ -189,7 +190,8 @@ export const buildBoltUXP = async (args: Args) => {
 
       // wite file if changed
       if (newTxt !== txt) {
-        console.log(`UPDATING CHANGED: ${color.green(color.bold(fileName))}`);
+        args.verbose &&
+          console.log(`UPDATING CHANGED: ${color.green(color.bold(fileName))}`);
         fs.writeFileSync(dest, newTxt, "utf8");
       }
     }
