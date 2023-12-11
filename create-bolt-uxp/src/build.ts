@@ -89,39 +89,13 @@ const formatFile = async (
 ) => {
   [...removeApps, ...removeFrameworks].map((app) => {
     const upper = app.toUpperCase();
-
     txt = replaceAll(txt, upper, "");
-
-    // const rangeRegex = getJSRangeRegex(upper);
-    // const onlyRegex = getJSOnlyRegex(upper);
-    // const rangeRegexHTML = getHTMLRegex(upper);
-    // const onlyRegexHTML = getHTMLRegex(upper);
-
-    // txt = txt
-    //   .replace(rangeRegex, "")
-    //   .replace(onlyRegex, "")
-    //   .replace(rangeRegexHTML, "")
-    //   .replace(onlyRegexHTML, "");
   });
   if (!enableHybrid) {
     txt = replaceAll(txt, "HYBRID", "");
-    // const rangeRegex = getJSRangeRegex("HYBRID");
-    // const onlyRegex = getJSOnlyRegex("HYBRID");
-    // txt = txt.replace(rangeRegex, "").replace(onlyRegex, "");
   }
   if (!keepSampleCode) {
     txt = replaceAll(txt, "SAMPLECODE", "");
-
-    // console.log("REMOVING SAMPLE CODE");
-    // const rangeRegex = getJSRangeRegex("SAMPLECODE");
-    // const onlyRegex = getJSOnlyRegex("SAMPLECODE");
-    // txt = txt.replace(rangeRegex, "").replace(onlyRegex, "");
-
-    // const rangeRegexHtml = getHTMLRegex("SAMPLECODE");
-    // txt = txt.replace(rangeRegexHtml, "");
-
-    // const rangeRegexJSX = getJSXRegex("SAMPLECODE");
-    // txt = txt.replace(rangeRegexJSX, "");
   }
   // cleanup
   txt = txt.replace(allCommentsRegex, "");
