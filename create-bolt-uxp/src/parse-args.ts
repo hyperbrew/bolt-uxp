@@ -106,6 +106,8 @@ export async function parseArgs(): Promise<Args> {
 
   const folder = argv["_"][0] ? String(argv["_"][0]) : "";
 
+  console.log("argv len", argv._.length);
+
   if (argv._.length === 0) {
     console.log("no params");
     return {
@@ -114,9 +116,9 @@ export async function parseArgs(): Promise<Args> {
       id: "",
       framework: "",
       apps: [],
-      enableHybrid: undefined,
-      keepSampleCode: undefined,
-      installDeps: undefined,
+      enableHybrid: argv.hybrid || undefined,
+      keepSampleCode: argv.sampleCode || undefined,
+      installDeps: argv.installDependencies || undefined,
     };
   }
 
