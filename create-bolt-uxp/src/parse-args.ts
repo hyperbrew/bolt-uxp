@@ -95,8 +95,12 @@ export async function parseArgs(): Promise<Args> {
       return true;
     })
     .example([
-      ["$0 <appname> -t skeleton -a aeft ilst -i", ""],
-      ["$0 <appname> -f svelte", ""],
+      [
+        'create bolt-uxp <folder> -f svelte -a "photoshop" -i test.my.panel -n "Test"',
+        "",
+      ],
+      ['create bolt-uxp <folder> -f react -a "photoshop,indesign"', ""],
+      ["create bolt-uxp <folder>", ""],
     ])
     .help().argv;
 
