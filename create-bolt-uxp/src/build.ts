@@ -11,15 +11,15 @@ import { spinner, note } from "@clack/prompts";
 
 import { capitalize, replace } from "radash";
 
-type Args = {
+export type Args = {
   folder: string;
   displayName: string;
   id: string;
   framework: string;
   apps: string[];
-  enableHybrid: boolean;
-  keepSampleCode: boolean;
-  installDeps: boolean;
+  enableHybrid: boolean | undefined;
+  keepSampleCode: boolean | undefined;
+  installDeps: boolean | undefined;
   pretty?: boolean;
   verbose?: boolean;
 };
@@ -182,8 +182,8 @@ export const buildBoltUXP = async (args: Args) => {
       const ext = path.extname(dest);
 
       const newTxt = await formatFile(txt, ext, {
-        enableHybrid: args.enableHybrid,
-        keepSampleCode: args.keepSampleCode,
+        enableHybrid: args.enableHybrid || false,
+        keepSampleCode: args.keepSampleCode || false,
         removeApps,
         removeFrameworks,
       });
@@ -235,11 +235,13 @@ export const buildBoltUXP = async (args: Args) => {
 
   note(
     [
-      `panel      ${args.displayName}`,
-      `id         ${args.id}`,
-      `framework  ${args.framework}`,
-      `apps       ${args.apps}`,
-      `hybrid     ${args.enableHybrid}`,
+      `display name   ${args.displayName}`,
+      `id             ${args.id}`,
+      `framework      ${args.framework}`,
+      `apps           ${args.apps}`,
+      `hybrid         ${args.enableHybrid}`,
+      `sample code    ${args.keepSampleCode}`,
+      `deps           ${args.installDeps}`,
     ].join("\n"),
     "Inputs"
   );

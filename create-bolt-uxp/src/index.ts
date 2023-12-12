@@ -18,6 +18,8 @@ import { buildBoltUXP } from "./build";
 
 import { frameworkOptions, appOptions } from "./data";
 
+import { parseArgs } from "./parse-args";
+
 main();
 
 const handleCancel = (value: unknown) => {
@@ -30,79 +32,110 @@ const handleCancel = (value: unknown) => {
 async function main() {
   console.clear();
   boltIntro();
+  const args = await parseArgs();
 
-  const folder = await text({
-    message: "Where do you want to create your project?",
-    // placeholder: 'Not sure',
-    initialValue: "./",
-    validate(value) {
-      if (value.length < 3) return `Value is required!`;
-    },
-  });
-  handleCancel(folder);
-  const displayName = await text({
-    message: "Choose a unique Display Name for your plugin:",
-    // placeholder: 'Not sure',
-    initialValue: "Bolt UXP",
-    validate(value) {
-      if (value.length === 0) return `Value is required!`;
-    },
-  });
-  handleCancel(displayName);
-  const id = await text({
-    message: "Choose a unique ID for your plugin:",
-    // placeholder: 'Not sure',
-    initialValue: `${dash(displayName.toString()).replace(/\-/g, ".")}.plugin`,
-    validate(value) {
-      if (value.length === 0) return `Value is required!`;
-    },
-  });
-  handleCancel(id);
-  const framework = await select({
-    message: "Select framework:",
-    options: frameworkOptions,
-  });
-  handleCancel(framework);
-  const apps = await multiselect({
-    message: "Select app:",
-    options: appOptions,
-    required: true,
-  });
-  handleCancel(apps);
-  const enableHybrid = await confirm({
-    message: `Do you want to include UXP Hybrid Plugin (C++) files?`,
-    initialValue: true,
-  });
-  handleCancel(enableHybrid);
-  const keepSampleCode = await confirm({
-    message: `Do you want to keep sample code and buttons?`,
-    initialValue: true,
-  });
-  handleCancel(keepSampleCode);
-  const recommended = color.gray("(recommended)");
-  const installDeps = await confirm({
-    message: `Do you want to install dependencies? ${recommended}`,
-    initialValue: true,
-  });
-  handleCancel(installDeps);
+  let {
+    folder,
+    displayName,
+    id,
+    framework,
+    apps,
+    enableHybrid,
+    keepSampleCode,
+    installDeps,
+  } = args;
+
+  if (folder.length === 0) {
+    folder = (await text({
+      message: "Where do you want to create your project?",
+      // placeholder: 'Not sure',
+      initialValue: "./",
+      validate(value) {
+        if (value.length < 3) return `Value is required!`;
+      },
+    })) as string;
+    handleCancel(folder);
+  }
+  if (displayName.length === 0) {
+    displayName = (await text({
+      message: "Choose a unique Display Name for your plugin:",
+      // placeholder: 'Not sure',
+      initialValue: "Bolt UXP",
+      validate(value) {
+        if (value.length === 0) return `Value is required!`;
+      },
+    })) as string;
+    handleCancel(displayName);
+  }
+  if (id.length === 0) {
+    id = (await text({
+      message: "Choose a unique ID for your plugin:",
+      // placeholder: 'Not sure',
+      initialValue: `${dash(displayName.toString()).replace(
+        /\-/g,
+        "."
+      )}.plugin`,
+      validate(value) {
+        if (value.length === 0) return `Value is required!`;
+      },
+    })) as string;
+    handleCancel(id);
+  }
+  if (framework.length === 0) {
+    framework = (await select({
+      message: "Select framework:",
+      options: frameworkOptions,
+    })) as string;
+    handleCancel(framework);
+  }
+  if (apps.length === 0) {
+    apps = (await multiselect({
+      message: "Select app:",
+      options: appOptions,
+      required: true,
+    })) as string[];
+    handleCancel(apps);
+  }
+  if (typeof enableHybrid !== "boolean") {
+    enableHybrid = (await confirm({
+      message: `Do you want to include UXP Hybrid Plugin (C++) files?`,
+      initialValue: true,
+    })) as boolean;
+    handleCancel(enableHybrid);
+  }
+  if (typeof keepSampleCode !== "boolean") {
+    keepSampleCode = (await confirm({
+      message: `Do you want to keep sample code and buttons?`,
+      initialValue: true,
+    })) as boolean;
+    handleCancel(keepSampleCode);
+  }
+  if (typeof installDeps !== "boolean") {
+    installDeps = (await confirm({
+      message: `Do you want to install dependencies? ${color.gray(
+        "(recommended)"
+      )}`,
+      initialValue: true,
+    })) as boolean;
+    handleCancel(installDeps);
+  }
 
   if (
-    typeof folder !== "symbol" &&
-    typeof displayName !== "symbol" &&
-    typeof id !== "symbol" &&
-    typeof framework !== "symbol" &&
-    typeof apps !== "symbol" &&
-    typeof installDeps !== "symbol" &&
-    typeof enableHybrid !== "symbol" &&
-    typeof keepSampleCode !== "symbol"
+    typeof folder === "string" &&
+    typeof displayName === "string" &&
+    typeof id === "string" &&
+    typeof framework === "string" &&
+    Array.isArray(apps) &&
+    typeof installDeps === "boolean" &&
+    typeof enableHybrid === "boolean" &&
+    typeof keepSampleCode === "boolean"
   ) {
-    //@ts-ignore
     buildBoltUXP({
       folder,
       displayName,
       id,
-      framework: framework as string,
-      apps: apps as string[],
+      framework,
+      apps,
       enableHybrid,
       keepSampleCode,
       installDeps,

@@ -21,6 +21,7 @@ export const frameworkOptions: Opt[] = [
     files: ["src/index-vue.ts", "src/main.vue", "package.vue.json"],
   },
 ];
+export const frameworkValues = frameworkOptions.map((f) => f.value);
 
 export const appOptions: Opt[] = [
   { value: "photoshop", label: "Photoshop", files: ["src/api/photoshop.ts"] },
@@ -36,3 +37,5 @@ export const appOptions: Opt[] = [
     files: ["src/api/premierepro.ts"],
   },
 ];
+
+export const appValues = appOptions.map((f) => f.value);
