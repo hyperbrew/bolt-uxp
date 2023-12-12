@@ -14,13 +14,11 @@ import {
   confirm,
 } from "@clack/prompts";
 import { dash } from "radash";
-import { buildBoltUXP } from "./build";
+import { Args, OptionalArgs, buildBoltUXP } from "./build";
 
 import { frameworkOptions, appOptions } from "./data";
 
 import { parseArgs } from "./parse-args";
-
-main();
 
 const handleCancel = (value: unknown) => {
   if (isCancel(value)) {
@@ -29,21 +27,30 @@ const handleCancel = (value: unknown) => {
   }
 };
 
-async function main() {
+export const main = async (params: OptionalArgs) => {
   console.clear();
   boltIntro();
   const args = await parseArgs();
 
-  let {
-    folder,
-    displayName,
-    id,
-    framework,
-    apps,
-    enableHybrid,
-    keepSampleCode,
-    installDeps,
-  } = args;
+  let folder = params.folder ?? args.folder;
+  let displayName = params.displayName ?? args.displayName;
+  let id = params.id ?? args.id;
+  let framework = params.framework ?? args.framework;
+  let apps = params.apps ?? args.apps;
+  let enableHybrid = params.enableHybrid ?? args.enableHybrid;
+  let keepSampleCode = params.keepSampleCode ?? args.keepSampleCode;
+  let installDeps = params.installDeps ?? args.installDeps;
+
+  // let {
+  //   folder,
+  //   displayName,
+  //   id,
+  //   framework,
+  //   apps,
+  //   enableHybrid,
+  //   keepSampleCode,
+  //   installDeps,
+  // } = args;
 
   if (folder.length === 0) {
     folder = (await text({
@@ -130,7 +137,7 @@ async function main() {
     typeof enableHybrid === "boolean" &&
     typeof keepSampleCode === "boolean"
   ) {
-    buildBoltUXP({
+    const fullPath = await buildBoltUXP({
       folder,
       displayName,
       id,
@@ -140,8 +147,20 @@ async function main() {
       keepSampleCode,
       installDeps,
     });
+
+    return {
+      folder,
+      displayName,
+      id,
+      framework,
+      apps,
+      enableHybrid,
+      keepSampleCode,
+      installDeps,
+      fullPath,
+    };
   }
-}
+};
 
 function boltIntro() {
   console.log();
@@ -149,4 +168,9 @@ function boltIntro() {
   const url = color.underline("https://hyperbrew.co");
   const bru = color.gray("│   ") + color.cyan(`by Hyper Brew | ${url}`);
   intro(`${cbc} \n${bru}`);
+}
+
+// if not using as a module, run immediately
+if (!process.env.BOLTUXP_MODULEONLY) {
+  main({});
 }

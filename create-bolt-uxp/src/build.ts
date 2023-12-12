@@ -24,6 +24,19 @@ export type Args = {
   verbose?: boolean;
 };
 
+export type OptionalArgs = {
+  folder?: string;
+  displayName?: string;
+  id?: string;
+  framework?: string;
+  apps?: string[];
+  enableHybrid?: boolean;
+  keepSampleCode?: boolean;
+  installDeps?: boolean;
+  pretty?: boolean;
+  verbose?: boolean;
+};
+
 const multiBlankLineRegex = /(\r?\n\s*){1,}/g;
 
 const getJSRangeRegex = (variable: string) =>
@@ -261,4 +274,5 @@ export const buildBoltUXP = async (args: Args) => {
   }
 
   note(summary.join("\n"), "Summary");
+  return fullPath;
 };
