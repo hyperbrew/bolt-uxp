@@ -29,11 +29,17 @@ export default defineConfig({
     emptyOutDir: !shouldNotEmptyDir,
     rollupOptions: {
       external: [
-        "uxp",
         "photoshop", // BOLT-UXP_PHOTOSHOP_ONLY
         "indesign", // BOLT-UXP_INDESIGN_ONLY
         "premierepro", // BOLT-UXP_PREMIEREPRO_ONLY
         "illustrator", // BOLT-UXP_ILLUSTRATOR_ONLY
+        "bolt-uxp-hybrid.uxpaddon", // BOLT-UXP_HYBRID_ONLY
+        "uxp",
+        "fs",
+        "os",
+        "path",
+        "process",
+        "shell",
       ],
       output: {
         format: "cjs",

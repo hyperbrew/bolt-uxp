@@ -1037,10 +1037,10 @@ balanced-match@^1.0.0:
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.2.tgz#e83e3a7e3f300b34cb9d87f615fa0cbf357690ee"
   integrity sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==
 
-bolt-uxp@^0.1.5:
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/bolt-uxp/-/bolt-uxp-0.1.5.tgz#967b4288f99bc912c8d07c539ed7fde2537572b9"
-  integrity sha512-YWeYhVrbDyDjN3iMol6kARw7xVOpTN6yQAhXNgJGE49Xy/DB2lsy2KF0UVLDkWHIDIPfqGitJkFU2a0GNEUK0Q==
+bolt-uxp@^0.1.6:
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/bolt-uxp/-/bolt-uxp-0.1.6.tgz#ba9c40b009d422fa34e5d33d1fcb34d5a55a493b"
+  integrity sha512-nL0VsRc04gnHmxVHn7NttelmI6dNSbHWMMQRE+4p8k3hz2MgWLTALifE/fJ/T4DKjE4WHIzHMYfJXYB3fRTE7g==
   dependencies:
     "@vitejs/plugin-react" "^4.2.0"
     "@vitejs/plugin-vue" "^4.5.0"
