@@ -35,6 +35,9 @@ export default defineConfig({
         "premierepro", // BOLT-UXP_PREMIEREPRO_ONLY
         "illustrator", // BOLT-UXP_ILLUSTRATOR_ONLY
       ],
+      output: {
+        format: "cjs",
+      },
     },
   },
   publicDir: "public",
