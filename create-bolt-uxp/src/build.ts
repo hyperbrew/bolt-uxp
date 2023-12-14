@@ -234,8 +234,9 @@ export const buildBoltUXP = async (args: Args) => {
   uxpConfigData = uxpConfigData
     // update name
     .replace(/name: \".*\",/, `name: "${args.displayName}",`)
-    // update id
-    .replace(/id: \".*\",/, `id: "${args.id}",`);
+    .replace(/default: \".*\",/, `default: "${args.displayName}",`)
+    // update ids
+    .replace(/bolt\.uxp\.plugin/g, args.id);
   fs.writeFileSync(uxpConfig, uxpConfigData, "utf8");
 
   // * Dependencies

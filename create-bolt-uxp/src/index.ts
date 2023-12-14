@@ -122,7 +122,7 @@ export const main = async (params: OptionalArgs) => {
       message: `Do you want to install dependencies? ${color.gray(
         "(recommended)"
       )}`,
-      initialValue: true,
+      initialValue: false,
     })) as boolean;
     handleCancel(installDeps);
   }
