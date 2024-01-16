@@ -3,6 +3,8 @@ declare module "*.gif";
 declare module "*.jpg";
 declare module "*.svg";
 
+// import http from "http";
+
 export const uxp = require("uxp") as typeof import("uxp");
 const hostName = uxp.host.name;
 
