@@ -14,7 +14,7 @@ import { api } from "./api/api";
 export const App = () => {
   // BOLT-UXP_SAMPLECODE_START
   const [count, setCount] = useState(0);
-  const increment = () => setCount(count + 1);
+  const increment = () => setCount((prev) => prev + 1);
 
   const hostName = (uxp.host.name as string).toLowerCase();
 
