@@ -28,7 +28,7 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "^4.2.0",
+    "@vitejs/plugin-react": "^4.2.1",
     "@adobe/cc-ext-uxp-types": "https://github.com/justintaylor-dev/cc-ext-uxp-types.git",
     "@types/node": "^20.8.7",
     "@types/photoshop": "^25.0.2",
@@ -36,7 +36,7 @@
     "cross-env": "^7.0.3",
     "sass": "^1.69.5",
     "typescript": "^5.0.2",
-    "vite": "^4.4.5",
+    "vite": "^5.1.1",
     "ws": "^8.14.2",
     "@types/react": "^18.0.24",
     "@types/react-dom": "^18.0.8",

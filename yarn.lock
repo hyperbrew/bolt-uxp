@@ -4,7 +4,7 @@
 
 "@adobe/cc-ext-uxp-types@https://github.com/justintaylor-dev/cc-ext-uxp-types.git":
   version "7.3.1"
-  resolved "https://github.com/justintaylor-dev/cc-ext-uxp-types.git#13c8078061aaece0d662e8f63901bb6ef228125a"
+  resolved "https://github.com/justintaylor-dev/cc-ext-uxp-types.git#7b03a25166a01f419a47fd1554f9a644ec8c5bde"
 
 "@ampproject/remapping@^2.2.0", "@ampproject/remapping@^2.2.1":
   version "2.2.1"
