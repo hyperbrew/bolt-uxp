@@ -21,6 +21,8 @@
     "mac-build": "yarn mac-build-64 && yarn mac-build-arm",
     "mac-build-64": "xcodebuild -project src/hybrid/mac/bolt-uxp-hybrid.xcodeproj -target x64",
     "mac-build-arm": "xcodebuild -project src/hybrid/mac/bolt-uxp-hybrid.xcodeproj -target arm64",
+    "mac-sign": "node mac-sign.js",
+    "mac-build-sign": "yarn mac-build && node mac-sign.js",
     "win-build": "msbuild src/hybrid/win/bolt-uxp-hybrid.sln"
   },
   "dependencies": {
@@ -38,6 +40,7 @@
     "typescript": "^5.0.2",
     "vite": "^5.1.1",
     "ws": "^8.14.2",
+    "dotenv": "^16.4.5",
     "vite-uxp-plugin": "^0.1.0"
   }
 }
