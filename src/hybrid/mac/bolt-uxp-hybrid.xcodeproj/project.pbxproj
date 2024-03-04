@@ -406,13 +406,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = arm64;
-				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 65L2SK86D2;
+				CODE_SIGN_IDENTITY = "Developer ID Application: Hyper Brew LLC (NRJ8DFFJK7)";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = NRJ8DFFJK7;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				EXECUTABLE_EXTENSION = uxpaddon;
 				EXECUTABLE_PREFIX = "";
+				OTHER_CODE_SIGN_FLAGS = "--timestamp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -422,13 +423,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = arm64;
-				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 65L2SK86D2;
+				CODE_SIGN_IDENTITY = "Developer ID Application: Hyper Brew LLC (NRJ8DFFJK7)";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = NRJ8DFFJK7;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				EXECUTABLE_EXTENSION = uxpaddon;
 				EXECUTABLE_PREFIX = "";
+				OTHER_CODE_SIGN_FLAGS = "--timestamp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -438,14 +440,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = x86_64;
-				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 65L2SK86D2;
+				CODE_SIGN_IDENTITY = "Developer ID Application: Hyper Brew LLC (NRJ8DFFJK7)";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = NRJ8DFFJK7;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				EXECUTABLE_EXTENSION = uxpaddon;
 				EXECUTABLE_PREFIX = "";
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CODE_SIGN_FLAGS = "--timestamp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -455,14 +458,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = x86_64;
-				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 65L2SK86D2;
+				CODE_SIGN_IDENTITY = "Developer ID Application: Hyper Brew LLC (NRJ8DFFJK7)";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = NRJ8DFFJK7;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				EXECUTABLE_EXTENSION = uxpaddon;
 				EXECUTABLE_PREFIX = "";
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CODE_SIGN_FLAGS = "--timestamp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};

@@ -29,7 +29,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C47E25BB27A2B22A002EE081"
-               BuildableName = "bolt-uxp-hybrid.uxpaddon"
+               BuildableName = "arm64.uxpaddon"
                BlueprintName = "arm64"
                ReferencedContainer = "container:bolt-uxp-hybrid.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
       </Testables>
    </TestAction>
    <LaunchAction
-      buildConfiguration = "Debug"
+      buildConfiguration = "Release"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
