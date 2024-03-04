@@ -53,6 +53,8 @@ _Install Note: The Adobe UXP Developer Tools (UDT) can be downloaded from the Ad
 
 ### Load and Debug Plugin
 
+e
+
 1. Click `Load` button on your plugin item
 2. Click `Debug` button on your plugin item
 
@@ -84,6 +86,27 @@ The project is set up for Visual Studio 2019. A post-build action will copy the 
 **Build Scripts**
 
 You can easily rebuild a binary from the commandline without opening XCode or Visual Studio with `yarn mac-build` and `yarn win-build`. You'll need to ensure msbuild for Windows and xcodebuild for MacOS are in your system's environment variables.
+
+**Sign and Notorize on MacOS**
+
+MacOS requires your hybrid plugins to be signed and notorized when shipped to users.
+
+Requirements:
+
+- Apple Developer Account
+- Developer ID Certificate
+- Latest Xcode installed
+- Xcode Command Line Tools installed
+
+Once these are set up, duplicate the .env.example file to a .env file and fill out all fields with your Apple credentials.
+
+Install your cert locally, and ensure your signing settings in XCode are set to that certificate for both arm64 and x64.
+
+Ensure you are logged into your correct Apple account in XCode.
+
+Finally run `yarn-build-sign` to both build your mac binary and sign it. This will also notorize the binary with Apple's servers which can take several minutes.
+
+More details on how the signing and notorization process works can be found in the `scripts/mac-sign.js` file.
 
 **Hot Reloading Notes**
 
