@@ -158,7 +158,7 @@ export const buildBoltUXP = async (args: Args) => {
   ];
 
   if (args.enableHybrid) {
-    includes = [...includes, "public-hybrid/**/*"];
+    includes = [...includes, "public-hybrid/**/*", "scripts/**/*"];
   } else {
     excludes = [...excludes, "src/hybrid/**/*"];
   }
