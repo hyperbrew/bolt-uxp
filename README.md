@@ -53,12 +53,58 @@ _Install Note: The Adobe UXP Developer Tools (UDT) can be downloaded from the Ad
 
 ### Load and Debug Plugin
 
-e
-
 1. Click `Load` button on your plugin item
 2. Click `Debug` button on your plugin item
 
 _Note: You only need to "Load" a plugin, do not use the "Load and Watch" feature. The bulit-in UDT file watcher aka "Load and Watch" does not reliably update on changes so we recommend avoiding it. Instead, Bolt UXP comes with it's own built-in WebSocket system to trigger a reload on each update which is more consistent and less error-prone._
+
+## Install a Plugin
+
+You can install your UXP plugin from CCX file in a number of ways:
+
+### A. The ZXP / UXP Installer from aescripts + aeplugins
+
+Download here: https://aescripts.com/learn/zxp-installer/ Simply drag and drop the CCX file onto the installer and follow the prompts.
+
+### B. The Adobe CC App (UPIA under the hood)
+
+As long as file associations are set up correctly, you can simply double click the CCX file to install it and you can follow the prompts in the Adobe CC app to complete the install
+
+### C. UPIA (Adobe's UXP Plugin Installer)
+
+You can install via the command line directly with the UPIA tool.
+
+Windows:
+
+```
+cd "C:\Program Files\Common Files\Adobe\Adobe Desktop Common\RemoteComponents\UPI\UnifiedPluginInstallerAgent"
+
+UnifiedPluginInstallerAgent.exe /install /path/to/plugin.ccx
+```
+
+Mac:
+
+```
+cd "/Library/Application Support/Adobe/Adobe Desktop Common/RemoteComponents/UPI/UnifiedPluginInstallerAgent/UnifiedPluginInstallerAgent.app/Contents/MacOS"
+
+./UnifiedPluginInstallerAgent --install /path/to/plugin.ccx
+```
+
+### Where are UXP Plugins Installed to?
+
+The resulting directory can end up in any number of places depending on UPIA version and settings. This location is subject to change and managed by UPIA and the UXP database. In general do not modify or try to manipulate these locations or you will likely break the plugin.
+
+Windows:
+
+- `C:\Program Files\Common Files\Adobe\UXP\Plugins\<username>\External\`
+- `C:\Users\<username>\AppData\Roaming\Adobe\UXP\Plugins\External\`
+
+Mac:
+
+- `/Users/<username>/Library/Application Support/Adobe/UXP/Plugins`
+
+_Special Note_
+You cannot write UXP plugins directly into the directories above like you could with CEP panels. UXP plugins must be installed via either double-click or UPIA in order to correctly update a database file.
 
 ## Multi-Window panels
 
