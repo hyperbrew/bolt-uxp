@@ -23,9 +23,10 @@
     "mac-build": "yarn mac-build-64 && yarn mac-build-arm",
     "mac-build-64": "xcodebuild -project src/hybrid/mac/bolt-uxp-hybrid.xcodeproj -target x64",
     "mac-build-arm": "xcodebuild -project src/hybrid/mac/bolt-uxp-hybrid.xcodeproj -target arm64",
-    "mac-sign": "node mac-sign.js",
-    "mac-build-sign": "yarn mac-build && node mac-sign.js",
-    "win-build": "msbuild src/hybrid/win/bolt-uxp-hybrid.sln"
+    "mac-sign": "node ./scripts/mac-sign.js",
+    "mac-build-sign": "yarn mac-build && node ./scripts/mac-sign.js",
+    "win-build": "msbuild src/hybrid/win/bolt-uxp-hybrid.sln",
+    "win-sign": "node ./scripts/win-sign.js"
   },
   "dependencies": {
     "@vitejs/plugin-react": "^4.2.1",
