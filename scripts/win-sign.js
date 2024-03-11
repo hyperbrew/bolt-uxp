@@ -43,6 +43,5 @@ const sign = (binPath) => {
 
 const main = async () => {
   await sign("./public-hybrid/win/x64/bolt-uxp-hybrid.uxpaddon");
-  await sign("./public-hybrid/win/arm64/bolt-uxp-hybrid.uxpaddon");
 };
 main();
