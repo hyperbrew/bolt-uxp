@@ -119,21 +119,41 @@ Note: Unlike CEP Extensions which multi-panel extensions behave as separate isol
 
 UXP Hybrid Plugins allow you to write C++ functions and call them from UXP. This is useful for performance critical operations and accessing system methods not yet part of the UXP APIs.
 
-Since Hybrid Plugins are application specific, you will need to compile the macOS binary with XCode on macOS and the Windows binary with Visual Studio 2019 on Windows. The hybrid plugin project files are located in `./src/hybrid`, and they compile to `./public-hybrid`, which ends up in `./dist/mac` and `./dist/pc` after build.
+Since Hybrid Plugins are application specific, you will need to compile the macOS binary with XCode on macOS and the Windows binary with Visual Studio 2019 on Windows. The hybrid plugin project files are located in `./src/hybrid`, and they compile to `./public-hybrid`, which ends up in `./dist/mac` and `./dist/pc` after build. The structure required is as follows:
 
-**Xcode Notes**
+```
+root
+ ├─ mac
+ │   ├─ arm64
+ |      └─ bolt-uxp-hybrid.uxpaddon
+ |   └─ x64
+ |      └─ bolt-uxp-hybrid.uxpaddon
+ └─ win
+     └─ x64
+        └─ bolt-uxp-hybrid.uxpaddon
+```
+
+Supported platforms include:
+
+- MacOS x64
+- MacOS arm64
+- Windows x64
+
+(note that Windows arm64 for Hybrid Plugins is not currently supported by Adobe UXP applications)
+
+#### Xcode Notes
 
 The Xcode project is designed to build a universal binary from an arm64 (M1, M2, M3) machine that works for both arm machines and x64 machines. If you are not on an arm machine, you will need to change the copy build settings to only build for x64, and note that your hybrid plugin will not work on arm machines.
 
-**Visual Studio Notes**
+#### Visual Studio Notes
 
 The project is set up for Visual Studio 2019. A post-build action will copy the resulting `.uxpaddon` binary to the `./public-hybrid` folder. If you are using a different version of Visual Studio, you may need to update settings for this to work, but Adobe recommends 2019 currently.
 
-**Build Scripts**
+#### Build Scripts
 
 You can easily rebuild a binary from the commandline without opening XCode or Visual Studio with `yarn mac-build` and `yarn win-build`. You'll need to ensure msbuild for Windows and xcodebuild for MacOS are in your system's environment variables.
 
-**Sign and Notorize on MacOS**
+#### Sign and Notorize on MacOS
 
 MacOS requires your hybrid plugins to be signed and notorized when shipped to users.
 
@@ -154,13 +174,19 @@ Finally run `yarn-build-sign` to both build your mac binary and sign it. This wi
 
 More details on how the signing and notorization process works can be found in the `scripts/mac-sign.js` file.
 
-**Hot Reloading Notes**
+#### Sign on Windows
+
+Windows does not require signing, however it's generally a good idea to avoid any warning popups or Windows silently blocking your plugin. A script is provided to sign your Windows binary with an EV cert hosted via Azure. Once you have a cert purchased and hosted with Azure, you'll need to fill out the .env file with your Azure credentials.
+
+Once your cert hosting is set up and your .env file is filled out, you can run `yarn win-sign` to sign your Windows binary.
+
+#### Hot Reloading Notes
 
 While Bolt UXP supports hot reloading, this does not extend to the C++ Hybrid plugin portion of the project. If you only make changes to the frontend code, hot reloading will work as expected, however if you make changes to the MacOS or Windows binaries, you will see a warning in the console that you need to unload and load the plugin since the binaries are locked during debug. You can do this in UDT by selecting "Unload", building the binary, then selecting "Load" again.
 
 Currently there is no way to automate this process in UDT, but we have requested that the Adobe UXP team add this feature.
 
-**Additional Notes**
+### Additional Notes
 
 More info on Hybrid Plugins can be found here: https://developer.adobe.com/photoshop/uxp/2022/guides/hybrid-plugins/
 
