@@ -25,7 +25,8 @@
     "mac-build-arm": "xcodebuild -project src/hybrid/mac/bolt-uxp-hybrid.xcodeproj -target arm64",
     "mac-sign": "node ./scripts/mac-sign.js",
     "mac-build-sign": "yarn mac-build && node ./scripts/mac-sign.js",
-    "win-build": "msbuild src/hybrid/win/bolt-uxp-hybrid.sln",
+    "win-build": "msbuild /p:Configuration=Release src/hybrid/win/bolt-uxp-hybrid.sln",
+    "win-build-debug": "msbuild /p:Configuration=Debug src/hybrid/win/bolt-uxp-hybrid.sln",
     "win-sign": "node ./scripts/win-sign.js"
   },
   "dependencies": {
