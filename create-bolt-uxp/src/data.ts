@@ -1,3 +1,16 @@
+export const globalIncludes: string[] = [
+  "*",
+  "src/**/*",
+  "public/**/*",
+  "public-zip/**/*",
+  ".github/**/*",
+  ".gitignore",
+  ".env.example",
+];
+export const globalExcludes: string[] = [".env", "yarn-error.log"];
+
+export const hybridFiles: string[] = ["public-hybrid/**/*", "scripts/**/*"];
+
 export type Opt = {
   value: string;
   label: string;

@@ -5,7 +5,13 @@ import * as color from "picocolors";
 
 import * as prettier from "prettier";
 
-import { appOptions, frameworkOptions } from "./data";
+import {
+  appOptions,
+  frameworkOptions,
+  globalExcludes,
+  globalIncludes,
+  hybridFiles,
+} from "./data";
 import { execAsync, posix } from "./utils";
 import { spinner, note } from "@clack/prompts";
 
@@ -142,8 +148,8 @@ export const buildBoltUXP = async (args: Args) => {
   if (fs.existsSync(fullPath)) fs.rmSync(fullPath, { recursive: true });
   fs.mkdirSync(fullPath, { recursive: true });
 
-  let includes: string[] = ["*", "src/**/*", "public/**/*", "public-zip/**/*"];
-  let excludes: string[] = [];
+  let includes = [...globalIncludes];
+  let excludes = [...globalExcludes];
 
   excludes = [
     ...excludes,
@@ -158,9 +164,9 @@ export const buildBoltUXP = async (args: Args) => {
   ];
 
   if (args.enableHybrid) {
-    includes = [...includes, "public-hybrid/**/*", "scripts/**/*"];
+    includes = [...includes, ...hybridFiles];
   } else {
-    excludes = [...excludes, "src/hybrid/**/*"];
+    excludes = [...excludes, ...hybridFiles];
   }
 
   const files = await fg(
