@@ -24,7 +24,9 @@ A lightning-fast boilerplate for building Adobe UXP Plugins in Svelte, React, or
 - [Adobe UXP Developer Tool (aka UDT)](https://developer.adobe.com/photoshop/uxp/2022/guides/devtool/installation/)
 - [Yarn](https://classic.yarnpkg.com/lang/en/docs/install/) ( ensure by running `yarn set version classic` )
 
-## Quickstart
+## Quick Start
+
+<img src="bolt-uxp-quickstart.gif" alt="Bolt CEP">
 
 `yarn create bolt-uxp` - Create your new Bolt UXP project (follow CLI prompts)
 
