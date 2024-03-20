@@ -44,7 +44,7 @@ export const App = () => {
   const helloWorld = () => {
     api.notify("Hello World");
   };
-
+  // BOLT-UXP_HYBRID_START
   const hybridTest = async () => {
     try {
       const addon = await require("bolt-uxp-hybrid.uxpaddon");
@@ -55,6 +55,7 @@ export const App = () => {
       console.log("Execute as testMyFunction command failed", err);
     }
   };
+  // BOLT-UXP_HYBRID_END
   // BOLT-UXP_SAMPLECODE_END
   return (
     <>
@@ -75,7 +76,9 @@ export const App = () => {
         <div className="button-group">
           <button onClick={increment}>count is {count}</button>
           <button onClick={helloWorld}>Hello World</button>
+          {/* BOLT-UXP_HYBRID_START */}
           <button onClick={hybridTest}>Hybrid</button>
+          {/* BOLT-UXP_HYBRID_END */}
         </div>
         <div>
           <p>
