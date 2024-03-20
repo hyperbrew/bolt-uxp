@@ -18,6 +18,15 @@ A lightning-fast boilerplate for building Adobe UXP Plugins in Svelte, React, or
 - Easy Package to ZIP archive with sidecar assets
 - GitHub Actions ready-to-go for CCX Releases
 
+## Backers
+
+Huge thanks to our backers who have made this project possible!
+
+<a href="https://aescripts.com/" target="_blank">
+<img src="https://aescripts.com/media/wysiwyg/aescripts_aeplugins_Logo_Stack_300.png" alt="aescripts + aeplugins" title="aescripts + aeplugins" width="200" /></a>
+
+If you're interested in supporting this open-source project, please [contact the Hyper Brew team](https://hyperbrew.co/contact/).
+
 ## Prerequisites
 
 - [Node.js 18](https://nodejs.org/en/) or later
