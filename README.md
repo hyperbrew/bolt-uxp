@@ -117,6 +117,20 @@ Mac:
 _Special Note_
 You cannot write UXP plugins directly into the directories above like you could with CEP panels. UXP plugins must be installed via either double-click or UPIA in order to correctly update a database file.
 
+## Supported Adobe Apps
+
+Currently the following Adobe apps support UXP plugins:
+
+- Photoshop
+- InDesign
+
+If you have UXP Beta access to any of the other Adobe apps, you can add them as well, including:
+
+- Premiere Pro (beta)
+- Illustrator (beta)
+
+_Note: Bolt UXP will not work out of-the-box for apps in UXP beta, you will need beta access from Adobe app teams as they become available. Hyper Brew cannot assist you in this, you will need to contact Adobe app teams directly for access._
+
 ## Multi-Window panels
 
 To add additional windows to a UXP Plugin, you'll need to do 2 things:

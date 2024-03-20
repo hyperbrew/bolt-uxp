@@ -97,7 +97,8 @@ export const main = async (params: OptionalArgs) => {
   }
   if (apps.length === 0) {
     apps = (await multiselect({
-      message: "Select app:",
+      message:
+        "Select apps: ( apps marked (Beta) require beta access from Adobe, see readme for more info )",
       options: appOptions,
       required: true,
     })) as string[];

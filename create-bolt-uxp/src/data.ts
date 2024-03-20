@@ -40,14 +40,14 @@ export const appOptions: Opt[] = [
   { value: "photoshop", label: "Photoshop", files: ["src/api/photoshop.ts"] },
   { value: "indesign", label: "InDesign", files: ["src/api/indesign.ts"] },
   {
-    value: "illustrator",
-    label: "Illustrator (Beta)",
-    files: ["src/api/illustrator.ts"],
-  },
-  {
     value: "premierepro",
     label: "Premiere Pro (Beta)",
     files: ["src/api/premierepro.ts"],
+  },
+  {
+    value: "illustrator",
+    label: "Illustrator (Beta)",
+    files: ["src/api/illustrator.ts"],
   },
 ];
 
