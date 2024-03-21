@@ -82,7 +82,7 @@ export const App = () => {
         </div>
         <div>
           <p>
-            Edit <span className="code">main.svelte</span> and save to test HMR
+            Edit <span className="code">main.tsx</span> and save to test HMR
             updates.
           </p>
         </div>

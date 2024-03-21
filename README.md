@@ -1,4 +1,4 @@
-<img src="src/assets/bolt-uxp.svg" alt="Bolt CEP" title="Bolt CEP" width="400" />
+<img src="src/assets/bolt-uxp.svg" alt="Bolt UXP" title="Bolt UXP" width="400" />
 
 A lightning-fast boilerplate for building Adobe UXP Plugins in Svelte, React, or Vue built on Vite + TypeScript + Sass
 
@@ -35,7 +35,7 @@ If you're interested in supporting this open-source project, please [contact the
 
 ## Quick Start
 
-<img src="bolt-uxp-quickstart.gif" alt="Bolt CEP">
+<img src="bolt-uxp-quickstart.gif" alt="Bolt UXP">
 
 `yarn create bolt-uxp` - Create your new Bolt UXP project (follow CLI prompts)
 
@@ -230,6 +230,15 @@ More info on Hybrid Plugins can be found here: https://developer.adobe.com/photo
 Currently, hybrid plugins are only supported in Photoshop.
 
 ---
+
+## Misc Troubleshooting
+
+- **Update a Bolt UXP Project** To update an existing Bolt UXP project to the the latest version, create a new Bolt UXP project with the same framework (React, Vue, Svelte) and host apps, then compare and update the following files:
+  1. `package.json` - Update all dependencies and scripts ( `vite-uxp-plugin` - usually contains the most frequent updates )
+  2. `vite.config.ts` - Unless you've modified the vite config yourself, you can just copy the contents of the latest into yours.
+  3. `uxp.config.ts` - Check if any new properties have been added that don't exist in your config.
+  4. `src/api` - Update this entire folder.
+  5. `src/hyntif` - Update this entire folder unless you've made modifications to the C++ code.
 
 ---
 

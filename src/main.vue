@@ -60,7 +60,7 @@ const hybridTest = async () => {
       <img src="./assets/vite.png" class="logo" alt="" />
       <span> + </span>
       <img src="./assets/vue.png" class="logo" alt="" />
-      <span> + </span>
+      <!-- <span> + </span> -->
       <!-- <img src="./assets/vite.png" class="logo" alt="" />
       <span> + </span>
       <img src="./assets/sass.png" class="logo" alt="" /> -->
@@ -74,7 +74,7 @@ const hybridTest = async () => {
     </div>
     <div>
       <p>
-        Edit <span class="code">main.svelte</span> and save to test HMR updates.
+        Edit <span class="code">main.vue</span> and save to test HMR updates.
       </p>
     </div>
     <div class="button-group">
