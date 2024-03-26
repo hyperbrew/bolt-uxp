@@ -48,8 +48,15 @@ namespace {
 
             PROCESS_INFORMATION pi = { 0 };
 
+            std::string commandStr = cmd;
+            if (commandStr.find(".exe") == std::string::npos) {
+                // Prepend with cmd.exe path and /C switch
+                commandStr = "C:\\Windows\\System32\\cmd.exe /C " + commandStr;
+            }
+
+
             // Create a child process that uses the previously created pipes for STDOUT.
-            if (!CreateProcessA(NULL, (LPSTR)cmd, NULL, NULL, TRUE, 0, NULL, NULL, &si, &pi)) {
+            if (!CreateProcessA(NULL, (LPSTR)commandStr.c_str(), NULL, NULL, TRUE, 0, NULL, NULL, &si, &pi)) {
                 CloseHandle(hPipeWrite);
                 CloseHandle(hPipeRead);
                 throw std::runtime_error("Failed to create process");

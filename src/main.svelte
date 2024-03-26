@@ -43,12 +43,14 @@
   // BOLT-UXP_HYBRID_START
   const hybridTest = async () => {
     try {
-      const addon = await require("bolt-uxp-hybrid.uxpaddon");
-      const myFunctionResult = addon.my_function();
-      console.log(`myFunctionResult = `, myFunctionResult);
-      api.notify(`myFunctionResult = ${myFunctionResult}`);
+      let hybridModule: {
+        execSync: (cmd: string) => string;
+      } = await require("bolt-uxp-hybrid.uxpaddon");
+      let execSyncRes = hybridModule.execSync("echo test");
+      console.log(`execSyncRes = `, execSyncRes);
+      api.notify(`execSyncRes = ${execSyncRes}`);
     } catch (err) {
-      console.log("Execute as testMyFunction command failed", err);
+      console.log("Execute as execSync command failed", err);
     }
   };
   // BOLT-UXP_HYBRID_END
