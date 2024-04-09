@@ -241,6 +241,46 @@ Currently, hybrid plugins are only supported in Photoshop.
 
 ---
 
+### Notes on Spectrum
+
+There are several flavors of Adobe Spectrum:
+
+- Spectrum CSS
+- React Spectrum
+- Spectrum Web Components
+- Spectrum UXP
+
+Recently the Adobe UXP team is moving away from the built-in Spectrum UXP to Spectrum Web Components.
+
+Since this move is recent, and compatibility is pending, Bolt UXP doesn't come set up for any Spectrum integration, however if you'd like you can add it yourself.
+
+**Spectrum UXP**
+
+You can use native Spectrum UXP widgets without any extra dependencies, however you will recieve TypeScript errors. To remove these errors you'll need to add defs for spectrum in your `globals.d.ts` file per your framework (React example below)
+
+React Example for `<sp-heading />`
+
+```ts
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      "sp-heading": React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement>,
+        HTMLElement
+      >;
+    }
+  }
+}
+```
+
+More info on Spectrum UXP: https://developer.adobe.com/xd/uxp/uxp/reference-spectrum/
+
+**Spectrum Web Components**
+
+For Spectrum Web Components, you'll need to add the dependency from npm and import the components into your project as needed. Follow the guide here:
+
+https://www.npmjs.com/package/@spectrum-web-components/bundle
+
 ## Misc Troubleshooting
 
 - **Update a Bolt UXP Project** To update an existing Bolt UXP project to the the latest version, create a new Bolt UXP project with the same framework (React, Vue, Svelte) and host apps, then compare and update the following files:
@@ -248,7 +288,7 @@ Currently, hybrid plugins are only supported in Photoshop.
   2. `vite.config.ts` - Unless you've modified the vite config yourself, you can just copy the contents of the latest into yours.
   3. `uxp.config.ts` - Check if any new properties have been added that don't exist in your config.
   4. `src/api` - Update this entire folder.
-  5. `src/hyntif` - Update this entire folder unless you've made modifications to the C++ code.
+  5. `src/hybrid` - Update this entire folder unless you've made modifications to the C++ code.
 
 ---
 
