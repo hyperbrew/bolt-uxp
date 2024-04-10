@@ -26,6 +26,8 @@ export default defineConfig({
     svelte({ preprocess: sveltePreprocess({ typescript: true }) }), // BOLT-UXP_SVELTE_ONLY
   ],
   build: {
+    sourcemap: mode && ["dev", "build"].includes(mode) ? true : false,
+    // minify: false,
     emptyOutDir: !shouldNotEmptyDir,
     rollupOptions: {
       external: [
