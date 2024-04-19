@@ -50,21 +50,23 @@ Bolt UXP Info Page Link: https://hyperbrew.co/resources/bolt-uxp
 **PNG Files**
 
 <div style="display:flex;gap:1rem;">
-<a href="./src/assets/built-with-bolt-uxp/Built_With_BOLT_UXP_Logo_Black_V01.png" target="_blank">
-<img src="./src/assets/built-with-bolt-uxp/Built_With_BOLT_UXP_Logo_Black_V01.png" alt="aescripts + aeplugins" title="aescripts + aeplugins" width="200" /></a>
-
 <a href="./src/assets/built-with-bolt-uxp/Built_With_BOLT_UXP_Logo_White_V01.png" target="_blank">
-<img src="./src/assets/built-with-bolt-uxp/Built_With_BOLT_UXP_Logo_White_V01.png" alt="aescripts + aeplugins" title="aescripts + aeplugins" width="200" /></a>
+<img src="./src/assets/built-with-bolt-uxp/Built_With_BOLT_UXP_Logo_White_V01.png" width="200" /></a>
+
+<a href="./src/assets/built-with-bolt-uxp/Built_With_BOLT_UXP_Logo_Black_V01.png" target="_blank">
+<img src="./src/assets/built-with-bolt-uxp/Built_With_BOLT_UXP_Logo_Black_V01.png" width="200" /></a>
+
 </div>
 
 **SVG Files**
 
 <div style="display:flex;gap:1rem;">
-<a href="src/assets/built-with-bolt-uxp/Built_With_BOLT_UXP_Logo_Black_V01.svg" target="_blank">
-<img src="src/assets/built-with-bolt-uxp/Built_With_BOLT_UXP_Logo_Black_V01.svg" alt="aescripts + aeplugins" title="aescripts + aeplugins" width="200" /></a>
-
 <a href="src/assets/built-with-bolt-uxp/Built_With_BOLT_UXP_Logo_White_V01.svg" target="_blank">
-<img src="src/assets/built-with-bolt-uxp/Built_With_BOLT_UXP_Logo_White_V01.svg" alt="aescripts + aeplugins" title="aescripts + aeplugins" width="200" /></a>
+<img src="src/assets/built-with-bolt-uxp/Built_With_BOLT_UXP_Logo_White_V01.svg" width="200" /></a>
+
+<a href="src/assets/built-with-bolt-uxp/Built_With_BOLT_UXP_Logo_Black_V01.svg" target="_blank">
+<img src="src/assets/built-with-bolt-uxp/Built_With_BOLT_UXP_Logo_Black_V01.svg" width="200" /></a>
+
 </div>
 
 ## Prerequisites
