@@ -37,6 +37,36 @@ If you have questions with getting started using Bolt UXP, feel free to ask and 
 
 If your team is interested in paid consulting or development with Bolt UXP, please [contact the Hyper Brew team](https://hyperbrew.co/contact/). More info on our [Adobe Plugin Development & Consulting Services](https://hyperbrew.co/landings/boost-development)
 
+## Can I use Bolt UXP in my free or commercial project?
+
+Yes! Bolt UXP is **100% free and open source**, being released under the MIT license with no attribution required. This means you are free to use it in your free or commercial projects.
+
+We would greatly appreciate it if you could provide a link back to this tool's info page in your product's site or about page:
+
+Bolt UXP Info Page Link: https://hyperbrew.co/resources/bolt-uxp
+
+**Built with Bolt UXP** button graphics:
+
+**PNG Files**
+
+<div style="display:flex;gap:1rem;">
+<a href="./src/assets/built-with-bolt-uxp/Built_With_BOLT_UXP_Logo_Black_V01.png" target="_blank">
+<img src="./src/assets/built-with-bolt-uxp/Built_With_BOLT_UXP_Logo_Black_V01.png" alt="aescripts + aeplugins" title="aescripts + aeplugins" width="200" /></a>
+
+<a href="./src/assets/built-with-bolt-uxp/Built_With_BOLT_UXP_Logo_White_V01.png" target="_blank">
+<img src="./src/assets/built-with-bolt-uxp/Built_With_BOLT_UXP_Logo_White_V01.png" alt="aescripts + aeplugins" title="aescripts + aeplugins" width="200" /></a>
+</div>
+
+**SVG Files**
+
+<div style="display:flex;gap:1rem;">
+<a href="src/assets/built-with-bolt-uxp/Built_With_BOLT_UXP_Logo_Black_V01.svg" target="_blank">
+<img src="src/assets/built-with-bolt-uxp/Built_With_BOLT_UXP_Logo_Black_V01.svg" alt="aescripts + aeplugins" title="aescripts + aeplugins" width="200" /></a>
+
+<a href="src/assets/built-with-bolt-uxp/Built_With_BOLT_UXP_Logo_White_V01.svg" target="_blank">
+<img src="src/assets/built-with-bolt-uxp/Built_With_BOLT_UXP_Logo_White_V01.svg" alt="aescripts + aeplugins" title="aescripts + aeplugins" width="200" /></a>
+</div>
+
 ## Prerequisites
 
 - [Node.js 18](https://nodejs.org/en/) or later
