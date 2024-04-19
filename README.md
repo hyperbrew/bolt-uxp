@@ -33,7 +33,7 @@ If you're interested in supporting this open-source project, please [contact the
 
 If you have questions with getting started using Bolt UXP, feel free to ask and discuss in our free Discord community [Discord Community](https://discord.gg/PC3EvvuRbc).
 
-### Paid Support
+### Paid Priority Support
 
 If your team is interested in paid consulting or development with Bolt UXP, please [contact the Hyper Brew team](https://hyperbrew.co/contact/). More info on our [Adobe Plugin Development & Consulting Services](https://hyperbrew.co/landings/boost-development)
 
