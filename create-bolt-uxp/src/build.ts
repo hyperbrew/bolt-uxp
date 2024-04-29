@@ -12,7 +12,7 @@ import {
   globalIncludes,
   hybridFiles,
 } from "./data";
-import { execAsync, posix } from "./utils";
+import { execAsync, getPackageManager, posix } from "./utils";
 import { spinner, note } from "@clack/prompts";
 
 import { capitalize, replace } from "radash";
@@ -245,11 +245,12 @@ export const buildBoltUXP = async (args: Args) => {
     .replace(/bolt\.uxp\.plugin/g, args.id);
   fs.writeFileSync(uxpConfig, uxpConfigData, "utf8");
 
+  const pm = getPackageManager() || "npm";
   // * Dependencies
   if (args.installDeps) {
     const s = spinner();
     s.start("Installing dependencies...");
-    await execAsync(`cd ${fullPath} && yarn`);
+    await execAsync(`cd ${fullPath} && ${pm} install`);
     s.stop("Dependencies installed!");
   }
 
@@ -275,7 +276,7 @@ export const buildBoltUXP = async (args: Args) => {
       ...summary,
       "",
       `Dependencies not installed. To install, run: ${color.yellow(
-        `cd ${path.basename(fullPath)} && yarn )`
+        `cd ${path.basename(fullPath)} && ${pm} install`
       )}`,
     ];
   }
