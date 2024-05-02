@@ -14,3 +14,18 @@ export const execAsync = (cmd: string) => {
     });
   });
 };
+
+/**
+ * Supports npm, pnpm, Yarn, cnpm, bun and any other package manager that sets the npm_config_user_agent env variable.
+ * Thanks to https://github.com/zkochan/packages/tree/main/which-pm-runs for this code!
+ */
+export function getPackageManager() {
+  if (!process.env.npm_config_user_agent) {
+    return undefined;
+  }
+  const userAgent = process.env.npm_config_user_agent;
+  const pmSpec = userAgent.split(" ")[0];
+  const separatorPos = pmSpec.lastIndexOf("/");
+  const name = pmSpec.substring(0, separatorPos);
+  return name === "npminstall" ? "cnpm" : name;
+}
