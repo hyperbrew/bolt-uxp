@@ -73,26 +73,54 @@ Bolt UXP Info Page Link: https://hyperbrew.co/resources/bolt-uxp
 
 - [Node.js 18](https://nodejs.org/en/) or later
 - [Adobe UXP Developer Tool (aka UDT)](https://developer.adobe.com/photoshop/uxp/2022/guides/devtool/installation/)
-- [Yarn](https://classic.yarnpkg.com/lang/en/docs/install/) ( ensure by running `yarn set version classic` )
+- Package manager either
+  - NPM (comes with Node.js)
+  - [Yarn](https://classic.yarnpkg.com/lang/en/docs/install/) ( ensure by running `yarn set version classic` )
+  - [PNPM](https://pnpm.io/installation) ( ensure by running `pnpm --version` )
 
 ## Quick Start
 
 <img src="bolt-uxp-quickstart.gif" alt="Bolt UXP">
 
-`yarn create bolt-uxp` - Create your new Bolt UXP project (follow CLI prompts)
+Create your new Bolt UXP project (follow CLI prompts)
 
-`cd project` - Change directory to the new project
+- yarn - `yarn create bolt-uxp`
+- npm - `npx create-bolt-uxp`
+- pnpm - `pnpm create-bolt-uxp`
 
-`yarn` - Install Dependencies (if not already done by create command)
+Change directory to the new project
 
-`yarn build` - Build the plugin (must run before `yarn dev`, can also run after for panel to work statically without the process)
+- `cd project`
 
-`yarn dev` - Run the plugin in hot reload mode for development with UDT (see below)
+Install Dependencies (if not already done by create command)
 
-`yarn ccx` - Build & Package the plugin as a CCX for delivery (separate CCX files for each host are generated due to
-current UXP requirements)
+- yarn - `yarn`
+- npm - `npm i`
+- pnpm - `pnpm i`
 
-`yarn zip` - Bundles your packaged ccx file(s) and specified assets from `copyZipAssets` to a zip archive in the `./zip` folder
+Build the plugin (must run before `dev`, can also run after for panel to work statically without the process)
+
+- yarn `yarn build`
+- npm `npm run build`
+- pnpm `pnpm build`
+
+Run the plugin in hot reload mode for development with UDT (see below)
+
+- yarn `yarn dev`
+- npm `npm run dev`
+- pnpm `pnpm dev`
+
+Build & Package the plugin as a CCX for delivery (separate CCX files for each host are generated due to current UXP requirements)
+
+- yarn `yarn ccx`
+- npm `npm run ccx`
+- pnpm `pnpm ccx`
+
+Bundles your packaged ccx file(s) and specified assets from `copyZipAssets` to a zip archive in the `./zip` folder
+
+- yarn `yarn zip`
+- npm `npm run zip`
+- pnpm `pnpm zip`
 
 ## UDT Setup
 
