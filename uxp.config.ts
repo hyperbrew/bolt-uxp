@@ -53,18 +53,16 @@ const manifest: UXP_Manifest = {
         {
           width: 23,
           height: 23,
-          path: "icons/dark-panel.png",
+          path: "icons/dark.png",
           scale: [1, 2],
           theme: ["darkest", "dark", "medium"],
-          species: ["chrome"],
         },
         {
           width: 23,
           height: 23,
-          path: "icons/light-panel.png",
+          path: "icons/light.png",
           scale: [1, 2],
           theme: ["lightest", "light"],
-          species: ["chrome"],
         },
       ],
     },
@@ -153,11 +151,11 @@ const manifest: UXP_Manifest = {
   // BOLT-UXP_HYBRID_END
   icons: [
     {
-      width: 24,
-      height: 24,
-      path: "icons/plugin.png",
+      width: 48,
+      height: 48,
+      path: "icons/plugin-icon.png",
       scale: [1, 2],
-      theme: ["all"],
+      theme: ["darkest", "dark", "medium", "lightest", "light", "all"],
       species: ["pluginList"],
     },
   ],

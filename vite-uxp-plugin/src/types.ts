@@ -5,6 +5,16 @@ export type UXP_COMMAND = {
     default: string;
   };
 };
+
+export type UXP_Icon = {
+  width?: number;
+  height?: number;
+  path?: string;
+  scale?: number[];
+  theme?: string[];
+  species?: string[];
+};
+
 export type UXP_PANEL = {
   type: string;
   id: string;
@@ -31,14 +41,7 @@ export type UXP_PANEL = {
     width: number;
     height: number;
   };
-  icons?: {
-    width: number;
-    height: number;
-    path: string;
-    scale: number[];
-    theme: string[];
-    species: string[];
-  }[];
+  icons?: UXP_Icon[];
 };
 
 export type UXP_Manifest = {
@@ -78,14 +81,7 @@ export type UXP_Manifest = {
   addon?: {
     name?: string;
   };
-  icons?: {
-    width?: number;
-    height?: number;
-    path?: string;
-    scale?: number[];
-    theme?: string[];
-    species?: string[];
-  }[];
+  icons?: UXP_Icon[];
 };
 
 export type UXP_Config = {
