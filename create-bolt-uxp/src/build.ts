@@ -177,6 +177,7 @@ export const buildBoltUXP = async (args: Args) => {
     {
       onlyFiles: true,
       followSymbolicLinks: true,
+      dot: true,
     }
   );
 
