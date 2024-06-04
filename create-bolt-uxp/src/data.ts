@@ -7,9 +7,17 @@ export const globalIncludes: string[] = [
   ".gitignore",
   ".env.example",
 ];
-export const globalExcludes: string[] = [".env", "yarn-error.log"];
+export const globalExcludes: string[] = [
+  ".env",
+  "yarn-error.log",
+  "src/hybrid/**/*",
+];
 
-export const hybridFiles: string[] = ["public-hybrid/**/*", "scripts/**/*"];
+export const hybridFiles: string[] = [
+  "public-hybrid/**/*",
+  "src/hybrid/**/*",
+  "scripts/**/*",
+];
 
 export type Opt = {
   value: string;
