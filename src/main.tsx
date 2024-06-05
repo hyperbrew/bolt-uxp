@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 // BOLT-UXP_SAMPLECODE_START
 import boltUxpLogo from "./assets/bolt-uxp.png";
@@ -10,6 +10,17 @@ import reactLogo from "./assets/react.png";
 import { uxp, indesign, photoshop } from "./globals";
 import { api } from "./api/api";
 // BOLT-UXP_SAMPLECODE_END
+
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      "uxp-panel": React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement> & { panelid?: string },
+        HTMLElement
+      >;
+    }
+  }
+}
 
 export const App = () => {
   // BOLT-UXP_SAMPLECODE_START
@@ -57,10 +68,17 @@ export const App = () => {
       console.log("Execute as execSync command failed", err);
     }
   };
+
   // BOLT-UXP_HYBRID_END
   // BOLT-UXP_SAMPLECODE_END
   return (
     <>
+      {/* Example of a secondary panel entrypoint */}
+      <uxp-panel panelid="bolt.uxp.plugin.settings">
+        <h1>Settings Panel</h1>
+        <p>count is: {count}</p>
+      </uxp-panel>
+      {/* BOLT-UXP_SAMPLECODE_END */}
       <main>
         {/* BOLT-UXP_SAMPLECODE_START */}
         <div>
@@ -96,12 +114,6 @@ export const App = () => {
         {/* BOLT-UXP_SAMPLECODE_END */}
       </main>
       {/* BOLT-UXP_SAMPLECODE_START */}
-      {/* Example of a secondary panel entrypoint */}
-      {/* <uxp-panel panelid="bolt.uxp.plugin.settings">
-        <h1>Settings Panel</h1>
-        <p>count is: {{ count }}</p>
-      </uxp-panel> */}
-      {/* BOLT-UXP_SAMPLECODE_END */}
     </>
   );
 };
