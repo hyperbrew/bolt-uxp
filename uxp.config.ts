@@ -72,35 +72,35 @@ const manifest: UXP_Manifest = {
     // * Example of a UXP Secondary panel
     // * Must also enable the <uxp-panel panelid="bolt.uxp.plugin.settings">
     //* tag in your entrypoint (.tsx, .vue, or .svelte) file
-    {
-      type: "panel",
-      id: "bolt.uxp.plugin.settings",
-      label: {
-        default: "Bolt UXP Settings",
-      },
-      minimumSize: { width: 230, height: 200 },
-      maximumSize: { width: 2000, height: 2000 },
-      preferredDockedSize: { width: 230, height: 300 },
-      preferredFloatingSize: { width: 230, height: 300 },
-      icons: [
-        {
-          width: 23,
-          height: 23,
-          path: "icons/dark-panel.png",
-          scale: [1, 2],
-          theme: ["darkest", "dark", "medium"],
-          species: ["chrome"],
-        },
-        {
-          width: 23,
-          height: 23,
-          path: "icons/light-panel.png",
-          scale: [1, 2],
-          theme: ["lightest", "light"],
-          species: ["chrome"],
-        },
-      ],
-    },
+    // {
+    //   type: "panel",
+    //   id: "bolt.uxp.plugin.settings",
+    //   label: {
+    //     default: "Bolt UXP Settings",
+    //   },
+    //   minimumSize: { width: 230, height: 200 },
+    //   maximumSize: { width: 2000, height: 2000 },
+    //   preferredDockedSize: { width: 230, height: 300 },
+    //   preferredFloatingSize: { width: 230, height: 300 },
+    //   icons: [
+    //     {
+    //       width: 23,
+    //       height: 23,
+    //       path: "icons/dark-panel.png",
+    //       scale: [1, 2],
+    //       theme: ["darkest", "dark", "medium"],
+    //       species: ["chrome"],
+    //     },
+    //     {
+    //       width: 23,
+    //       height: 23,
+    //       path: "icons/light-panel.png",
+    //       scale: [1, 2],
+    //       theme: ["lightest", "light"],
+    //       species: ["chrome"],
+    //     },
+    //   ],
+    // },
 
     // * Example of a UXP Command
     // {

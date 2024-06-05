@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 // BOLT-UXP_SAMPLECODE_START
 import boltUxpLogo from "./assets/bolt-uxp.png";
@@ -73,12 +73,6 @@ export const App = () => {
   // BOLT-UXP_SAMPLECODE_END
   return (
     <>
-      {/* Example of a secondary panel entrypoint */}
-      <uxp-panel panelid="bolt.uxp.plugin.settings">
-        <h1>Settings Panel</h1>
-        <p>count is: {count}</p>
-      </uxp-panel>
-      {/* BOLT-UXP_SAMPLECODE_END */}
       <main>
         {/* BOLT-UXP_SAMPLECODE_START */}
         <div>
@@ -114,6 +108,12 @@ export const App = () => {
         {/* BOLT-UXP_SAMPLECODE_END */}
       </main>
       {/* BOLT-UXP_SAMPLECODE_START */}
+      {/* Example of a secondary panel entrypoint */}
+      <uxp-panel panelid="bolt.uxp.plugin.settings">
+        <h1>Settings Panel</h1>
+        <p>count is: {count}</p>
+      </uxp-panel>
+      {/* BOLT-UXP_SAMPLECODE_END */}
     </>
   );
 };
