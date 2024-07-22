@@ -113,6 +113,9 @@ const manifest: UXP_Manifest = {
 
     // BOLT-UXP_SAMPLECODE_END
   ],
+  featureFlags: {
+    enableAlerts: true,
+  },
   requiredPermissions: {
     localFileSystem: "fullAccess",
     launchProcess: {
