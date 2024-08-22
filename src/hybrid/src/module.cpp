@@ -52,12 +52,15 @@ namespace {
             PROCESS_INFORMATION pi = { 0 };
 
             std::string commandStr = cmd;
-            if (commandStr.find(".exe") == std::string::npos) {
+            if (commandStr.find(".exe") != std::string::npos) {
                 if (!PathFileExistsA(commandStr.c_str())) {
-                    throw std::runtime_error("Invalid executable path: " + commandStr);
+                    // throw std::runtime_error("Invalid executable path: " + commandStr);
+                    CloseHandle(hPipeWrite);
+                    CloseHandle(hPipeRead);
+                    return "Invalid executable path: " + commandStr;
                 }
                 // Prepend with cmd.exe path and /C switch
-                commandStr = "C:\\Windows\\System32\\cmd.exe /C \"" + commandStr + "\"";
+                // commandStr = "C:\\Windows\\System32\\cmd.exe /C \"" + commandStr + "\"";
             }
 
 
@@ -65,7 +68,8 @@ namespace {
             if (!CreateProcessA(NULL, (LPSTR)commandStr.c_str(), NULL, NULL, TRUE, 0, NULL, NULL, &si, &pi)) {
                 CloseHandle(hPipeWrite);
                 CloseHandle(hPipeRead);
-                throw std::runtime_error("Failed to create process");
+                // throw std::runtime_error("Failed to create process");
+                return "Failed to create process";
             }
 
             CloseHandle(hPipeWrite);  // Close the write end of the pipe before reading from the read end of the pipe.
