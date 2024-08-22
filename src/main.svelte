@@ -46,9 +46,13 @@
       let hybridModule: {
         execSync: (cmd: string) => string;
       } = await require("bolt-uxp-hybrid.uxpaddon");
-      let execSyncRes = hybridModule.execSync("echo test");
+      // let execSyncRes = hybridModule.execSync("echo test");
+      let execSyncRes = hybridModule.execSync(
+        // 'ffmpeg'
+        "C:\\Users\\justin\\Downloads\\yt-dlp_min.exe"
+      );
       console.log(`execSyncRes = `, execSyncRes);
-      api.notify(`execSyncRes = ${execSyncRes}`);
+      // api.notify(`execSyncRes = ${execSyncRes}`);
     } catch (err) {
       console.log("Execute as execSync command failed", err);
     }

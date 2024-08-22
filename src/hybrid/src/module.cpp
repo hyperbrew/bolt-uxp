@@ -24,6 +24,9 @@
 #include "../src/utilities/UxpTask.h"
 #include "../src/utilities/UxpValue.h"
 
+#include <Shlwapi.h>  // For PathFileExistsA
+#pragma comment(lib, "Shlwapi.lib")  // Link with Shlwapi.lib
+
 namespace {
 
     std::string execWin(const char* cmd) {
@@ -50,8 +53,11 @@ namespace {
 
             std::string commandStr = cmd;
             if (commandStr.find(".exe") == std::string::npos) {
+                if (!PathFileExistsA(commandStr.c_str())) {
+                    throw std::runtime_error("Invalid executable path: " + commandStr);
+                }
                 // Prepend with cmd.exe path and /C switch
-                commandStr = "C:\\Windows\\System32\\cmd.exe /C " + commandStr;
+                commandStr = "C:\\Windows\\System32\\cmd.exe /C \"" + commandStr + "\"";
             }
 
 
