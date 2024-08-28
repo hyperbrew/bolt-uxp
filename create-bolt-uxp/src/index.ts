@@ -15,6 +15,7 @@ import {
 } from "@clack/prompts";
 import { dash } from "radash";
 import { Args, OptionalArgs, buildBoltUXP } from "./build";
+import { isFolderEmpty } from "./utils";
 
 import { frameworkOptions, appOptions } from "./data";
 
@@ -61,6 +62,20 @@ export const main = async (params: OptionalArgs) => {
         if (value.length < 3) return `Value is required!`;
       },
     })) as string;
+
+    if (isFolderEmpty(folder) === false) {
+      const cancelFolder = (await confirm({
+        message: `This directory is not empty. Creating project will delete folder contents. Continue?`,
+        initialValue: false,
+      })) as boolean;
+      if (cancelFolder === false) {
+        cancel("Operation cancelled");
+        return process.exit(0);
+      }
+
+      handleCancel(cancelFolder);
+    }
+
     handleCancel(folder);
   }
   if (displayName.length === 0) {
