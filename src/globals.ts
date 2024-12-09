@@ -3,19 +3,21 @@ declare module "*.gif";
 declare module "*.jpg";
 declare module "*.svg";
 
+import type { premierepro as premiereproTypes } from "./types/ppro";
+
 export const uxp = require("uxp") as typeof import("uxp");
-const hostName = uxp.host.name;
+const hostName = uxp.host.name.toLowerCase();
 
 export const photoshop = (
-  hostName === "Photoshop" ? require("photoshop") : {}
+  hostName === "photoshop" ? require("photoshop") : {}
 ) as typeof import("photoshop");
 
 export const indesign = (
-  hostName === "InDesign" ? require("indesign") : {}
+  hostName === "indesign" ? require("indesign") : {}
 ) as any;
 export const premierepro = (
-  hostName === "PremierePro" ? require("premierepro") : {}
-) as any;
+  hostName === "premierepro" ? require("premierepro") : {}
+) as premiereproTypes;
 export const illustrator = (
-  hostName === "Illustrator" ? require("illustrator") : {}
+  hostName === "illustrator" ? require("illustrator") : {}
 ) as any;
