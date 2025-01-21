@@ -120,7 +120,7 @@ const manifest: UXP_Manifest = {
     localFileSystem: "fullAccess",
     launchProcess: {
       schemes: ["https", "slack", "file", "ws"],
-      extensions: [".xd", ".psd", ".bat", ".cmd"],
+      extensions: [".xd", ".psd", ".bat", ".cmd", ".exe"],
     },
     network: {
       domains: [
@@ -138,7 +138,9 @@ const manifest: UXP_Manifest = {
     clipboard: "readAndWrite",
     webview: {
       allow: "yes",
-      domains: ["https://*.hyperbrew.co"],
+      allowLocalRendering: "yes",
+      domains: "all",
+      enableMessageBridge: "localAndRemote",
     },
     ipc: {
       enablePluginCommunication: true,

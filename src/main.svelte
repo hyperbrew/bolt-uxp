@@ -54,11 +54,65 @@
     }
   };
   // BOLT-UXP_HYBRID_END
+
+  // BOLT-UXP_WEBVIEW_START
+  const startServeSimple = async () => {
+    try {
+      let hybridModule: {
+        execSync: (cmd: string) => string;
+      } = await require("bolt-uxp-hybrid.uxpaddon");
+      let execSyncRes = hybridModule.execSync("npx serve dist");
+      console.log(`execSyncRes = `, execSyncRes);
+
+      // const res = uxp.shell.openPath(
+      //   "C:\\Users\\justin\\Documents\\Dev\\Hyper-Brew\\bolt-uxp\\public\\http_server_files.exe"
+      // );
+      // console.log("res = ", res);
+    } catch (err) {
+      console.log("Error in opening serve.bat", err);
+    }
+  };
+  const startServeCpp = async () => {
+    try {
+      let hybridModule: {
+        start_server: (cmd: string) => string;
+      } = await require("bolt-uxp-hybrid.uxpaddon");
+      let execSyncRes = hybridModule.start_server("echo test");
+      console.log(`execSyncRes = `, execSyncRes);
+
+      // const res = uxp.shell.openPath(
+      //   "C:\\Users\\justin\\Documents\\Dev\\Hyper-Brew\\bolt-uxp\\public\\http_server_files.exe"
+      // );
+      // console.log("res = ", res);
+    } catch (err) {
+      console.log("Error in opening serve.bat", err);
+    }
+  };
+  // BOLT-UXP_WEBVIEW_END
+
   // BOLT-UXP_SAMPLECODE_END
 </script>
 
 <main>
   <!-- BOLT-UXP_SAMPLECODE_START -->
+
+  <!-- <webview
+    id="webviewsample"
+    width="500px"
+    height="360px"
+    src="plugin:/ui/index.html"
+    uxpAllowInspector="true"
+  ></webview> -->
+  <webview
+    id="webviewsample"
+    width="500px"
+    height="360px"
+    src="https://hyperbrew.co"
+    uxpAllowInspector="true"
+  ></webview>
+  <button on:click={() => startServeCpp()}>start serve</button>
+  <button on:click={() => startServeSimple()}>start serve simple</button>
+
   <div>
     <img class="logo-lg" src={boltUxpLogo} alt="" />
   </div>

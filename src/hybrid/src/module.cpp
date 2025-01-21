@@ -15,9 +15,15 @@
 #include <cstdio>
 #include <iostream>
 #include <vector>
+#include <thread>
+
+// #include <uwebsockets/App.h>
 
 #ifdef _WIN32
-#include <windows.h>
+#include <winsock2.h>
+#include <ws2tcpip.h> // For additional helper functions
+#include <windows.h>  // Ensure this comes after winsock2.h
+
 #endif
 
 #include "../src/utilities/UxpAddon.h"
@@ -26,7 +32,7 @@
 
 namespace {
 
-    std::string execWin(const char* cmd) {
+    std::string execSyncWin(const char* cmd) {
         #ifdef _WIN32
             std::string result;
             HANDLE hPipeRead, hPipeWrite;
@@ -92,7 +98,7 @@ namespace {
         #endif
     }
 
-std::string exec(const char* cmd) {
+std::string execSyncMac(const char* cmd) {
     char buffer[128];
     std::string result = "";
     
@@ -156,10 +162,9 @@ addon_value ExecSync(addon_env env, addon_callback_info info)
     std::string output;
 
 #ifdef __APPLE__
-    // Mac Code
-    output = exec(name);
+    output = execSyncMac(name);
 #elif _WIN32
-    output = execWin(name);
+    output = execSyncWin(name);
 #else
 
 #endif
@@ -174,6 +179,118 @@ addon_value ExecSync(addon_env env, addon_callback_info info)
 
     //return nullptr;
 }
+
+
+///  EXEC
+
+addon_value Exec(addon_env env, addon_callback_info info) {
+    try {        
+        // Allocate space for the first argument
+        addon_value arg1;
+        size_t argc = 1;
+        Check(UxpAddonApis.uxp_addon_get_cb_info(env, info, &argc, &arg1, nullptr, nullptr));
+
+        // Convert the first argument to a value that can be retained past the
+        // return from this function. This is needed if you want to pass arguments
+        // to an asynchronous/deferred task hand;er
+        Value stdValue(env, arg1);
+
+        // Create a heap copy using move. This prevents a deep copy of the data & we can pass that
+        // ptr to another context
+        std::shared_ptr<Value> valuePtr(std::make_shared<Value>(std::move(stdValue)));
+
+        auto scriptThreadHandler = [](Task& task, addon_env env, addon_deferred deferred, std::string str) {
+            try {
+                HandlerScope scope(env);
+
+                bool isError = false;
+                addon_value resultValue;
+                addon_status status;
+
+                //status = UxpAddonApis.uxp_addon_create_string_utf8(env, str.c_str(), str.size(), &resultValue);
+
+                std::string output;
+                char* name = &str[0];
+                name[str.length()] = '\0';
+
+#ifdef __APPLE__
+                output = execSyncMac(name);
+#elif _WIN32
+                output = execSyncWin(name);
+#else
+
+#endif
+
+                status = UxpAddonApis.uxp_addon_create_string_utf8(env, output.c_str(), output.size(), &resultValue);
+      
+                if (status != addon_ok)
+                {
+                    UxpAddonApis.uxp_addon_throw_error(env, NULL, "Failed to pass the arguments");
+                    isError = true;
+                }
+                // std::this_thread::sleep_for(std::chrono::seconds(5)); // Test Delay
+
+                if (isError) {
+                    Check(UxpAddonApis.uxp_addon_reject_deferred(env, deferred, resultValue));
+                }
+                else {
+                    Check(UxpAddonApis.uxp_addon_resolve_deferred(env, deferred, resultValue));
+                }
+            }
+            catch (...) {
+                std::string errMsg = "There was an error.";
+                addon_value resultValue;
+                addon_status status;
+                status = UxpAddonApis.uxp_addon_create_string_utf8(env, errMsg.c_str(), errMsg.size(), &resultValue);
+                Check(UxpAddonApis.uxp_addon_resolve_deferred(env, deferred, resultValue));
+            }
+        };
+
+        auto mainThreadHandler = [valuePtr, scriptThreadHandler](Task& task) {
+            try {
+                // Access `mEnv` and `mDeferred` directly (updated get methods in UxpTask.h)
+                addon_env env = task.GetEnv();
+                addon_deferred deferred = task.GetDeferred();
+                
+                // manually pass string to new thread
+                auto resultOg = valuePtr.get();
+                const Value& result = *resultOg;
+                auto str = result.GetString();                
+
+
+                // Launch scriptThreadHandler on a native thread
+                std::thread nativeThread([&task, env, deferred, str, scriptThreadHandler]() {
+                    scriptThreadHandler(task, env, deferred, str);
+                    });
+                nativeThread.detach();
+            }
+            catch (...) {
+                
+                addon_env env = task.GetEnv();
+                addon_deferred deferred = task.GetDeferred();
+
+                std::string errMsg = "There was an error.";
+                addon_value resultValue;
+                addon_status status;                
+                status = UxpAddonApis.uxp_addon_create_string_utf8(env, errMsg.c_str(), errMsg.size(), &resultValue);
+                Check(UxpAddonApis.uxp_addon_resolve_deferred(env, deferred, resultValue));
+            }
+        };
+
+        auto task = Task::Create();
+        return task->ScheduleOnMainThread(env, mainThreadHandler);
+    }
+    catch (...) {
+        return CreateErrorFromException(env);
+    }
+}
+
+///
+///
+/// EXAMPLE UXP HYBRID PLUGIN FUNCTIONS FROM ADOBE
+///
+///
+
 
 /*
  * The function is used to return 'hello world' message.
@@ -272,12 +389,217 @@ addon_value MyAsyncEcho(addon_env env, addon_callback_info info) {
     }
 }
 
+#pragma comment(lib, "Ws2_32.lib")
+
+#define PORT 8080
+#define BUFFER_SIZE 1024
+
+addon_value StartServerNative(addon_env env, addon_callback_info info) {
+    try {
+        // Allocate space for the callback argument
+        addon_value callback;
+        size_t argc = 1;
+        Check(UxpAddonApis.uxp_addon_get_cb_info(env, info, &argc, &callback, nullptr, nullptr));
+
+        // Convert the callback argument
+        Value callbackValue(env, callback);
+        std::shared_ptr<Value> callbackPtr(std::make_shared<Value>(std::move(callbackValue)));
+
+        auto serverThread = [callbackPtr]() {
+            try {
+                WSADATA wsaData;
+                SOCKET serverSocket, clientSocket;
+                struct sockaddr_in serverAddr, clientAddr;
+                char buffer[BUFFER_SIZE];
+                int addrLen = sizeof(clientAddr);
+
+                // Initialize Winsock
+                if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
+                    std::cerr << "WSAStartup failed." << std::endl;
+                    return;
+                }
+
+                // Create server socket
+                serverSocket = socket(AF_INET, SOCK_STREAM, 0);
+                if (serverSocket == INVALID_SOCKET) {
+                    std::cerr << "Socket creation failed." << std::endl;
+                    WSACleanup();
+                    return;
+                }
+
+                // Configure server address
+                serverAddr.sin_family = AF_INET;
+                serverAddr.sin_addr.s_addr = INADDR_ANY;
+                serverAddr.sin_port = htons(PORT);
+
+                // Bind socket
+                if (bind(serverSocket, (struct sockaddr*)&serverAddr, sizeof(serverAddr)) == SOCKET_ERROR) {
+                    std::cerr << "Socket bind failed." << std::endl;
+                    closesocket(serverSocket);
+                    WSACleanup();
+                    return;
+                }
+
+                // Listen for connections
+                if (listen(serverSocket, 3) == SOCKET_ERROR) {
+                    std::cerr << "Listen failed." << std::endl;
+                    closesocket(serverSocket);
+                    WSACleanup();
+                    return;
+                }
+
+                std::cout << "Server listening on port " << PORT << std::endl;
+
+                while (true) {
+                    // Accept client connection
+                    clientSocket = accept(serverSocket, (struct sockaddr*)&clientAddr, &addrLen);
+                    if (clientSocket == INVALID_SOCKET) {
+                        std::cerr << "Client connection failed." << std::endl;
+                        continue;
+                    }
+
+                    std::cout << "Client connected." << std::endl;
+
+                    // Receive data
+                    int bytesRead = recv(clientSocket, buffer, BUFFER_SIZE, 0);
+                    if (bytesRead > 0) {
+                        buffer[bytesRead] = '\0';
+                        std::cout << "Received: " << buffer << std::endl;
+
+                        // Echo back data
+                        send(clientSocket, buffer, bytesRead, 0);
+                    }
+
+                    closesocket(clientSocket);
+                }
+
+                closesocket(serverSocket);
+                WSACleanup();
+            }
+            catch (const std::exception& e) {
+                std::cerr << "Server thread exception: " << e.what() << std::endl;
+            }
+        };
+
+        // Run server on a separate thread
+        std::thread(serverThread).detach();
+
+        // Return success
+        // UxpAddonApis.uxp_addon
+        // return UxpAddonApis.uxp_addon_create_boolean(env, true);
+    }
+    catch (...) {
+        return CreateErrorFromException(env);
+    }
+}
+
+
+addon_value StartServer(addon_env env, addon_callback_info info) {
+ //   try {
+ //       // Allocate space for the callback argument
+ //       addon_value callback;
+ //       size_t argc = 1;
+ //       Check(UxpAddonApis.uxp_addon_get_cb_info(env, info, &argc, &callback, nullptr, nullptr));
+ //
+ //       // Convert the callback argument
+ //       Value callbackValue(env, callback);
+ //       std::shared_ptr<Value> callbackPtr(std::make_shared<Value>(std::move(callbackValue)));
+ //
+ //       auto serverThread = [callbackPtr]() {
+ //           try {
+ //               uWS::App().ws<struct PerSocketData>("/*", {
+ //                   /* Settings */
+ //                   .compression = uWS::DEDICATED_COMPRESSOR_3KB,
+ //                   .maxPayloadLength = 16 * 1024,
+ //                   .idleTimeout = 10,
+ //                   .open = [](auto* ws, auto* req) {
+ //                       std::cout << "WebSocket connection opened." << std::endl;
+ //                   },
+ //                   .message = [](auto* ws, std::string_view message, uWS::OpCode opCode) {
+ //                       std::cout << "Received: " << message << std::endl;
+ //                       ws->send(message, opCode); // Echo back the message
+ //                   },
+ //                   .close = [](auto* ws, int code, std::string_view message) {
+ //                       std::cout << "WebSocket connection closed." << std::endl;
+ //                   }
+ //                   }).listen(8080, [](auto* token) {
+ //                       if (token) {
+ //                           std::cout << "Server listening on port 8080." << std::endl;
+ //                       }
+ //                       else {
+ //                           std::cerr << "Failed to start server." << std::endl;
+ //                       }
+ //                       }).run();
+ //           }
+ //           catch (const std::exception& e) {
+ //               std::cerr << "Server thread exception: " << e.what() << std::endl;
+ //           }
+ //       };
+ //
+ //       // Run server on a separate thread
+ //       std::thread(serverThread).detach();
+ //
+ //       // Return success
+ //       return UxpAddonApis.uxp_addon_create_boolean(env, true);
+ //   }
+ //   catch (...) {
+        return CreateErrorFromException(env);
+ //   }
+}
+
+
+
 /* Method invoked when the addon module is being requested by JavaScript
  * This method is invoked on the JavaScript thread.
  */
 addon_value Init(addon_env env, addon_value exports, const addon_apis& addonAPIs) {
     addon_status status = addon_ok;
     addon_value fn = nullptr;
+
+    // PRODUCTION FUNCTIONS
+    
+    // execSync
+    {
+        status = addonAPIs.uxp_addon_create_function(env, NULL, 0, ExecSync, NULL, &fn);
+        if (status != addon_ok) {
+            addonAPIs.uxp_addon_throw_error(env, NULL, "Unable to wrap native function");
+        }
+
+        status = addonAPIs.uxp_addon_set_named_property(env, exports, "execSync", fn);
+        if (status != addon_ok) {
+            addonAPIs.uxp_addon_throw_error(env, NULL, "Unable to populate exports");
+        }
+    }
+ 
+    // exec
+    {
+        status = addonAPIs.uxp_addon_create_function(env, NULL, 0, Exec, NULL, &fn);
+        if (status != addon_ok) {
+            addonAPIs.uxp_addon_throw_error(env, NULL, "Unable to wrap native function");
+        }
+
+        status = addonAPIs.uxp_addon_set_named_property(env, exports, "exec", fn);
+        if (status != addon_ok) {
+            addonAPIs.uxp_addon_throw_error(env, NULL, "Unable to populate exports");
+        }
+    }
+
+    // R&D FUNCTIONS
+
+    // StartServer
+    {
+        status = addonAPIs.uxp_addon_create_function(env, NULL, 0, StartServer, NULL, &fn);
+        if (status != addon_ok) {
+            addonAPIs.uxp_addon_throw_error(env, NULL, "Unable to wrap native function");
+        }
+
+        status = addonAPIs.uxp_addon_set_named_property(env, exports, "start_server", fn);
+        if (status != addon_ok) {
+            addonAPIs.uxp_addon_throw_error(env, NULL, "Unable to populate exports");
+        }
+    }
+
+    // ADOBE EXAMPLE FUNCTIONS
 
     // MyFunction
     {
@@ -313,19 +635,6 @@ addon_value Init(addon_env env, addon_value exports, const addon_apis& addonAPIs
         }
 
         status = addonAPIs.uxp_addon_set_named_property(env, exports, "my_echo_async", fn);
-        if (status != addon_ok) {
-            addonAPIs.uxp_addon_throw_error(env, NULL, "Unable to populate exports");
-        }
-    }
-
-        // execSync
-    {
-        status = addonAPIs.uxp_addon_create_function(env, NULL, 0, ExecSync, NULL, &fn);
-        if (status != addon_ok) {
-            addonAPIs.uxp_addon_throw_error(env, NULL, "Unable to wrap native function");
-        }
-
-        status = addonAPIs.uxp_addon_set_named_property(env, exports, "execSync", fn);
         if (status != addon_ok) {
             addonAPIs.uxp_addon_throw_error(env, NULL, "Unable to populate exports");
         }

@@ -37,6 +37,8 @@ class Task : public std::enable_shared_from_this<Task> {
 
     void SetResult(Value&& value, bool isError);
     const Value& GetResult(bool& isError) const;
+    addon_env GetEnv() const { return mEnv; }
+    addon_deferred GetDeferred() const { return mDeferred; }
 
  protected:
     Task() {}
