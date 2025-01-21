@@ -17,11 +17,7 @@
 #include <vector>
 #include <thread>
 
-// #include <uwebsockets/App.h>
-
 #ifdef _WIN32
-#include <winsock2.h>
-#include <ws2tcpip.h> // For additional helper functions
 #include <windows.h>  // Ensure this comes after winsock2.h
 
 #endif
@@ -389,165 +385,6 @@ addon_value MyAsyncEcho(addon_env env, addon_callback_info info) {
     }
 }
 
-#pragma comment(lib, "Ws2_32.lib")
-
-#define PORT 8080
-#define BUFFER_SIZE 1024
-
-addon_value StartServerNative(addon_env env, addon_callback_info info) {
-    try {
-        // Allocate space for the callback argument
-        addon_value callback;
-        size_t argc = 1;
-        Check(UxpAddonApis.uxp_addon_get_cb_info(env, info, &argc, &callback, nullptr, nullptr));
-
-        // Convert the callback argument
-        Value callbackValue(env, callback);
-        std::shared_ptr<Value> callbackPtr(std::make_shared<Value>(std::move(callbackValue)));
-
-        auto serverThread = [callbackPtr]() {
-            try {
-                WSADATA wsaData;
-                SOCKET serverSocket, clientSocket;
-                struct sockaddr_in serverAddr, clientAddr;
-                char buffer[BUFFER_SIZE];
-                int addrLen = sizeof(clientAddr);
-
-                // Initialize Winsock
-                if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
-                    std::cerr << "WSAStartup failed." << std::endl;
-                    return;
-                }
-
-                // Create server socket
-                serverSocket = socket(AF_INET, SOCK_STREAM, 0);
-                if (serverSocket == INVALID_SOCKET) {
-                    std::cerr << "Socket creation failed." << std::endl;
-                    WSACleanup();
-                    return;
-                }
-
-                // Configure server address
-                serverAddr.sin_family = AF_INET;
-                serverAddr.sin_addr.s_addr = INADDR_ANY;
-                serverAddr.sin_port = htons(PORT);
-
-                // Bind socket
-                if (bind(serverSocket, (struct sockaddr*)&serverAddr, sizeof(serverAddr)) == SOCKET_ERROR) {
-                    std::cerr << "Socket bind failed." << std::endl;
-                    closesocket(serverSocket);
-                    WSACleanup();
-                    return;
-                }
-
-                // Listen for connections
-                if (listen(serverSocket, 3) == SOCKET_ERROR) {
-                    std::cerr << "Listen failed." << std::endl;
-                    closesocket(serverSocket);
-                    WSACleanup();
-                    return;
-                }
-
-                std::cout << "Server listening on port " << PORT << std::endl;
-
-                while (true) {
-                    // Accept client connection
-                    clientSocket = accept(serverSocket, (struct sockaddr*)&clientAddr, &addrLen);
-                    if (clientSocket == INVALID_SOCKET) {
-                        std::cerr << "Client connection failed." << std::endl;
-                        continue;
-                    }
-
-                    std::cout << "Client connected." << std::endl;
-
-                    // Receive data
-                    int bytesRead = recv(clientSocket, buffer, BUFFER_SIZE, 0);
-                    if (bytesRead > 0) {
-                        buffer[bytesRead] = '\0';
-                        std::cout << "Received: " << buffer << std::endl;
-
-                        // Echo back data
-                        send(clientSocket, buffer, bytesRead, 0);
-                    }
-
-                    closesocket(clientSocket);
-                }
-
-                closesocket(serverSocket);
-                WSACleanup();
-            }
-            catch (const std::exception& e) {
-                std::cerr << "Server thread exception: " << e.what() << std::endl;
-            }
-        };
-
-        // Run server on a separate thread
-        std::thread(serverThread).detach();
-
-        // Return success
-        // UxpAddonApis.uxp_addon
-        // return UxpAddonApis.uxp_addon_create_boolean(env, true);
-    }
-    catch (...) {
-        return CreateErrorFromException(env);
-    }
-}
-
-
-addon_value StartServer(addon_env env, addon_callback_info info) {
- //   try {
- //       // Allocate space for the callback argument
- //       addon_value callback;
- //       size_t argc = 1;
- //       Check(UxpAddonApis.uxp_addon_get_cb_info(env, info, &argc, &callback, nullptr, nullptr));
- //
- //       // Convert the callback argument
- //       Value callbackValue(env, callback);
- //       std::shared_ptr<Value> callbackPtr(std::make_shared<Value>(std::move(callbackValue)));
- //
- //       auto serverThread = [callbackPtr]() {
- //           try {
- //               uWS::App().ws<struct PerSocketData>("/*", {
- //                   /* Settings */
- //                   .compression = uWS::DEDICATED_COMPRESSOR_3KB,
- //                   .maxPayloadLength = 16 * 1024,
- //                   .idleTimeout = 10,
- //                   .open = [](auto* ws, auto* req) {
- //                       std::cout << "WebSocket connection opened." << std::endl;
- //                   },
- //                   .message = [](auto* ws, std::string_view message, uWS::OpCode opCode) {
- //                       std::cout << "Received: " << message << std::endl;
- //                       ws->send(message, opCode); // Echo back the message
- //                   },
- //                   .close = [](auto* ws, int code, std::string_view message) {
- //                       std::cout << "WebSocket connection closed." << std::endl;
- //                   }
- //                   }).listen(8080, [](auto* token) {
- //                       if (token) {
- //                           std::cout << "Server listening on port 8080." << std::endl;
- //                       }
- //                       else {
- //                           std::cerr << "Failed to start server." << std::endl;
- //                       }
- //                       }).run();
- //           }
- //           catch (const std::exception& e) {
- //               std::cerr << "Server thread exception: " << e.what() << std::endl;
- //           }
- //       };
- //
- //       // Run server on a separate thread
- //       std::thread(serverThread).detach();
- //
- //       // Return success
- //       return UxpAddonApis.uxp_addon_create_boolean(env, true);
- //   }
- //   catch (...) {
-        return CreateErrorFromException(env);
- //   }
-}
-
-
 
 /* Method invoked when the addon module is being requested by JavaScript
  * This method is invoked on the JavaScript thread.
@@ -579,21 +416,6 @@ addon_value Init(addon_env env, addon_value exports, const addon_apis& addonAPIs
         }
 
         status = addonAPIs.uxp_addon_set_named_property(env, exports, "exec", fn);
-        if (status != addon_ok) {
-            addonAPIs.uxp_addon_throw_error(env, NULL, "Unable to populate exports");
-        }
-    }
-
-    // R&D FUNCTIONS
-
-    // StartServer
-    {
-        status = addonAPIs.uxp_addon_create_function(env, NULL, 0, StartServer, NULL, &fn);
-        if (status != addon_ok) {
-            addonAPIs.uxp_addon_throw_error(env, NULL, "Unable to wrap native function");
-        }
-
-        status = addonAPIs.uxp_addon_set_named_property(env, exports, "start_server", fn);
         if (status != addon_ok) {
             addonAPIs.uxp_addon_throw_error(env, NULL, "Unable to populate exports");
         }
