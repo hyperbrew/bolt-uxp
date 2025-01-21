@@ -53,6 +53,31 @@
       console.log("Execute as execSync command failed", err);
     }
   };
+  const hybridAsyncTest = async () => {
+    try {
+      let hybridModule: {
+        exec: (cmd: string) => Promise<string>;
+      } = await require("bolt-uxp-hybrid.uxpaddon");
+
+      let command =
+        process.platform === "win32"
+          ? "timeout 2 && echo hello"
+          : "sleep 2 && echo hello";
+
+      hybridModule
+        .exec(command)
+        .then((res) => {
+          console.log(`execAsyncRes = `, res);
+          api.notify(`execAsyncRes = ${res}`);
+        })
+        .catch((err) => {
+          console.log("Execute as execAsync command failed", err);
+          api.notify("Execute as execAsync command failed");
+        });
+    } catch (err) {
+      console.log("Execute as execSync command failed", err);
+    }
+  };
   // BOLT-UXP_HYBRID_END
 
   // BOLT-UXP_WEBVIEW_START
@@ -94,16 +119,15 @@
 </script>
 
 <main>
-  <!-- BOLT-UXP_SAMPLECODE_START -->
-
+  <!-- BOLT-UXP_WEBVIEW_START -->
   <!-- <webview
-    id="webviewsample"
-    width="500px"
-    height="360px"
-    src="plugin:/ui/index.html"
-    uxpAllowInspector="true"
+  id="webviewsample"
+  width="500px"
+  height="360px"
+  src="plugin:/ui/index.html"
+  uxpAllowInspector="true"
   ></webview> -->
-  <webview
+  <!-- <webview
     id="webviewsample"
     width="500px"
     height="360px"
@@ -111,7 +135,10 @@
     uxpAllowInspector="true"
   ></webview>
   <button on:click={() => startServeCpp()}>start serve</button>
-  <button on:click={() => startServeSimple()}>start serve simple</button>
+  <button on:click={() => startServeSimple()}>start serve simple</button> -->
+  <!-- BOLT-UXP_WEBVIEW_END -->
+
+  <!-- BOLT-UXP_SAMPLECODE_START -->
 
   <div>
     <img class="logo-lg" src={boltUxpLogo} alt="" />
@@ -131,7 +158,8 @@
     </button>
     <button on:click={helloWorld}>Hello World</button>
     <!-- BOLT-UXP_HYBRID_START -->
-    <button on:click={hybridTest}>Hybrid</button>
+    <button on:click={hybridTest}>Hybrid Sync</button>
+    <button on:click={hybridAsyncTest}>Hybrid Async</button>
     <!-- BOLT-UXP_HYBRID_END -->
   </div>
   <div>
