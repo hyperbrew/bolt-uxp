@@ -158,11 +158,13 @@
       count is {count}
     </button>
     <button on:click={helloWorld}>Hello World</button>
-    <!-- BOLT-UXP_HYBRID_START -->
+  </div>
+  <!-- BOLT-UXP_HYBRID_START -->
+  <div class="button-group">
     <button on:click={hybridTest}>Hybrid Sync</button>
     <button on:click={hybridAsyncTest}>Hybrid Async</button>
-    <!-- BOLT-UXP_HYBRID_END -->
   </div>
+  <!-- BOLT-UXP_HYBRID_END -->
   <div>
     <p>
       Edit <span class="code">main.svelte</span> and save to test HMR updates.
