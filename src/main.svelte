@@ -64,7 +64,7 @@
           ? "timeout 2 && echo hello"
           : "sleep 2 && echo hello";
 
-      hybridModule
+      const promise = hybridModule
         .exec(command)
         .then((res) => {
           console.log(`execAsyncRes = `, res);
@@ -74,6 +74,7 @@
           console.log("Execute as execAsync command failed", err);
           api.notify("Execute as execAsync command failed");
         });
+      console.log(`async promise = `, promise);
     } catch (err) {
       console.log("Execute as execSync command failed", err);
     }
