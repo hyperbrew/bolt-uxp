@@ -175,13 +175,13 @@ export const uxp = (config: UXP_Config, mode?: string): Plugin => {
         copyHybridBinaries(config, false);
       }
       if (mode === "package" || mode === "zip") {
-        generateCCX(config);
+        await generateCCX(config);
       }
       if (mode === "zip") {
         const zipDir = path.join(process.cwd(), "zip");
         const ccxDir = path.join(process.cwd(), "ccx");
         const src = process.cwd();
-        zipPackage(config, zipDir, ccxDir, src, config.copyZipAssets);
+        await zipPackage(config, zipDir, ccxDir, src, config.copyZipAssets);
       }
     },
   };
