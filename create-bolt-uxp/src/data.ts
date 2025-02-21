@@ -5,6 +5,7 @@ export const globalIncludes: string[] = [
   "public-zip/**/*",
   ".github/**/*",
   ".gitignore",
+  ".npmignore",
   ".env.example",
 ];
 export const globalExcludes: string[] = [".env", "yarn-error.log"];

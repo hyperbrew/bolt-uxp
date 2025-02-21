@@ -1,6 +1,6 @@
 {
   "name": "bolt-uxp",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -72,6 +72,7 @@
     "uxp.config.ts",
     "vite.config.ts",
     "yarn.lock",
-    ".gitignore"
+    ".gitignore",
+    ".npmignore"
   ]
 }
