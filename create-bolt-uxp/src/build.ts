@@ -225,6 +225,18 @@ export const buildBoltUXP = async (args: Args) => {
     path.join(fullPath, "package.json")
   );
 
+  //* if .npmignore exists (for npm and pnpm only), rename it to .gitignore
+  const npmIgnore = path.join(fullPath, ".npmignore");
+  const gitignore = path.join(fullPath, ".gitignore");
+  if (!fs.existsSync(gitignore) && fs.existsSync(npmIgnore)) {
+    fs.renameSync(npmIgnore, gitignore);
+  }
+
+  fs.renameSync(
+    path.join(fullPath, `package.${args.framework}.json`),
+    path.join(fullPath, "package.json")
+  );
+
   //* update package.json
   const packageJson = path.join(fullPath, "package.json");
   const packageJsonData = JSON.parse(fs.readFileSync(packageJson, "utf8"));

@@ -165,7 +165,7 @@ export const main = async (params: OptionalArgs) => {
 
 function boltIntro() {
   console.log();
-  const cbc = color.bgGreen(` create-bolt-uxp `);
+  const cbc = color.bgGreen(` create-bolt-uxp (new)`);
   const url = color.underline("https://hyperbrew.co");
   const bru = color.gray("│   ") + color.cyan(`by Hyper Brew | ${url}`);
   intro(`${cbc} \n${bru}`);
