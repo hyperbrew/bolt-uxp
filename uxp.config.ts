@@ -120,7 +120,7 @@ const manifest: UXP_Manifest = {
     localFileSystem: "fullAccess",
     launchProcess: {
       schemes: ["https", "slack", "file", "ws"],
-      extensions: [".xd", ".psd", ".bat", ".cmd"],
+      extensions: [".xd", ".psd", ".bat", ".cmd", ""],
     },
     network: {
       domains: [

@@ -232,11 +232,6 @@ export const buildBoltUXP = async (args: Args) => {
     fs.renameSync(npmIgnore, gitignore);
   }
 
-  fs.renameSync(
-    path.join(fullPath, `package.${args.framework}.json`),
-    path.join(fullPath, "package.json")
-  );
-
   //* update package.json
   const packageJson = path.join(fullPath, "package.json");
   const packageJsonData = JSON.parse(fs.readFileSync(packageJson, "utf8"));
