@@ -1,4 +1,5 @@
 import { execSync, exec } from "child_process";
+import * as fs from "fs";
 
 export const posix = (str: string) => str.replace(/\\/g, "/");
 
@@ -28,4 +29,13 @@ export function getPackageManager() {
   const separatorPos = pmSpec.lastIndexOf("/");
   const name = pmSpec.substring(0, separatorPos);
   return name === "npminstall" ? "cnpm" : name;
+}
+
+export function isFolderEmpty(folderPath: string): boolean {
+  try {
+    const files = fs.readdirSync(folderPath);
+    return files.length === 0;
+  } catch (error) {
+    return true;
+  }
 }
