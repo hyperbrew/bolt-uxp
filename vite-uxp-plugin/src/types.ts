@@ -5,7 +5,6 @@ export type UXP_COMMAND = {
     default: string;
   };
 };
-
 export type UXP_Icon = {
   width?: number;
   height?: number;
@@ -14,7 +13,6 @@ export type UXP_Icon = {
   theme?: string[];
   species?: string[];
 };
-
 export type UXP_PANEL = {
   type: string;
   id: string;
@@ -43,7 +41,6 @@ export type UXP_PANEL = {
   };
   icons?: UXP_Icon[];
 };
-
 export type UXP_Manifest = {
   id: string;
   name: string;
@@ -58,6 +55,11 @@ export type UXP_Manifest = {
     };
   }[];
   entrypoints: Array<UXP_PANEL | UXP_Manifest>;
+  featureFlags?: {
+    enableAlerts?: boolean;
+    enableSWCSupport?: boolean;
+    enableFillAsCustomAttribute?: boolean;
+  };
   requiredPermissions?: {
     localFileSystem?: string;
     launchProcess?: {
@@ -70,7 +72,9 @@ export type UXP_Manifest = {
     clipboard?: string;
     webview?: {
       allow?: string;
-      domains?: string[];
+      allowLocalRendering?: string;
+      domains?: string[] | "all";
+      enableMessageBridge?: "localAndRemote" | "localOnly" | "no";
     };
     ipc?: {
       enablePluginCommunication?: boolean;
@@ -83,7 +87,6 @@ export type UXP_Manifest = {
   };
   icons?: UXP_Icon[];
 };
-
 export type UXP_Config = {
   manifest: UXP_Manifest;
   hotReloadPort: number;

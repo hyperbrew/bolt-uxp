@@ -1,6 +1,6 @@
 {
   "name": "bolt-uxp",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -54,7 +54,7 @@
     "svelte-preprocess": "5",
     "typescript": "^5.0.2",
     "vite": "^5.2.12",
-    "vite-uxp-plugin": "^0.1.25",
+    "vite-uxp-plugin": "^0.2.4",
     "ws": "^8.14.2"
   },
   "files": [
