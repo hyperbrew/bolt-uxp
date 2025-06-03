@@ -1,177 +1,168 @@
 #!/usr/bin/env node
 
-import * as color from "picocolors";
-import {
-  intro,
-  note,
-  outro,
-  spinner,
-  multiselect,
-  select,
-  text,
-  isCancel,
-  cancel,
-  confirm,
-} from "@clack/prompts";
-import { dash } from "radash";
-import { Args, OptionalArgs, buildBoltUXP } from "./build";
+import { main } from "meta-bolt";
+import type { BoltInitData, ArgOpt } from "meta-bolt";
 
-import { frameworkOptions, appOptions } from "./data";
+export const frameworkOptions: ArgOpt[] = [
+  {
+    value: "svelte",
+    label: "Svelte",
+    files: ["src/index-svelte.ts", "src/main.svelte", "package.svelte.jsonc"],
+  },
+  {
+    value: "react",
+    label: "React",
+    files: ["src/index-react.tsx", "src/main.tsx", "package.react.jsonc"],
+  },
+  {
+    value: "vue",
+    label: "Vue",
+    files: ["src/index-vue.ts", "src/main.vue", "package.vue.jsonc"],
+  },
+];
 
-import { parseArgs } from "./parse-args";
+export const appOptions: ArgOpt[] = [
+  { value: "phxs", label: "Photoshop", files: ["src/api/photoshop.ts"] },
+  { value: "idsn", label: "InDesign", files: ["src/api/indesign.ts"] },
+  {
+    value: "ppro",
+    label: "Premiere Pro (Beta)",
+    files: ["src/api/premierepro.ts"],
+  },
+  {
+    value: "ilst",
+    label: "Illustrator (Beta)",
+    files: ["src/api/illustrator.ts"],
+  },
+];
 
-const handleCancel = (value: unknown) => {
-  if (isCancel(value)) {
-    cancel("Operation cancelled");
-    return process.exit(0);
-  }
-};
+const initData: BoltInitData = {
+  intro: {
+    name: "create-bolt-uxp",
+    prettyName: "Bolt UXP",
+  },
+  base: {
+    module: "bolt-uxp",
+    createDirName: __dirname,
+    globalIncludes: [
+      "*",
+      "src/**/*",
+      ".github/**/*",
+      ".gitignore",
+      ".npmrc",
+      ".prettierrc",
+      ".env.example",
+    ],
+    globalExcludes: [
+      ".env",
+      "yarn-error.log",
+      "package.json",
+      "tsconfig.json",
+      "LICENSE",
+    ],
+    fileRenames: [
+      ["package.svelte.jsonc", "package.json"],
+      ["package.react.jsonc", "package.json"],
+      ["package.vue.jsonc", "package.json"],
 
-export const main = async (params: OptionalArgs) => {
-  console.clear();
-  boltIntro();
-  const args = await parseArgs();
-
-  let folder = params.folder ?? args.folder;
-  let displayName = params.displayName ?? args.displayName;
-  let id = params.id ?? args.id;
-  let framework = params.framework ?? args.framework;
-  let apps = params.apps ?? args.apps;
-  let enableHybrid = params.enableHybrid ?? args.enableHybrid;
-  let keepSampleCode = params.keepSampleCode ?? args.keepSampleCode;
-  let installDeps = params.installDeps ?? args.installDeps;
-
-  // let {
-  //   folder,
-  //   displayName,
-  //   id,
-  //   framework,
-  //   apps,
-  //   enableHybrid,
-  //   keepSampleCode,
-  //   installDeps,
-  // } = args;
-
-  if (folder.length === 0) {
-    folder = (await text({
+      [".npmignore", ".gitignore"],
+    ],
+  },
+  argsTemplate: [
+    {
+      name: "folder",
+      type: "folder",
       message: "Where do you want to create your project?",
-      // placeholder: 'Not sure',
       initialValue: "./",
-      validate(value) {
-        if (value.length < 1) return `Value is required!`;
-      },
-    })) as string;
-    handleCancel(folder);
-  }
-  if (displayName.length === 0) {
-    displayName = (await text({
-      message: "Choose a unique Display Name for your plugin:",
-      // placeholder: 'Not sure',
-      initialValue: "Bolt UXP",
-      validate(value) {
-        if (value.length === 0) return `Value is required!`;
-      },
-    })) as string;
-    handleCancel(displayName);
-  }
-  if (id.length === 0) {
-    id = (await text({
-      message: "Choose a unique ID for your plugin:",
-      // placeholder: 'Not sure',
-      initialValue: `${dash(displayName.toString()).replace(
-        /\-/g,
-        "."
-      )}.plugin`,
-      validate(value) {
-        if (value.length === 0) return `Value is required!`;
-      },
-    })) as string;
-    handleCancel(id);
-  }
-  if (framework.length === 0) {
-    framework = (await select({
-      message: "Select framework:",
-      options: frameworkOptions,
-    })) as string;
-    handleCancel(framework);
-  }
-  if (apps.length === 0) {
-    apps = (await multiselect({
-      message:
-        "Select apps: ( apps marked (Beta) require beta access from Adobe, see readme for more info )",
-      options: appOptions,
       required: true,
-    })) as string[];
-    handleCancel(apps);
-  }
-  if (typeof enableHybrid !== "boolean") {
-    enableHybrid = (await confirm({
-      message: `Do you want to include UXP Hybrid Plugin (C++) files?`,
+      validator: (input: string) => {
+        if (input.length < 1) return `Value is required!`;
+      },
+      describe: "Name of the folder for the new Adobe UXP plugin ",
+    },
+    {
+      name: "displayName",
+      type: "string",
+      message: "Choose a unique Display Name for your UXP plugin:",
+      initialValue: "Bolt UXP",
+      required: true,
+      validator: (input: string) => {
+        if (input.length < 1) return `Value is required!`;
+      },
+      describe: "Panel's display name",
+      alias: "n",
+    },
+    {
+      name: "id",
+      type: "string",
+      message: "Choose a unique ID for your UXP plugin:",
+      initialValue: "com.bolt.uxp",
+      required: true,
+      validator: (input: string) => {
+        if (input.length < 1) return `Value is required!`;
+      },
+      describe: "Unique ID for your UXP plugin (e.g. com.bolt.cep)",
+      alias: "i",
+    },
+    {
+      name: "framework",
+      type: "select",
+      message: "Select framework:",
+      alias: "f",
+      describe: "Select a Framework for your UXP plugin:",
+      options: frameworkOptions,
+      required: true,
+    },
+    {
+      name: "apps",
+      type: "multiselect",
+      message: "Select app:",
+      alias: "a",
+      describe: "Select app(s) for your UXP plugin:",
+      options: appOptions,
+      validator: (input: string[]) => {
+        if (input.length < 1) return `At Least One value Required!`;
+      },
+      required: true,
+    },
+    {
+      name: "hybrid",
+      type: "boolean",
+      message: "Do you want to include UXP Hybrid Plugin (C++) files?",
       initialValue: true,
-    })) as boolean;
-    handleCancel(enableHybrid);
-  }
-  if (typeof keepSampleCode !== "boolean") {
-    keepSampleCode = (await confirm({
-      message: `Do you want to keep sample code and buttons?`,
+      required: true,
+      alias: "h",
+      describe: "Keep Hybrid Plugin Files (default: true)",
+      options: [
+        {
+          value: "true",
+          label: "Yes",
+          files: ["public-hybrid/**/*", "src/hybrid/**/*", "scripts/**/*"],
+        },
+        { value: "false", label: "No", files: [] },
+      ],
+    },
+    {
+      name: "installDeps",
+      type: "boolean",
+      message: "Install dependencies?",
       initialValue: true,
-    })) as boolean;
-    handleCancel(keepSampleCode);
-  }
-  if (typeof installDeps !== "boolean") {
-    installDeps = (await confirm({
-      message: `Do you want to install dependencies? ${color.gray(
-        "(recommended)"
-      )}`,
-      initialValue: false,
-    })) as boolean;
-    handleCancel(installDeps);
-  }
-
-  if (
-    typeof folder === "string" &&
-    typeof displayName === "string" &&
-    typeof id === "string" &&
-    typeof framework === "string" &&
-    Array.isArray(apps) &&
-    typeof installDeps === "boolean" &&
-    typeof enableHybrid === "boolean" &&
-    typeof keepSampleCode === "boolean"
-  ) {
-    const fullPath = await buildBoltUXP({
-      folder,
-      displayName,
-      id,
-      framework,
-      apps,
-      enableHybrid,
-      keepSampleCode,
-      installDeps,
-    });
-
-    return {
-      folder,
-      displayName,
-      id,
-      framework,
-      apps,
-      enableHybrid,
-      keepSampleCode,
-      installDeps,
-      fullPath,
-    };
-  }
+      required: true,
+      alias: "d",
+      describe: "Install dependencies (default: false)",
+    },
+    {
+      name: "sampleCode",
+      type: "boolean",
+      message: "Keep Sample Code Snippets?",
+      initialValue: true,
+      required: true,
+      alias: "s",
+      describe: "Keep Sample Code (default: true)",
+    },
+  ],
 };
 
-function boltIntro() {
-  console.log();
-  const cbc = color.bgGreen(` create-bolt-uxp (new)`);
-  const url = color.underline("https://hyperbrew.co");
-  const bru = color.gray("│   ") + color.cyan(`by Hyper Brew | ${url}`);
-  intro(`${cbc} \n${bru}`);
-}
-
-// if not using as a module, run immediately
-if (!process.env.BOLTUXP_MODULEONLY) {
-  main({});
-}
+//* if not using as a module, run immediately
+console.log("BOLT_MODULEONLY", process.env.BOLT_MODULEONLY);
+if (!process.env.BOLT_MODULEONLY) main(initData);

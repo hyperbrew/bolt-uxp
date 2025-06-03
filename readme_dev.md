@@ -34,12 +34,12 @@ File includes and excludes for each template can be found in `create-bolt-uxp/sr
 
 All code sections:
 
-- between: `// BOLT-UXP_VARIABLE_START` and `// BOLT-UXP_VARIABLE_END` or `<!-- BOLT-UXP_VARIABLE_START -->` and `<!-- BOLT-UXP_VARIABLE_END -->` or `{/* BOLT-UXP_VARIABLE_START */}` and `{/* BOLT-UXP_VARIABLE_END */}`
-- before: `// BOLT-UXP_VARIABLE_ONLY`
+- between: `// BOLT_VARIABLE_START` and `// BOLT_VARIABLE_END` or `<!-- BOLT_VARIABLE_START -->` and `<!-- BOLT_VARIABLE_END -->` or `{/* BOLT_VARIABLE_START */}` and `{/* BOLT_VARIABLE_END */}`
+- before: `// BOLT_VARIABLE_ONLY`
 
 Are removed if the variable doesn't match the framework (e.g. React, Vue, Svelte), app (e.g. PhotoShop, InDesign, etc.), or feature (e.g. Hybrid) selected.
 
-_Note: Swap `VARIABLE` with the variable name (e.g. `// BOLT-UXP_REACT_ONLY`, `// BOLT-UXP_PHOTOSHOP_ONLY`, etc.)_
+_Note: Swap `VARIABLE` with the variable name (e.g. `// BOLT_REACT_ONLY`, `// BOLT_PHXS_ONLY`, etc.)_
 
 ## How to publish changes:
 

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-// BOLT-UXP_SAMPLECODE_START
+// BOLT_SAMPLECODE_START
 import boltUxpLogo from "./assets/bolt-uxp.png";
 import viteLogo from "./assets/vite.png";
 import tsLogo from "./assets/typescript.png";
@@ -9,7 +9,7 @@ import reactLogo from "./assets/react.png";
 
 import { uxp, indesign, photoshop } from "./globals";
 import { api } from "./api/api";
-// BOLT-UXP_SAMPLECODE_END
+// BOLT_SAMPLECODE_END
 
 declare global {
   namespace JSX {
@@ -23,39 +23,39 @@ declare global {
 }
 
 export const App = () => {
-  // BOLT-UXP_SAMPLECODE_START
+  // BOLT_SAMPLECODE_START
   const [count, setCount] = useState(0);
   const increment = () => setCount((prev) => prev + 1);
 
   const hostName = (uxp.host.name as string).toLowerCase();
 
   //* Call Functions Conditionally by App
-  // BOLT-UXP_PHOTOSHOP_START
+  // BOLT_PHXS_START
   if (hostName === "photoshop") {
     console.log("Hello from Photoshop", photoshop);
   }
-  // BOLT-UXP_PHOTOSHOP_END
-  // BOLT-UXP_INDESIGN_START
+  // BOLT_PHXS_END
+  // BOLT_IDSN_START
   if (hostName === "indesign") {
     console.log("Hello from InDesign", indesign);
   }
-  // BOLT-UXP_INDESIGN_END
-  // BOLT-UXP_PREMIEREPRO_START
+  // BOLT_IDSN_END
+  // BOLT_PPRO_START
   if (hostName === "premierepro") {
     console.log("Hello from Premiere Pro", indesign);
   }
-  // BOLT-UXP_PREMIEREPRO_END
-  // BOLT-UXP_ILLUSTRATOR_START
+  // BOLT_PPRO_END
+  // BOLT_ILST_START
   if (hostName === "illustrator") {
     console.log("Hello from Illustrator", indesign);
   }
-  // BOLT-UXP_ILLUSTRATOR_END
+  // BOLT_ILST_END
 
   //* Or call the unified API object directly and the correct app function will be used
   const helloWorld = () => {
     api.notify("Hello World");
   };
-  // BOLT-UXP_HYBRID_START
+  // BOLT_HYBRID_START
   const hybridTest = async () => {
     try {
       let hybridModule: {
@@ -69,12 +69,12 @@ export const App = () => {
     }
   };
 
-  // BOLT-UXP_HYBRID_END
-  // BOLT-UXP_SAMPLECODE_END
+  // BOLT_HYBRID_END
+  // BOLT_SAMPLECODE_END
   return (
     <>
       <main>
-        {/* BOLT-UXP_SAMPLECODE_START */}
+        {/* BOLT_SAMPLECODE_START */}
         <div>
           <img className="logo-lg" src={boltUxpLogo} alt="" />
         </div>
@@ -90,9 +90,9 @@ export const App = () => {
         <div className="button-group">
           <button onClick={increment}>count is {count}</button>
           <button onClick={helloWorld}>Hello World</button>
-          {/* BOLT-UXP_HYBRID_START */}
+          {/* BOLT_HYBRID_START */}
           <button onClick={hybridTest}>Hybrid</button>
-          {/* BOLT-UXP_HYBRID_END */}
+          {/* BOLT_HYBRID_END */}
         </div>
         <div>
           <p>
@@ -105,15 +105,15 @@ export const App = () => {
           <a href="https://svelte.dev">Svelte Docs</a>
           <a href="https://vitejs.dev/">Vite Docs</a>
         </div>
-        {/* BOLT-UXP_SAMPLECODE_END */}
+        {/* BOLT_SAMPLECODE_END */}
       </main>
-      {/* BOLT-UXP_SAMPLECODE_START */}
+      {/* BOLT_SAMPLECODE_START */}
       {/* Example of a secondary panel entrypoint */}
       <uxp-panel panelid="bolt.uxp.plugin.settings">
         <h1>Settings Panel</h1>
         <p>count is: {count}</p>
       </uxp-panel>
-      {/* BOLT-UXP_SAMPLECODE_END */}
+      {/* BOLT_SAMPLECODE_END */}
     </>
   );
 };

@@ -1,5 +1,5 @@
 {
-  "name": "bolt-uxp",
+  "name": "bolt-uxp", // BOLT_ID_REPLACE
   "private": true,
   "version": "0.0.1",
   "repository": {

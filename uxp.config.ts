@@ -13,30 +13,30 @@ const manifest: UXP_Manifest = {
   main: "index.html",
   manifestVersion: 6,
   host: [
-    // BOLT-UXP_PHOTOSHOP_START
+    // BOLT_PHXS_START
     {
       app: "PS",
       minVersion: "24.2.0",
     },
-    // BOLT-UXP_PHOTOSHOP_END
-    // BOLT-UXP_INDESIGN_START
+    // BOLT_PHXS_END
+    // BOLT_IDSN_START
     {
       app: "ID",
       minVersion: "18.5",
     },
-    // BOLT-UXP_INDESIGN_END
-    // BOLT-UXP_PREMIEREPRO_START
+    // BOLT_IDSN_END
+    // BOLT_PPRO_START
     {
       app: "premierepro",
       minVersion: "22.3",
     },
-    // BOLT-UXP_PREMIEREPRO_END
-    // BOLT-UXP_ILLUSTRATOR_START
+    // BOLT_PPRO_END
+    // BOLT_ILST_START
     {
       app: "AI",
       minVersion: "18.5",
     },
-    // BOLT-UXP_ILLUSTRATOR_END
+    // BOLT_ILST_END
   ],
   entrypoints: [
     {
@@ -67,7 +67,7 @@ const manifest: UXP_Manifest = {
       ],
     },
 
-    // BOLT-UXP_SAMPLECODE_START
+    // BOLT_SAMPLECODE_START
 
     // * Example of a UXP Secondary panel
     // * Must also enable the <uxp-panel panelid="bolt.uxp.plugin.settings">
@@ -111,7 +111,7 @@ const manifest: UXP_Manifest = {
     //   },
     // },
 
-    // BOLT-UXP_SAMPLECODE_END
+    // BOLT_SAMPLECODE_END
   ],
   featureFlags: {
     enableAlerts: true,
@@ -124,14 +124,14 @@ const manifest: UXP_Manifest = {
     },
     network: {
       domains: [
-        // BOLT-UXP_SAMPLECODE_START
+        // BOLT_SAMPLECODE_START
         "https://hyperbrew.co",
         "https://github.com",
         "https://vitejs.dev",
         "https://svelte.dev",
         "https://reactjs.org",
         "https://vuejs.org/",
-        // BOLT-UXP_SAMPLECODE_END
+        // BOLT_SAMPLECODE_END
         `ws://localhost:${extraPrefs.hotReloadPort}`, // Required for hot reload
       ],
     },
@@ -145,13 +145,13 @@ const manifest: UXP_Manifest = {
     },
     allowCodeGenerationFromStrings: true,
 
-    enableAddon: true, // BOLT-UXP_HYBRID_ONLY
+    enableAddon: true, // BOLT_HYBRID_ONLY
   },
-  // BOLT-UXP_HYBRID_START
+  // BOLT_HYBRID_START
   addon: {
     name: "bolt-uxp-hybrid.uxpaddon",
   },
-  // BOLT-UXP_HYBRID_END
+  // BOLT_HYBRID_END
   icons: [
     {
       width: 48,

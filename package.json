@@ -60,9 +60,9 @@
   "files": [
     "index.html",
     "package.json",
-    "package.react.json",
-    "package.svelte.json",
-    "package.vue.json",
+    "package.react.jsonc",
+    "package.svelte.jsonc",
+    "package.vue.jsonc",
     "public/**/*",
     "public-hybrid/**/*",
     "public-zip/**/*",

@@ -1,5 +1,5 @@
 {
-  "name": "bolt-uxp",
+  "name": "bolt-uxp", // BOLT_ID_REPLACE
   "private": true,
   "version": "0.0.1",
   "repository": {
@@ -14,7 +14,6 @@
     "ccx": "cross-env MODE=package vite build",
     "zip": "cross-env MODE=zip vite build",
     "preview": "vite preview",
-    "check": "svelte-check --tsconfig ./tsconfig.json",
     "hmr": "vite",
     "mac-build": "run-s mac-build-64 mac-build-arm",
     "mac-build-64": "xcodebuild -project src/hybrid/mac/bolt-uxp-hybrid.xcodeproj -target x64",
@@ -23,23 +22,24 @@
     "mac-build-sign": "mac-build && node mac-sign.js",
     "win-build": "msbuild src/hybrid/win/bolt-uxp-hybrid.sln"
   },
-  "dependencies": {},
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
   "devDependencies": {
     "npm-run-all": "^4.1.5",
+    "@vitejs/plugin-react": "^4.2.1",
     "@adobe/cc-ext-uxp-types": "https://github.com/justintaylor-dev/cc-ext-uxp-types.git",
-    "@sveltejs/vite-plugin-svelte": "^3.0.2",
-    "@tsconfig/svelte": "^5.0.0",
     "@types/node": "^20.8.7",
     "@types/photoshop": "^25.0.2",
     "@types/ws": "^8.5.8",
-    "svelte-preprocess": "5",
     "cross-env": "^7.0.3",
     "sass": "^1.69.5",
-    "svelte": "^4.0.5",
-    "svelte-check": "^3.4.6",
     "typescript": "^5.0.2",
     "vite": "^5.1.1",
     "ws": "^8.14.2",
+    "@types/react": "^18.0.24",
+    "@types/react-dom": "^18.0.8",
     "dotenv": "^16.4.5",
     "vite-uxp-plugin": "^0.2.5"
   }
