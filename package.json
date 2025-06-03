@@ -16,10 +16,10 @@
     "preview": "vite preview",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "hmr": "vite",
-    "connect": "cross-env ACTION=connect vite",
-    "disconnect": "cross-env ACTION=disconnect vite",
-    "ccx-install": "cross-env ACTION=install vite",
-    "ccx-uninstall": "cross-env ACTION=uninstall vite",
+    "connect": "cross-env BOLT_ACTION=connect vite",
+    "disconnect": "cross-env BOLT_ACTION=disconnect vite",
+    "ccx-install": "cross-env BOLT_ACTION=install vite",
+    "ccx-uninstall": "cross-env BOLT_ACTION=uninstall vite",
     "mac-build": "run-s mac-build-64 mac-build-arm",
     "mac-build-64": "xcodebuild -project src/hybrid/mac/bolt-uxp-hybrid.xcodeproj -target x64",
     "mac-build-arm": "xcodebuild -project src/hybrid/mac/bolt-uxp-hybrid.xcodeproj -target arm64",
@@ -27,16 +27,17 @@
     "mac-build-sign": "mac-build && node ./scripts/mac-sign.js",
     "win-build": "msbuild /p:Configuration=Release src/hybrid/win/bolt-uxp-hybrid.sln",
     "win-build-debug": "msbuild /p:Configuration=Debug src/hybrid/win/bolt-uxp-hybrid.sln",
-    "win-sign": "node ./scripts/win-sign.js"
+    "win-sign": "node ./scripts/win-sign.js",
+    "dep": "cross-env BOLT_ACTION=dependencyCheck vite"
   },
   "dependencies": {
-    "@vitejs/plugin-react": "^4.3.0",
-    "@vitejs/plugin-vue": "^5.0.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "vue": "^3.2.45"
   },
   "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.0",
+    "@vitejs/plugin-vue": "^5.0.4",
     "@adobe/cc-ext-uxp-types": "https://github.com/justintaylor-dev/cc-ext-uxp-types.git",
     "@sveltejs/vite-plugin-svelte": "^3.0.2",
     "@tsconfig/svelte": "^5.0.0",

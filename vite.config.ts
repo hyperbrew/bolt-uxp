@@ -7,13 +7,10 @@ import vue from "@vitejs/plugin-vue"; // BOLT_VUE_ONLY
 
 import { config } from "./uxp.config";
 
-const action = process.env.ACTION;
+const action = process.env.BOLT_ACTION;
 const mode = process.env.MODE;
 
-if (action) {
-  runAction({}, action);
-  process.exit();
-}
+if (action) runAction(config, action);
 
 const shouldNotEmptyDir =
   mode === "dev" && config.manifest.requiredPermissions?.enableAddon;

@@ -19,6 +19,15 @@ import {
 } from "fs";
 import path = require("path");
 import { zipPackage } from "./zip";
+
+import {
+  packageSync,
+  emptyFolder,
+  copyFilesRecursively,
+  // zipPackage,
+} from "meta-bolt/dist/plugin-utils";
+import { conColors, log, posix, resetLog } from "meta-bolt/dist/lib";
+
 export type { UXP_Config, UXP_Manifest };
 
 export const uxpSetup = (config: UXP_Config, mode?: string) => {
@@ -52,7 +61,7 @@ const deleteExistingBinaries = (config: UXP_Config) => {
     console.log("Deleted Binaries: ", paths.join(", "));
   } catch (e) {
     console.warn(
-      "UXP Hybrid Binaries were not updated. Ensure plugin is unloaded from UDT before rebuilding as binaries are locked during debug."
+      "UXP Hybrid Binaries were not updated. Ensure plugin is unloaded from UDT before rebuilding as binaries are locked during debug.",
     );
   }
 };
@@ -97,7 +106,7 @@ const copyHybridBinaries = (config: UXP_Config, onlyChanged: boolean) => {
       if (changedFiles.length > 0) {
         console.log(
           `copied ${changedFiles.length} changed binary files`,
-          changedFiles
+          changedFiles,
         );
       }
     } else {
@@ -117,7 +126,7 @@ const copyHybridBinaries = (config: UXP_Config, onlyChanged: boolean) => {
     console.error(e);
     console.warn(
       "⛔ WARNING: UXP Hybrid Binaries have changed, but could not be updated. " +
-        "Ensure plugin is unloaded from UDT before rebuilding as binaries are locked during debug."
+        "Ensure plugin is unloaded from UDT before rebuilding as binaries are locked during debug.",
     );
   }
 };
@@ -194,7 +203,7 @@ const upiaWin =
 
 const upiaPath = os.platform() === "darwin" ? upiaMac : upiaWin;
 
-export const runAction = (opts: object, action: string) => {
+export const runAction = (config: UXP_Config, action: string) => {
   const outPath = process.cwd() + "/dist";
   console.log("outPath", outPath);
 
@@ -213,14 +222,12 @@ export const runAction = (opts: object, action: string) => {
       encoding: "utf-8",
     });
     console.log("res", res);
-  } else if (action === "connect") {
-  } else if (action === "disconnect") {
-  } else if (action === "startdebug") {
-    //* Start Debugging a development Plugin Package
-  } else if (action === "stopdebug") {
-    //* Stop Debugging a development Plugin Package
+  } else if (action === "dependencyCheck") {
+    console.log("Checking Dependencies");
+    packageSync();
   } else {
     console.warn(`Unknown Action: ${action}`);
   }
-  //   resetLog();
+  resetLog();
+  process.exit();
 };

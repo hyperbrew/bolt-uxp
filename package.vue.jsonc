@@ -2,11 +2,6 @@
   "name": "bolt-uxp", // BOLT_ID_REPLACE
   "private": true,
   "version": "0.0.1",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/hyperbrew/bolt-uxp.git"
-  },
-  "homepage": "https://github.com/hyperbrew/bolt-uxp",
   "type": "module",
   "scripts": {
     "dev": "cross-env MODE=dev vite build --watch",
@@ -15,12 +10,16 @@
     "zip": "cross-env MODE=zip vite build",
     "preview": "vite preview",
     "hmr": "vite",
+    // BOLT_HYBRID_START
     "mac-build": "run-s mac-build-64 mac-build-arm",
     "mac-build-64": "xcodebuild -project src/hybrid/mac/bolt-uxp-hybrid.xcodeproj -target x64",
     "mac-build-arm": "xcodebuild -project src/hybrid/mac/bolt-uxp-hybrid.xcodeproj -target arm64",
     "mac-sign": "node mac-sign.js",
     "mac-build-sign": "mac-build && node mac-sign.js",
-    "win-build": "msbuild src/hybrid/win/bolt-uxp-hybrid.sln"
+    "win-build": "msbuild /p:Configuration=Release src/hybrid/win/bolt-uxp-hybrid.sln",
+    "win-build-debug": "msbuild /p:Configuration=Debug src/hybrid/win/bolt-uxp-hybrid.sln",
+    "win-sign": "node ./scripts/win-sign.js"
+    // BOLT_HYBRID_END
   },
   "dependencies": {
     "vue": "^3.2.45"
@@ -35,7 +34,7 @@
     "cross-env": "^7.0.3",
     "sass": "^1.69.5",
     "typescript": "^5.0.2",
-    "vite": "^5.1.1",
+    "vite": "^5.2.12",
     "ws": "^8.14.2",
     "dotenv": "^16.4.5",
     "vite-uxp-plugin": "^0.2.5"
