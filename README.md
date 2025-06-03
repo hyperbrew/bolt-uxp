@@ -80,7 +80,7 @@ Bolt UXP Info Page Link: https://hyperbrew.co/resources/bolt-uxp
 
 ## Quick Start
 
-<img src="bolt-uxp-quickstart.gif" alt="Bolt UXP">
+<img src="src/assets/bolt-uxp-quickstart.gif" alt="Bolt UXP">
 
 Create your new Bolt UXP project (follow CLI prompts)
 

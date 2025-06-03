@@ -28,9 +28,9 @@ To test the different frameworks (React, Vue, Svelte), enable the corresponding 
 
 Root directory is in the main `bolt-uxp` folder.
 
-`package.json` for the framework is copied and renamed to `package.json` in the root directory (e.g. `package.react.json`)
+`package.framework.jsonc` for the framework is copied and renamed to `package.json` in the root directory (e.g. `package.react.json`)
 
-File includes and excludes for each template can be found in `create-bolt-uxp/src/data.ts`
+File includes and excludes for each template can be found in `create-bolt-uxp/src/index.ts`
 
 All code sections:
 
@@ -40,6 +40,8 @@ All code sections:
 Are removed if the variable doesn't match the framework (e.g. React, Vue, Svelte), app (e.g. PhotoShop, InDesign, etc.), or feature (e.g. Hybrid) selected.
 
 _Note: Swap `VARIABLE` with the variable name (e.g. `// BOLT_REACT_ONLY`, `// BOLT_PHXS_ONLY`, etc.)_
+
+For more info on how templating works, refer to the Meta Bolt respository: [meta-bolt](https://github.com/hyperbrew/meta-bolt)
 
 ## How to publish changes:
 
