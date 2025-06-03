@@ -136,7 +136,7 @@ const formatFile = async (
 };
 
 export const buildBoltUXP = async (args: Args) => {
-  const fullPath = path.join(process.cwd(), args.folder);
+  const fullPath = path.resolve(args.folder);
   note(`Creating Bolt UXP in ${color.green(color.bold(fullPath))}`, "Info");
 
   const localStem = posix(

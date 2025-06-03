@@ -58,7 +58,7 @@ export const main = async (params: OptionalArgs) => {
       // placeholder: 'Not sure',
       initialValue: "./",
       validate(value) {
-        if (value.length < 3) return `Value is required!`;
+        if (value.length < 1) return `Value is required!`;
       },
     })) as string;
     handleCancel(folder);
