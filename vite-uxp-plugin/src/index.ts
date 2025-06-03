@@ -18,15 +18,9 @@ import {
   unlinkSync,
 } from "fs";
 import path = require("path");
-import { zipPackage } from "./zip";
 
-import {
-  packageSync,
-  emptyFolder,
-  copyFilesRecursively,
-  // zipPackage,
-} from "meta-bolt/dist/plugin-utils";
-import { conColors, log, posix, resetLog } from "meta-bolt/dist/lib";
+import { packageSync, zipPackage } from "meta-bolt/dist/plugin-utils";
+import { resetLog } from "meta-bolt/dist/lib";
 
 export type { UXP_Config, UXP_Manifest };
 
@@ -35,8 +29,6 @@ export const uxpSetup = (config: UXP_Config, mode?: string) => {
     hotReloadServer(config.hotReloadPort);
   }
 };
-
-const wait = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
 const deleteExistingBinaries = (config: UXP_Config) => {
   try {
@@ -144,6 +136,9 @@ const generateManifest = (config: UXP_Config) => {
 export const uxp = (config: UXP_Config, mode?: string): Plugin => {
   return {
     name: "vite-uxp-plugin",
+    //* We can't delete exisitng binaries yet because they're actively being read by UXP dev tool
+    //* If we can in the future, then we can re-enable this and avoid having to manually Unload
+    //* the plugin in UDT. Tracking issue here: https://github.com/hyperbrew/bolt-uxp/issues/3
     // configResolved(resolvedConfig) {
     // if (mode === "dev" && config.manifest.addon) {
     //   deleteExistingBinaries(config);
@@ -169,7 +164,7 @@ export const uxp = (config: UXP_Config, mode?: string): Plugin => {
           current.code = polyfills + "\n" + current.code;
           console.log("file", file);
           if (mode === "dev" && file.indexOf("index") > 0) {
-            // console.log("Add WS Snippet");
+            // Add WS Snippet
             current.code = wsListener(config) + "\n" + current.code;
           }
         });
@@ -189,8 +184,8 @@ export const uxp = (config: UXP_Config, mode?: string): Plugin => {
       if (mode === "zip") {
         const zipDir = path.join(process.cwd(), "zip");
         const ccxDir = path.join(process.cwd(), "ccx");
-        const src = process.cwd();
-        await zipPackage(config, zipDir, ccxDir, src, config.copyZipAssets);
+        const name = `${config.manifest.name}_${config.manifest.version}`;
+        await zipPackage(name, zipDir, ccxDir, config.copyZipAssets, false);
       }
     },
   };
@@ -214,10 +209,8 @@ export const runAction = (config: UXP_Config, action: string) => {
       encoding: "utf-8",
     });
     console.log("res", res);
-    // makeSymlink(symlinkSrc, symlinkDst);
   } else if (action === "ccx-uninstall") {
     //* Uninstall a CCX Plugin Package
-    // removeSymlink(symlinkSrc, symlinkDst);
     const res = execSync(`"${upiaPath}" /remove "${outPath}"`, {
       encoding: "utf-8",
     });
