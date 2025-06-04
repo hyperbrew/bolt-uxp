@@ -2,8 +2,9 @@
 
 import { main } from "meta-bolt";
 import type { BoltInitData, ArgOpt } from "meta-bolt";
+import { ResArgs } from "meta-bolt/dist/types";
 
-export const frameworkOptions: ArgOpt[] = [
+const frameworkOptions: ArgOpt[] = [
   {
     value: "svelte",
     label: "Svelte",
@@ -21,7 +22,7 @@ export const frameworkOptions: ArgOpt[] = [
   },
 ];
 
-export const appOptions: ArgOpt[] = [
+const appOptions: ArgOpt[] = [
   { value: "phxs", label: "Photoshop", files: ["src/api/photoshop.ts"] },
   { value: "idsn", label: "InDesign", files: ["src/api/indesign.ts"] },
   {
@@ -163,6 +164,10 @@ const initData: BoltInitData = {
   ],
 };
 
+export const createBoltUXP = async (overrideArgs: ResArgs = {}) => {
+  return await main(initData, overrideArgs);
+};
+
 //* if not using as a module, run immediately
 console.log("BOLT_MODULEONLY", process.env.BOLT_MODULEONLY);
-if (!process.env.BOLT_MODULEONLY) main(initData);
+if (!process.env.BOLT_MODULEONLY) createBoltUXP();
