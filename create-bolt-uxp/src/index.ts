@@ -8,17 +8,32 @@ const frameworkOptions: ArgOpt[] = [
   {
     value: "svelte",
     label: "Svelte",
-    files: ["src/index-svelte.ts", "src/main.svelte", "package.svelte.jsonc"],
+    files: [
+      "src/index-svelte.ts",
+      "src/main.svelte",
+      "package.svelte.jsonc",
+      "tsconfig.svelte.json",
+    ],
   },
   {
     value: "react",
     label: "React",
-    files: ["src/index-react.tsx", "src/main.tsx", "package.react.jsonc"],
+    files: [
+      "src/index-react.tsx",
+      "src/main.tsx",
+      "package.react.jsonc",
+      "tsconfig.react.json",
+    ],
   },
   {
     value: "vue",
     label: "Vue",
-    files: ["src/index-vue.ts", "src/main.vue", "package.vue.jsonc"],
+    files: [
+      "src/index-vue.ts",
+      "src/main.vue",
+      "package.vue.jsonc",
+      "tsconfig.vue.json",
+    ],
   },
 ];
 
@@ -70,6 +85,10 @@ const initData: BoltInitData = {
       ["package.svelte.jsonc", "package.json"],
       ["package.react.jsonc", "package.json"],
       ["package.vue.jsonc", "package.json"],
+
+      ["tsconfig.svelte.json", "tsconfig.json"],
+      ["tsconfig.react.json", "tsconfig.json"],
+      ["tsconfig.vue.json", "tsconfig.json"],
 
       [".npmignore", ".gitignore"],
     ],

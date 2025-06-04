@@ -1,8 +1,3 @@
-declare module "*.png";
-declare module "*.gif";
-declare module "*.jpg";
-declare module "*.svg";
-
 import type { premierepro as premiereproTypes } from "./types/ppro";
 
 export const uxp = require("uxp") as typeof import("uxp");

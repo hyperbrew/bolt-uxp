@@ -108,11 +108,12 @@ export const App = () => {
         {/* BOLT_SAMPLECODE_END */}
       </main>
       {/* BOLT_SAMPLECODE_START */}
-      {/* Example of a secondary panel entrypoint */}
+      {/* Example of a secondary panel entrypoint 
       <uxp-panel panelid="bolt.uxp.plugin.settings">
         <h1>Settings Panel</h1>
         <p>count is: {count}</p>
       </uxp-panel>
+      */}
       {/* BOLT_SAMPLECODE_END */}
     </>
   );
