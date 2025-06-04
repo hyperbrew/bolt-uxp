@@ -53,6 +53,7 @@ const initData: BoltInitData = {
       ".npmrc",
       ".prettierrc",
       ".env.example",
+      "public-zip/**/*",
     ],
     globalExcludes: [
       ".env",
