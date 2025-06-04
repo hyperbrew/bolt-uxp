@@ -193,10 +193,10 @@ Currently the following Adobe apps support UXP plugins:
 
 - Photoshop
 - InDesign
+- Premiere Pro Beta
 
 If you have UXP Beta access to any of the other Adobe apps, you can add them as well, including:
 
-- Premiere Pro (beta)
 - Illustrator (beta)
 
 _Note: Bolt UXP will not work out of-the-box for apps in UXP beta, you will need beta access from Adobe app teams as they become available. Hyper Brew cannot assist you in this, you will need to contact Adobe app teams directly for access._
@@ -344,11 +344,24 @@ https://www.npmjs.com/package/@spectrum-web-components/bundle
 ## Misc Troubleshooting
 
 - **Update a Bolt UXP Project** To update an existing Bolt UXP project to the the latest version, create a new Bolt UXP project with the same framework (React, Vue, Svelte) and host apps, then compare and update the following files:
+
   1. `package.json` - Update all dependencies and scripts ( `vite-uxp-plugin` - usually contains the most frequent updates )
   2. `vite.config.ts` - Unless you've modified the vite config yourself, you can just copy the contents of the latest into yours.
   3. `uxp.config.ts` - Check if any new properties have been added that don't exist in your config.
   4. `src/api` - Update this entire folder.
   5. `src/hybrid` - Update this entire folder unless you've made modifications to the C++ code.
+  6. `src/lib` - Update this entire folder unless you've made modifications to the library files.
+
+- **Why are CSS rules not working / HTML widgets broken / JavaScript DOM methods missing?**
+  UXP is not a browser, it is a subset of web standards built from the ground-up by Adobe. This means many features in CSS/HTML/JS that work in the browser will not work in UXP. This includes many CSS rules, HTML elements, and JavaScript methods. If you find something that is not working, please check the [Adobe UXP documentation](https://developer.adobe.com/photoshop/uxp/2022/uxp-api/) to see if it is supported.
+
+- **Can I get full browser UI in UXP with a Webview?**
+  It is possible to build a UXP panel will the entire UI built inside a webview. While this will create 2 separate contexts, a Webview Frontend and UXP backend, you can use the same CSS/HTML/JS features you would per OS (Edge on Windows, Safari on MacOS) This will require a separte build system for the frontend, and you'll need to build to a single HTML file if you're not hosting the backend with a Hybrid Plugin.
+  For more details on this process, view the UXP Webview docs [here](https://developer.adobe.com/photoshop/uxp/2022/uxp-api/reference-js/Global%20Members/HTML%20Elements/HTMLWebViewElement/).
+
+- **How do I know which CSS Styles are supported and which ones aren't?**
+
+See the UXP Validator extension for VS Code [here](https://github.com/jardicc/vscode-uxp-validator)
 
 ---
 
