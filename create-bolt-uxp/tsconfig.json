@@ -9,6 +9,6 @@
     "newLine": "lf",
     "outDir": "dist"
   },
-  "files": ["src/index.ts", "tests/test.ts"],
+  "files": ["src/index.ts"],
   "exclude": ["node_modules"]
 }
