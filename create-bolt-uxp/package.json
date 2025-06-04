@@ -19,7 +19,8 @@
     "publish": "npm publish --access public",
     "start": "node dist/index.js",
     "jest": "jest",
-    "test": "cross-env BOLT_MODULEONLY=true tsx tests/test.ts"
+    "test": "cross-env BOLT_MODULEONLY=true tsx scripts/test.ts",
+    "clean": "cross-env BOLT_MODULEONLY=true tsx scripts/clean.ts"
   },
   "repository": {
     "type": "git",

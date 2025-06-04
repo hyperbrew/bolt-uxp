@@ -10,7 +10,6 @@
     "zip": "cross-env MODE=zip vite build",
     "preview": "vite preview",
     "check": "svelte-check --tsconfig ./tsconfig.json",
-    "hmr": "vite",
     // BOLT_HYBRID_START
     "mac-build": "run-s mac-build-64 mac-build-arm",
     "mac-build-64": "xcodebuild -project src/hybrid/mac/bolt-uxp-hybrid.xcodeproj -target x64",
@@ -19,8 +18,9 @@
     "mac-build-sign": "mac-build && node mac-sign.js",
     "win-build": "msbuild /p:Configuration=Release src/hybrid/win/bolt-uxp-hybrid.sln",
     "win-build-debug": "msbuild /p:Configuration=Debug src/hybrid/win/bolt-uxp-hybrid.sln",
-    "win-sign": "node ./scripts/win-sign.js"
+    "win-sign": "node ./scripts/win-sign.js",
     // BOLT_HYBRID_END
+    "hmr": "vite"
   },
   "dependencies": {},
   "devDependencies": {

@@ -60,6 +60,10 @@ const initData: BoltInitData = {
       "package.json",
       "tsconfig.json",
       "LICENSE",
+      "src/hybrid/win/.vs/**/*",
+      "src/hybrid/win/x64/**/*",
+      "src/hybrid/win/x86/**/*",
+      "src/hybrid/win/build",
     ],
     fileRenames: [
       ["package.svelte.jsonc", "package.json"],

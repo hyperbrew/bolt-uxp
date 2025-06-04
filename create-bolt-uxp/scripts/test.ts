@@ -16,7 +16,7 @@ const runTests = async () => {
     displayName: "Test Svelte",
     id: "com.test.svelte",
     framework: "svelte",
-    apps: ["photoshop"],
+    apps: ["phxs"],
     hybrid: true,
     sampleCode: true,
     installDeps: false,
@@ -27,7 +27,7 @@ const runTests = async () => {
     displayName: "Test Vue",
     id: "com.test.vue",
     framework: "vue",
-    apps: ["photoshop"],
+    apps: ["phxs"],
     hybrid: true,
     sampleCode: true,
     installDeps: false,
@@ -38,9 +38,20 @@ const runTests = async () => {
     displayName: "Test React",
     id: "com.test.react",
     framework: "react",
-    apps: ["photoshop"],
+    apps: ["phxs"],
     hybrid: true,
     sampleCode: true,
+    installDeps: false,
+  });
+
+  const allNoHybrid = await createBoltUXP({
+    folder: ".test-all",
+    displayName: "Test All",
+    id: "com.test.all",
+    framework: "svelte",
+    apps: ["phxs", "idsn", "ppro"],
+    hybrid: false,
+    sampleCode: false,
     installDeps: false,
   });
 
@@ -48,6 +59,7 @@ const runTests = async () => {
     svelte,
     vue,
     react,
+    allNoHybrid,
   });
 };
 runTests();
