@@ -210,6 +210,25 @@ To add additional windows to a UXP Plugin, you'll need to do 2 things:
 
 Note: Unlike CEP Extensions which multi-panel extensions behave as separate isolated panels/websites, a multi-panel UXP plugin is all in 1 space with certain sections of the markup rendered in different panels (identified by the `<uxp-panel />` tag)
 
+## GitHub Actions CCX Releases
+
+This repo comes with a configured GitHub Action workflow to build a CCX and add to the releases each time a git tag is added.
+
+```
+git tag 1.0.0
+git push origin --tags
+```
+
+Then your new build will be available under GitHub Releases. For more info, see the [YML config](.github\workflows\main.yml)
+
+## Copy Zip Assets
+
+If you have assets that you would like copied with your ccx into a zip archive for delivery, you can add the optional `copyZipAssets:[]` array inside your `uxp.config.ts` to include files or entire folders. A folder ending in "/\*" will copy the contents without the folder structure into the zip destination.
+
+```js
+  copyZipAssets: ["public-zip/*"],
+```
+
 ## Hybrid Plugin Development
 
 UXP Hybrid Plugins allow you to write C++ functions and call them from UXP. This is useful for performance critical operations and accessing system methods not yet part of the UXP APIs.

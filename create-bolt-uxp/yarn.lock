@@ -444,10 +444,10 @@ base64-js@^1.3.1:
   resolved "https://registry.yarnpkg.com/base64-js/-/base64-js-1.5.1.tgz#1b1b440160a5bf7ad40b650f095963481903930a"
   integrity sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==
 
-bolt-uxp@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/bolt-uxp/-/bolt-uxp-1.0.1.tgz#f8d9075f7aa8cdddfb8aba62c3b38aedc60026e1"
-  integrity sha512-bhOTP0Xcl/xgJ3Dy2SRE5oZoyPEKSlswgdkiiDaUeRPXEtcQ/qSYOpONIE7pF4KvwAUhOJXWFL2qBbzVNWWgdg==
+bolt-uxp@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/bolt-uxp/-/bolt-uxp-1.0.2.tgz#c671401c8807f63315e32095b0cd5a10336763e1"
+  integrity sha512-IrxE4z7uHnKmdoepQp6UWjsQfJ31BaDq6bLI1Op6KBrRXbeRX4FySr27Ip9miFgbg6VyN0k29F6ZBLUQi2fRkQ==
   dependencies:
     react "^18.3.1"
     react-dom "^18.3.1"

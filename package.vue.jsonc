@@ -37,6 +37,6 @@
     "vite": "^5.2.12",
     "ws": "^8.14.2",
     "dotenv": "^16.4.5",
-    "vite-uxp-plugin": "^0.2.5"
+    "vite-uxp-plugin": "^1.0.0"
   }
 }
