@@ -8,10 +8,11 @@
   import sassLogo from "./assets/sass.png";
   import svelteLogo from "./assets/svelte.png";
 
-  let count: number = 0;
+  let count: number = $state(0);
+
   const increment = () => (count += 1);
 
-  const hostName = (uxp.host.name as string).toLowerCase();
+  const hostName = (uxp?.host?.name || ("" as string)).toLowerCase();
 
   //* Call Functions Conditionally by App
   // BOLT_PHXS_START

@@ -20,11 +20,11 @@ export default defineConfig({
     uxp(config, mode),
     react(), // BOLT_REACT_ONLY
     vue(), // BOLT_VUE_ONLY
-    svelte({ preprocess: sveltePreprocess({ typescript: true }) }), // BOLT_SVELTE_ONLY
+    svelte(), // BOLT_SVELTE_ONLY
   ],
   build: {
     sourcemap: mode && ["dev", "build"].includes(mode) ? true : false,
-    // minify: false,
+    minify: false,
     emptyOutDir: !shouldNotEmptyDir,
     rollupOptions: {
       external: [

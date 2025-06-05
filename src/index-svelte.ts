@@ -1,11 +1,19 @@
 import "./app.css";
 import App from "./main.svelte";
 import "./index.scss";
+import { mount } from "svelte";
 
 console.clear(); // Clear logs on each reload
 
-const app = new App({
-  target: document.getElementById("app")!,
-});
+const start = () =>
+  mount(App, {
+    target: document.getElementById("app")!,
+  });
 
-export default app;
+if (typeof process !== "undefined" && process?.version?.includes("uxp")) {
+  // UXP environment
+  start();
+} else {
+  // Browser environment
+  document.addEventListener("DOMContentLoaded", start);
+}
