@@ -97,5 +97,5 @@ const hybridTest = async () => {
 </template>
 
 <style lang="scss">
-@import "./variables.scss";
+@use "./variables.scss" as *;
 </style>

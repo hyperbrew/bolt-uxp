@@ -103,5 +103,5 @@
 <!-- BOLT_SAMPLECODE_END -->
 
 <style lang="scss">
-  @import "./variables.scss";
+  @use "./variables.scss" as *;
 </style>
