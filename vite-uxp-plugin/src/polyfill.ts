@@ -4,9 +4,11 @@ import { UXP_Config } from "./types";
 const htmlMediaElementPolyfill = `//* HTMLMediaElement blank polyfill for UXP
 try{window.HTMLMediaElement = function() {};}catch(e){}`;
 
+// Required for Svelte 5 compatibility
 const microtaskPolyfill = `//* Microtask polyfill for UXP
 if (typeof queueMicrotask !== "function") { window.queueMicrotask = function (fn) { Promise.resolve().then(fn).catch((err) => setTimeout(() => { throw err; }));  }; }`;
 
+// Required for Svelte 5 compatibility
 const templateElementPolyfill = `//* Template polyfill for UXP
 (function () {
   if ("content" in document.createElement("template")) return;
@@ -39,6 +41,7 @@ const templateElementPolyfill = `//* Template polyfill for UXP
 })();
 `;
 
+// Required for Vite compatibility
 const mutationObserverPolyfill: string = `//* MutationObserver for Vite to work correctly in UXP
 (function(){var t;null==window.MutationObserver&&(t=function(){function t(t){this.callBack=t}return t.prototype.observe=function(t,n){var e;return this.element=t,this.interval=setInterval((e=this,function(){var t;if((t=e.element.innerHTML)!==e.oldHtml)return e.oldHtml=t,e.callBack.apply(null)}),200)},t.prototype.disconnect=function(){return window.clearInterval(this.interval)},t}(),window.MutationObserver=t)}).call(this);
 `;
