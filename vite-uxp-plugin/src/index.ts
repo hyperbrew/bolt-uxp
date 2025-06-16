@@ -216,7 +216,6 @@ export const runAction = (config: UXP_Config, action: string) => {
     });
     console.log("res", res);
   } else if (action === "dependencyCheck") {
-    console.log("Checking Dependencies");
     packageSync();
   } else {
     console.warn(`Unknown Action: ${action}`);

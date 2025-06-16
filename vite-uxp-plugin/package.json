@@ -1,6 +1,6 @@
 {
   "name": "vite-uxp-plugin",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "license": "MIT",
   "description": "A Vite Plugin for building Adobe UXP Plugin Panels",
   "main": "lib/index.js",
@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "archiver": "5.3.0",
-    "meta-bolt": "^0.0.16",
+    "meta-bolt": "^0.0.17",
     "typescript": "^5.2.2",
     "ws": "^8.14.2"
   },
