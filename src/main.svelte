@@ -11,7 +11,6 @@
 
   // BOLT_WEBVIEW_START
   import * as Comlink from "comlink";
-  window.Comlink = Comlink;
   // BOLT_WEBVIEW_END
 
   let count: number = $state(0);
@@ -92,6 +91,7 @@
         {
           uxp,
           photoshop,
+          api,
           // notify: (msg: string) => {
           //   console.log("Received message from webview:", msg);
           //   api.notify(msg);
