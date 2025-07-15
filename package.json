@@ -32,6 +32,7 @@
     "dep": "cross-env BOLT_ACTION=dependencyCheck vite"
   },
   "dependencies": {
+    "comlink": "^4.4.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "vue": "^3.5.16"

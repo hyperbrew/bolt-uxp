@@ -1,5 +1,47 @@
 <script lang="ts">
   import { onMount } from "svelte";
+  import * as Comlink from "comlink";
+  window.Comlink = Comlink;
+
+  // Wait for the parent to connect
+  // const parentEndpoint = Comlink.windowEndpoint(window.parent);
+  const parentEndpoint = Comlink.windowEndpoint(window.uxpHost);
+  const parentAPI = Comlink.wrap(parentEndpoint);
+  window.parentAPI = parentAPI;
+
+  const comlinkResponse = async () => {
+    // Call backend’s `notify()` method
+    await parentAPI.notify("Hello from webview!");
+
+    // Optionally, expose something back to the parent:
+    // Comlink.expose({ ping: () => "pong from webview" }, parentEndpoint);
+  };
+
+  function createProxy({ properties, methods }: string) {
+    return new Proxy(
+      {},
+      {
+        get(_, prop) {
+          if (prop in properties) {
+            return properties[prop];
+          }
+          if (methods.includes(prop)) {
+            return (...args) => {
+              // You’ll replace this with actual backend call logic
+              console.log(`Calling method "${prop}" with`, args);
+            };
+          }
+          return undefined;
+        },
+        set(_, prop, value) {
+          // Update frontend copy and optionally sync to backend
+          properties[prop] = value;
+          console.log(`Setting property "${prop}" to`, value);
+          return true;
+        },
+      }
+    );
+  }
 
   const sendMessage = () => {
     window.uxpHost.postMessage(
@@ -10,31 +52,19 @@
 
   window.addEventListener("message", (e) => {
     console.log(e);
+    // const msgData = JSON.parse(e.data);
+    // console.log(msgData);
+    // window.uxp = createProxy(msgData.data);
   });
-  onMount(() => {});
 </script>
 
 <main>
   <h2>Bolt UXP Webview</h2>
-  <button onclick={sendMessage}>Send Message</button>
+  <!-- <button onclick={sendMessage}>Send Message</button> -->
+  <button onclick={comlinkResponse}>Send Comlink</button>
 </main>
 
 <style lang="scss">
-  .logo {
-    height: 6em;
-    padding: 1.5em;
-    will-change: filter;
-    transition: filter 300ms;
-  }
-  .logo:hover {
-    filter: drop-shadow(0 0 2em #646cffaa);
-  }
-  .logo.svelte:hover {
-    filter: drop-shadow(0 0 2em #ff3e00aa);
-  }
-  .read-the-docs {
-    color: #888;
-  }
   button {
     transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     outline: none;

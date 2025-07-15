@@ -9,6 +9,11 @@
   import svelteLogo from "./assets/svelte.png";
   import { onMount } from "svelte";
 
+  // BOLT_WEBVIEW_START
+  import * as Comlink from "comlink";
+  window.Comlink = Comlink;
+  // BOLT_WEBVIEW_END
+
   let count: number = $state(0);
 
   const increment = () => (count += 1);
@@ -59,15 +64,64 @@
   // BOLT_SAMPLECODE_END
 
   // BOLT_WEBVIEW_START
+
+  function storeForProxy(obj: object) {
+    const descriptor = {
+      properties: {},
+      methods: [],
+    };
+
+    for (const key of Reflect.ownKeys(obj)) {
+      const val = obj[key];
+      if (typeof val === "function") {
+        descriptor.methods.push(key);
+      } else {
+        descriptor.properties[key] = val;
+      }
+    }
+    return descriptor;
+  }
+
+  const connectComlink = (webview: HTMLElement) => {
+    console.log("Comlink Connecting");
+    try {
+      const childEndpoint = Comlink.windowEndpoint(webview.postMessage);
+      console.log({ childEndpoint });
+      const childAPI = Comlink.wrap(childEndpoint);
+      Comlink.expose(
+        {
+          uxp,
+          photoshop,
+          // notify: (msg: string) => {
+          //   console.log("Received message from webview:", msg);
+          //   api.notify(msg);
+          // },
+        },
+        childEndpoint
+      );
+      // console.log(await childAPI.ping());  // → "pong"
+    } catch (e) {
+      console.error("Error creating Comlink endpoint:");
+    }
+  };
+
   let webview: null | HTMLElement = $state(null);
   onMount(() => {
     if (!webview) return console.error("Webview element not found");
     webview.addEventListener("loadstop", () => {
-      webview.postMessage("uxp-to-webview");
+      connectComlink(webview);
+      // webview.postMessage({type: "uxp-to-webview"});
+      webview.postMessage(
+        JSON.stringify({
+          type: "uxp-proxy",
+          name: "uxp",
+          data: storeForProxy(uxp),
+        })
+      );
       window.addEventListener("message", (e) => {
         // Get Messages Here
         console.log(e.data);
-        api.notify(`Received message: ${e.data.text}`);
+        // api.notify(`Received message: ${e.data.text}`);
       });
     });
   });
