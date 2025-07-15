@@ -7,6 +7,7 @@
   import tsLogo from "./assets/typescript.png";
   import sassLogo from "./assets/sass.png";
   import svelteLogo from "./assets/svelte.png";
+  import { onMount } from "svelte";
 
   let count: number = $state(0);
 
@@ -56,8 +57,36 @@
   };
   // BOLT_HYBRID_END
   // BOLT_SAMPLECODE_END
+
+  // BOLT_WEBVIEW_START
+  let webview: null | HTMLElement = $state(null);
+  onMount(() => {
+    if (!webview) return console.error("Webview element not found");
+    webview.addEventListener("loadstop", () => {
+      webview.postMessage("uxp-to-webview");
+      window.addEventListener("message", (e) => {
+        // Get Messages Here
+        console.log(e.data);
+        api.notify(`Received message: ${e.data.text}`);
+      });
+    });
+  });
+  // BOLT_WEBVIEW_END
 </script>
 
+<!-- BOLT_WEBVIEW_START -->
+
+<!-- TODO: Make HMR Port Dynamic -->
+<webview
+  bind:this={webview}
+  class="webview-ui"
+  src={import.meta.env.VITE_BOLT_MODE === "dev"
+    ? "http://localhost:8081/"
+    : "plugin:/webview-ui/index.html"}
+  uxpAllowInspector="true"
+></webview>
+
+<!-- BOLT_WEBVIEW_END -->
 <main>
   <!-- BOLT_SAMPLECODE_START -->
   <div>

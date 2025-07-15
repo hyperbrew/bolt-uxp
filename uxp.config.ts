@@ -138,7 +138,9 @@ const manifest: UXP_Manifest = {
     clipboard: "readAndWrite",
     webview: {
       allow: "yes",
-      domains: ["https://*.hyperbrew.co"],
+      allowLocalRendering: "yes",
+      domains: "all",
+      enableMessageBridge: "localAndRemote",
     },
     ipc: {
       enablePluginCommunication: true,

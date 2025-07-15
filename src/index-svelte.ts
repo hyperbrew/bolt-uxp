@@ -1,6 +1,6 @@
 import "./app.css";
 import App from "./main.svelte";
-import "./index.scss";
+import "../src/index.scss";
 import { mount } from "svelte";
 
 console.clear(); // Clear logs on each reload

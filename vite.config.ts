@@ -9,6 +9,7 @@ import { config } from "./uxp.config";
 
 const action = process.env.BOLT_ACTION;
 const mode = process.env.MODE;
+process.env.VITE_BOLT_MODE = mode;
 
 if (action) runAction(config, action);
 

@@ -11,8 +11,8 @@
     "allowJs": true,
     "checkJs": true,
     "isolatedModules": true,
-    "jsx": "react-jsx",
-    "types": ["@adobe/cc-ext-uxp-types", "@types/photoshop", "@types/node", "./src/uxp-types.d.ts"]
+    "jsx": "preserve",
+    "types": []
   },
   "include": ["./src"]
 }
