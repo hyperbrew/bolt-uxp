@@ -2,17 +2,51 @@
   import { onMount } from "svelte";
   import * as Comlink from "comlink";
 
-  const parentEndpoint = Comlink.windowEndpoint(window.uxpHost);
-  const api = Comlink.wrap(parentEndpoint);
+  const hostEndpoint = {
+    postMessage: (msg) => window.uxpHost.postMessage(msg),
+    addEventListener: (type, handler) => {
+      window.uxpHost.addEventListener("message", handler);
+    },
+    removeEventListener: (type, handler) => {
+      window.uxpHost.removeEventListener("message", handler);
+    },
+  };
+
+  const endpoint = Comlink.windowEndpoint(hostEndpoint);
+  const api = Comlink.wrap(endpoint);
   window.api = api;
 
-  const comlinkResponse = async () => {
-    // await api.notify("Hello from webview!");
-    // await api.photoshop.app.showAlert("Hi from Webview Land!");
-    await api.uxp.dialog.showOpenDialog();
+  // const parentEndpoint = Comlink.windowEndpoint(window.uxpHost);
+  // window.parentEndpoint = parentEndpoint;
+  // const api = Comlink.wrap(parentEndpoint);
+  // Comlink.expose({ ping: () => "pong from webview" }, parentEndpoint);
 
-    // Optionally, expose something back to the parent:
-    // Comlink.expose({ ping: () => "pong from webview" }, parentEndpoint);
+  const comlinkAlert = async () => {
+    console.log("Sending Comlink");
+    // call a method on our API object
+    // await api.api.notify("Hello from webview!");
+    // console.log(await api.api.getNumber());
+    const res = await api.greet("Justin");
+    console.log("Comlink Response:", res);
+
+    // call a PS method directly
+    // await api.photoshop.app.showAlert("Hi from Webview Land!");
+
+    // call a UXP method directly
+    // await api.uxp.dialog.showOpenDialog();
+  };
+  const comlinkDocInfo = async () => {
+    const doc = await api.photoshop.app.activeDocument;
+    // Can't store references like this
+    // const path = doc.path;
+    // const name = doc.name;
+    // console.log("Document Info:", { path, name });
+
+    // Hove to call them verbosely like this:
+
+    const path = await api.photoshop.app.activeDocument.path;
+    const name = await api.photoshop.app.activeDocument.name;
+    console.log("Document Info:", { path, name });
   };
 
   const sendMessage = () => {
@@ -22,16 +56,17 @@
     );
   };
 
-  window.addEventListener("message", (e) => {
-    console.log(e);
-  });
+  // window.addEventListener("message", (e) => {
+  //   console.log(e);
+  // });
 </script>
 
 <main>
   <h2>Bolt UXP Webview</h2>
   <div class="button-group">
     <button onclick={sendMessage}>Send Message</button>
-    <button onclick={comlinkResponse}>Send Comlink</button>
+    <button onclick={comlinkAlert}>Comlink: Alert</button>
+    <button onclick={comlinkDocInfo}>Comlink: Get Document Info</button>
   </div>
 </main>
 

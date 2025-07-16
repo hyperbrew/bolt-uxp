@@ -11,6 +11,7 @@
 
   // BOLT_WEBVIEW_START
   import * as Comlink from "comlink";
+  window.Comlink = Comlink;
   // BOLT_WEBVIEW_END
 
   let count: number = $state(0);
@@ -81,25 +82,50 @@
     return descriptor;
   }
 
-  const connectComlink = (webview: HTMLElement) => {
+  const connectComlink = (webview) => {
+    const backendAPI = {
+      uxp,
+      photoshop,
+      greet: (name) => {
+        console.log("greet() called with", name);
+        return `Hello, ${name}!`;
+      },
+    };
+
+    const backendEndpoint = {
+      postMessage: (msg) => webview.postMessage(msg),
+      addEventListener: (type, handler) => {
+        webview.addEventListener("message", handler);
+      },
+      removeEventListener: (type, handler) => {
+        webview.removeEventListener("message", handler);
+      },
+    };
+
+    const endpoint = Comlink.windowEndpoint(backendEndpoint);
+    Comlink.expose(backendAPI, endpoint);
+  };
+
+  const connectComlinkOld = async (webview: HTMLElement) => {
     console.log("Comlink Connecting");
     try {
-      const childEndpoint = Comlink.windowEndpoint(webview.postMessage);
+      const childEndpoint = Comlink.windowEndpoint(webview);
       console.log({ childEndpoint });
-      const childAPI = Comlink.wrap(childEndpoint);
       Comlink.expose(
         {
-          uxp,
-          photoshop,
-          api,
-          // notify: (msg: string) => {
-          //   console.log("Received message from webview:", msg);
-          //   api.notify(msg);
-          // },
+          greet: (name: string) => {
+            const res = `Hello, ${name}!`;
+            console.log("Greet called:", res);
+            return res;
+          },
         },
         childEndpoint
       );
-      // console.log(await childAPI.ping());  // → "pong"
+
+      const childAPI = Comlink.wrap(childEndpoint);
+      window.childAPI = childAPI;
+      await childAPI.ping();
+      // console.log(await childAPI.ping()); // → "pong"
     } catch (e) {
       console.error("Error creating Comlink endpoint:");
     }
