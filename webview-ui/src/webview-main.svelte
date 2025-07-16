@@ -1,26 +1,8 @@
 <script lang="ts">
-  import { onMount } from "svelte";
-  import * as Comlink from "comlink";
+  import { initWebview } from "./webview-setup";
+  const api = initWebview();
 
-  import type { api as API } from "../../src/api/api";
-
-  const hostEndpoint = {
-    postMessage: (msg) => window.uxpHost.postMessage(msg),
-    addEventListener: (type, handler) => {
-      window.uxpHost.addEventListener("message", handler);
-    },
-    removeEventListener: (type, handler) => {
-      window.uxpHost.removeEventListener("message", handler);
-    },
-  };
-
-  const endpoint = Comlink.windowEndpoint(hostEndpoint);
-  const comlinkAPI = Comlink.wrap(endpoint);
-  const api = comlinkAPI.api as typeof API;
-
-  const comlinkAlert = async () => {
-    const res = await api.notify("Hello World");
-  };
+  const comlinkAlert = async () => await api.notify("Hello World");
 
   let projectInfo: string = $state("");
   const comlinkProjectInfo = async () => {
@@ -35,12 +17,6 @@
     uxpInfo = JSON.stringify(info, null, 2);
     console.log("Project Info:", { info });
   };
-
-  // basic way to send a message
-  // const sendMessage = () => window.uxpHost.postMessage({ type: "message", text: "msg" },"*");
-
-  // basic way to get a message
-  // window.addEventListener("message", (e) => console.log(e));
 </script>
 
 <main>
@@ -71,7 +47,7 @@
   }
   textarea {
     width: calc(100vw - 8rem);
-    height: 200px;
+    height: 110px;
     background-color: transparent;
     border-radius: 5px;
     resize: none;
