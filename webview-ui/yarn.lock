@@ -2,6 +2,10 @@
 # yarn lockfile v1
 
 
+"@adobe/cc-ext-uxp-types@https://github.com/justintaylor-dev/cc-ext-uxp-types.git":
+  version "7.3.1"
+  resolved "https://github.com/justintaylor-dev/cc-ext-uxp-types.git#4d5d1d2b9b33729a5de44c63aba202efa575d88d"
+
 "@ampproject/remapping@^2.3.0":
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/@ampproject/remapping/-/remapping-2.3.0.tgz#ed441b6fa600072520ce18b43d2c8cc8caecc7f4"

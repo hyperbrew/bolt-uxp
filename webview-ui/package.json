@@ -16,7 +16,8 @@
     "svelte": "^5.33.14",
     "svelte-check": "^4.2.1",
     "typescript": "^5.8.3",
-    "vite": "^6.3.5"
+    "vite": "^6.3.5",
+    "@adobe/cc-ext-uxp-types": "https://github.com/justintaylor-dev/cc-ext-uxp-types.git"
   },
   "dependencies": {
     "comlink": "^4.4.2",

@@ -65,31 +65,11 @@
 
   // BOLT_WEBVIEW_START
 
-  function storeForProxy(obj: object) {
-    const descriptor = {
-      properties: {},
-      methods: [],
-    };
-
-    for (const key of Reflect.ownKeys(obj)) {
-      const val = obj[key];
-      if (typeof val === "function") {
-        descriptor.methods.push(key);
-      } else {
-        descriptor.properties[key] = val;
-      }
-    }
-    return descriptor;
-  }
-
   const connectComlink = (webview) => {
     const backendAPI = {
+      api,
       uxp,
       photoshop,
-      greet: (name) => {
-        console.log("greet() called with", name);
-        return `Hello, ${name}!`;
-      },
     };
 
     const backendEndpoint = {
@@ -106,44 +86,12 @@
     Comlink.expose(backendAPI, endpoint);
   };
 
-  const connectComlinkOld = async (webview: HTMLElement) => {
-    console.log("Comlink Connecting");
-    try {
-      const childEndpoint = Comlink.windowEndpoint(webview);
-      console.log({ childEndpoint });
-      Comlink.expose(
-        {
-          greet: (name: string) => {
-            const res = `Hello, ${name}!`;
-            console.log("Greet called:", res);
-            return res;
-          },
-        },
-        childEndpoint
-      );
-
-      const childAPI = Comlink.wrap(childEndpoint);
-      window.childAPI = childAPI;
-      await childAPI.ping();
-      // console.log(await childAPI.ping()); // → "pong"
-    } catch (e) {
-      console.error("Error creating Comlink endpoint:");
-    }
-  };
-
   let webview: null | HTMLElement = $state(null);
   onMount(() => {
     if (!webview) return console.error("Webview element not found");
     webview.addEventListener("loadstop", () => {
       connectComlink(webview);
       // webview.postMessage({type: "uxp-to-webview"});
-      webview.postMessage(
-        JSON.stringify({
-          type: "uxp-proxy",
-          name: "uxp",
-          data: storeForProxy(uxp),
-        })
-      );
       window.addEventListener("message", (e) => {
         // Get Messages Here
         console.log(e.data);
