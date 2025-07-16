@@ -151,10 +151,12 @@ export const uxp = (config: UXP_Config, mode?: string): Plugin => {
         copyHybridBinaries(config, true);
       }
       if (config.webviewUi) {
-        console.log("Webview UI is enabled");
+        console.log("🌐 Webview UI is enabled");
         const pm = getPackageManager() || "npm";
         if (mode === "dev") {
-          execAsync(`cd webview-ui && ${pm} run dev`);
+          execAsync(
+            `cd webview-ui && ${pm} run dev --port ${config.webviewReloadPort}`,
+          );
         } else {
           execSync(`cd webview-ui && ${pm} run build`);
         }

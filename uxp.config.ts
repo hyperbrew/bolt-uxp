@@ -5,7 +5,7 @@ const extraPrefs = {
   hotReloadPort: 8080,
   // BOLT_WEBVIEW_START
   webviewUi: true,
-  webviewReloadPort: 8081,
+  webviewReloadPort: 8082,
   // BOLT_WEBVIEW_END
   copyZipAssets: ["public-zip/*"],
 };

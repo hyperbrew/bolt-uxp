@@ -17,7 +17,9 @@
 
   // BOLT_WEBVIEW_START
   import { webviewInitHost } from "./webview-setup-host";
-  onMount(() => webviewInitHost());
+  if (import.meta.env.VITE_BOLT_WEBVIEW_UI === "true") {
+    onMount(() => webviewInitHost());
+  }
   // BOLT_WEBVIEW_END
 
   let count: number = $state(0);
