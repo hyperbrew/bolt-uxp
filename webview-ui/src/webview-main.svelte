@@ -17,62 +17,47 @@
   const endpoint = Comlink.windowEndpoint(hostEndpoint);
   const comlinkAPI = Comlink.wrap(endpoint);
   const api = comlinkAPI.api as typeof API;
-  const uxp = comlinkAPI.uxp;
-  window.photoshop = comlinkAPI.photoshop;
 
   const comlinkAlert = async () => {
-    console.log("Sending Comlink");
-    // Call Methods on our API Object object
-    const res = await api.notify("Justin");
-    console.log("Comlink Response:", res);
-    uxp;
-
-    // call a PS method directly
-    // await api.photoshop.app.showAlert("Hi from Webview Land!");
-
-    // call a UXP method directly
-    // await api.uxp.dialog.showOpenDialog();
+    const res = await api.notify("Hello World");
   };
-  const comlinkDocInfo = async () => {
-    // Can't use references like this
-    // const doc = await api.photoshop.app.activeDocument;
-    // const path = doc.path;
-    // const name = doc.name;
 
-    // Hove to call them verbosely like this:
-    const path = await photoshop.app.activeDocument.path;
-    const name = await photoshop.app.activeDocument.name;
-    console.log("Document Info:", { path, name });
+  let projectInfo: string = $state("");
+  const comlinkProjectInfo = async () => {
+    const info = await api.getProjectInfo();
+    projectInfo = JSON.stringify(info, null, 2);
+    console.log("Project Info:", { info });
+  };
+
+  let uxpInfo: string = $state("");
+  const comlinkUXPInfo = async () => {
+    const info = await api.getUXPInfo();
+    uxpInfo = JSON.stringify(info, null, 2);
+    console.log("Project Info:", { info });
   };
 
   // basic way to send a message
-  const sendMessage = () => {
-    window.uxpHost.postMessage(
-      { type: "message", text: "webview-to-uxp" },
-      "*"
-    );
-  };
+  // const sendMessage = () => window.uxpHost.postMessage({ type: "message", text: "msg" },"*");
 
-  // window.addEventListener("message", (e) => {
-  //   console.log(e);
-  // });
+  // basic way to get a message
+  // window.addEventListener("message", (e) => console.log(e));
 </script>
 
 <main>
   <h2>Bolt UXP Webview</h2>
   <div class="button-group">
-    <button onclick={sendMessage}>Send Message</button>
-    <button onclick={comlinkAlert}>Comlink: Alert</button>
-    <button onclick={comlinkDocInfo}>Comlink: Get Document Info</button>
+    <button onclick={comlinkAlert}>Alert</button>
+    <button onclick={comlinkProjectInfo}>Get Project Info</button>
+    <button onclick={comlinkUXPInfo}>Get UXP Info</button>
   </div>
+  <textarea spellcheck="false">{projectInfo}</textarea>
+  <textarea spellcheck="false">{uxpInfo}</textarea>
 </main>
 
 <style lang="scss">
   .button-group {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
     gap: 1rem;
   }
   button {
@@ -80,8 +65,18 @@
     outline: none;
   }
   button:hover {
-    filter: drop-shadow(0 0 2em #646cffaa);
+    filter: drop-shadow(0 0 2em #20639b);
     padding-right: 2rem;
     padding-left: 2rem;
+  }
+  textarea {
+    width: calc(100vw - 8rem);
+    height: 200px;
+    background-color: transparent;
+    border-radius: 5px;
+    resize: none;
+    margin-top: 1rem;
+    color: #43aaff;
+    padding: 1rem;
   }
 </style>

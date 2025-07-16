@@ -1,6 +1,12 @@
 <script lang="ts">
   // BOLT_SAMPLECODE_START
-  import { uxp, indesign, photoshop } from "./globals";
+  import {
+    uxp,
+    indesign,
+    photoshop,
+    premierepro,
+    illustrator,
+  } from "./globals";
   import { api } from "./api/api";
   import boltUxpLogo from "./assets/bolt-uxp.png";
   import viteLogo from "./assets/vite.png";
@@ -33,12 +39,12 @@
   // BOLT_IDSN_END
   // BOLT_PPRO_START
   if (hostName === "premierepro") {
-    console.log("Hello from Premiere Pro", indesign);
+    console.log("Hello from Premiere Pro", premierepro);
   }
   // BOLT_PPRO_END
   // BOLT_ILST_START
   if (hostName === "illustrator") {
-    console.log("Hello from Illustrator", indesign);
+    console.log("Hello from Illustrator", illustrator);
   }
   // BOLT_ILST_END
 
@@ -66,11 +72,7 @@
   // BOLT_WEBVIEW_START
 
   const connectComlink = (webview) => {
-    const backendAPI = {
-      api,
-      uxp,
-      photoshop,
-    };
+    const backendAPI = { api };
 
     const backendEndpoint = {
       postMessage: (msg) => webview.postMessage(msg),
