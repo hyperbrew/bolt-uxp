@@ -16,8 +16,8 @@
   import { onMount } from "svelte";
 
   // BOLT_WEBVIEW_START
-  import * as Comlink from "comlink";
-  window.Comlink = Comlink;
+  import { webviewInitHost } from "./webview-setup-host";
+  onMount(() => webviewInitHost());
   // BOLT_WEBVIEW_END
 
   let count: number = $state(0);
@@ -68,55 +68,8 @@
   };
   // BOLT_HYBRID_END
   // BOLT_SAMPLECODE_END
-
-  // BOLT_WEBVIEW_START
-
-  const connectComlink = (webview) => {
-    const backendAPI = { api };
-
-    const backendEndpoint = {
-      postMessage: (msg) => webview.postMessage(msg),
-      addEventListener: (type, handler) => {
-        webview.addEventListener("message", handler);
-      },
-      removeEventListener: (type, handler) => {
-        webview.removeEventListener("message", handler);
-      },
-    };
-
-    const endpoint = Comlink.windowEndpoint(backendEndpoint);
-    Comlink.expose(backendAPI, endpoint);
-  };
-
-  let webview: null | HTMLElement = $state(null);
-  onMount(() => {
-    if (!webview) return console.error("Webview element not found");
-    webview.addEventListener("loadstop", () => {
-      connectComlink(webview);
-      // webview.postMessage({type: "uxp-to-webview"});
-      window.addEventListener("message", (e) => {
-        // Get Messages Here
-        console.log(e.data);
-        // api.notify(`Received message: ${e.data.text}`);
-      });
-    });
-  });
-  // BOLT_WEBVIEW_END
 </script>
 
-<!-- BOLT_WEBVIEW_START -->
-
-<!-- TODO: Make HMR Port Dynamic -->
-<webview
-  bind:this={webview}
-  class="webview-ui"
-  src={import.meta.env.VITE_BOLT_MODE === "dev"
-    ? "http://localhost:8081/"
-    : "plugin:/webview-ui/index.html"}
-  uxpAllowInspector="true"
-></webview>
-
-<!-- BOLT_WEBVIEW_END -->
 <main>
   <!-- BOLT_SAMPLECODE_START -->
   <div>

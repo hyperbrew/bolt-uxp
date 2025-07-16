@@ -1,4 +1,6 @@
 <script lang="ts">
+  import boltUxpLogo from "../../src/assets/bolt-uxp.png";
+
   import { initWebview } from "./webview-setup";
   const api = initWebview();
 
@@ -21,6 +23,9 @@
 
 <main>
   <h2>Bolt UXP Webview</h2>
+  <div>
+    <img class="logo-lg" src={boltUxpLogo} alt="" />
+  </div>
   <div class="button-group">
     <button onclick={comlinkAlert}>Alert</button>
     <button onclick={comlinkProjectInfo}>Get Project Info</button>
@@ -54,5 +59,8 @@
     margin-top: 1rem;
     color: #43aaff;
     padding: 1rem;
+  }
+  .logo-lg {
+    height: 6rem;
   }
 </style>

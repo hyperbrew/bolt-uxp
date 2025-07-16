@@ -72,6 +72,7 @@ p {
 
 // BOLT_SAMPLECODE_END
 
+// BOLT_WEBVIEW_START
 .webview-ui{
   position: absolute;
   top: 0;
@@ -79,4 +80,6 @@ p {
   width: 100vw;
   height: 100vh;
   border: none;
+  // opacity: 0; // hide webview while loading
 }
+// BOLT_WEBVIEW_END

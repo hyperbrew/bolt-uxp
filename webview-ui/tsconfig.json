@@ -12,7 +12,7 @@
     "checkJs": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "types": ["./src/webview-globals.d.ts"]
+    "types": []
   },
   "include": ["./src", "../src/api/api*"]
 }
