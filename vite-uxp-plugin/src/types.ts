@@ -90,5 +90,7 @@ export type UXP_Manifest = {
 export type UXP_Config = {
   manifest: UXP_Manifest;
   hotReloadPort: number;
+  webviewUi: boolean;
+  webviewReloadPort: number;
   copyZipAssets: string[];
 };

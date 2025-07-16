@@ -20,6 +20,7 @@ import {
 import path = require("path");
 
 import { packageSync, zipPackage } from "meta-bolt/dist/plugin-utils";
+import { getPackageManager, execAsync } from "meta-bolt/dist/utils";
 import { resetLog } from "meta-bolt/dist/lib";
 
 export type { UXP_Config, UXP_Manifest };
@@ -148,6 +149,15 @@ export const uxp = (config: UXP_Config, mode?: string): Plugin => {
       uxpSetup(config, mode);
       if (mode === "dev" && config.manifest.addon) {
         copyHybridBinaries(config, true);
+      }
+      if (config.webviewUi) {
+        console.log("Webview UI is enabled");
+        const pm = getPackageManager() || "npm";
+        if (mode === "dev") {
+          execAsync(`cd webview-ui && ${pm} run dev`);
+        } else {
+          execSync(`cd webview-ui && ${pm} run build`);
+        }
       }
     },
     transform(code, id, options) {

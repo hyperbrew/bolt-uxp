@@ -3,6 +3,10 @@ import { version } from "./package.json";
 
 const extraPrefs = {
   hotReloadPort: 8080,
+  // BOLT_WEBVIEW_START
+  webviewUi: true,
+  webviewReloadPort: 8081,
+  // BOLT_WEBVIEW_END
   copyZipAssets: ["public-zip/*"],
 };
 

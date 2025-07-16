@@ -10,10 +10,9 @@ interface UXPHTMLWebViewElement extends HTMLElement {
 export const webviewInitHost = () => {
   let webview = document.createElement("webview") as UXPHTMLWebViewElement;
 
-  // TODO: Make HMR Port Dynamic
   webview.src =
     import.meta.env.VITE_BOLT_MODE === "dev"
-      ? "http://localhost:8081/"
+      ? `http://localhost:${import.meta.env.VITE_BOLT_WEBVIEW_PORT}/`
       : "plugin:/webview-ui/index.html";
   webview.className = "webview-ui";
   webview.uxpAllowInspector = "true";
