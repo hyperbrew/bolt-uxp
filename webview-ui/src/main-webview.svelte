@@ -12,6 +12,7 @@
     const info = await api.getProjectInfo();
     projectInfo = JSON.stringify(info, null, 2);
     console.log("Project Info:", { info });
+    await api.notify(projectInfo);
   };
 
   let uxpInfo: string = $state("");
@@ -19,6 +20,7 @@
     const info = await api.getUXPInfo();
     uxpInfo = JSON.stringify(info, null, 2);
     console.log("Project Info:", { info });
+    await api.notify(uxpInfo);
   };
 </script>
 
@@ -32,8 +34,6 @@
     <button onclick={getProjectInfo}>Get Project Info</button>
     <button onclick={getUXPInfo}>Get UXP Info</button>
   </div>
-  <textarea spellcheck="false">{projectInfo}</textarea>
-  <textarea spellcheck="false">{uxpInfo}</textarea>
 </main>
 
 <style lang="scss">

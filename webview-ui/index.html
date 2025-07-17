@@ -3,10 +3,21 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + Svelte + TS</title>
+    <title>Bolt UXP</title>
   </head>
   <body>
     <div id="app"></div>
-    <script type="module" src="/src/main.ts"></script>
+    
+      <!-- Uncomment to debug the desired template -->
+
+    <!-- BOLT_SVELTE_START -->
+    <script type="module" src="/src/index-webview-svelte.ts"></script>
+    <!-- BOLT_SVELTE_END -->
+    <!-- BOLT_REACT_START -->
+    <!-- <script type="module" src="/src/index-webview-react.tsx"></script> -->
+    <!-- BOLT_REACT_END -->
+    <!-- BOLT_VUE_START -->
+    <!-- <script type="module" src="/src/index-webview-vue.ts"></script> -->
+    <!-- BOLT_VUE_END -->
   </body>
 </html>

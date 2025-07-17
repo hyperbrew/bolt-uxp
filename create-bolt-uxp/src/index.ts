@@ -13,6 +13,11 @@ const frameworkOptions: ArgOpt[] = [
       "src/main.svelte",
       "package.svelte.jsonc",
       "tsconfig.svelte.json",
+
+      "webview-ui/src/index-webview-svelte.ts",
+      "webview-ui/src/main-webview.svelte",
+      "webview-ui/package.svelte.jsonc",
+      "webview-ui/tsconfig.svelte.json",
     ],
   },
   {
@@ -23,6 +28,11 @@ const frameworkOptions: ArgOpt[] = [
       "src/main.tsx",
       "package.react.jsonc",
       "tsconfig.react.json",
+
+      "webview-ui/src/index-webview-react.tsx",
+      "webview-ui/src/main-webview.tsx",
+      "webview-ui/package.react.jsonc",
+      "webview-ui/tsconfig.react.json",
     ],
   },
   {
@@ -33,6 +43,11 @@ const frameworkOptions: ArgOpt[] = [
       "src/main.vue",
       "package.vue.jsonc",
       "tsconfig.vue.json",
+
+      "webview-ui/src/index-webview-vue.ts",
+      "webview-ui/src/main-webview.vue",
+      "webview-ui/package.vue.jsonc",
+      "webview-ui/tsconfig.vue.json",
     ],
   },
 ];

@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "composite": true,
+    "skipLibCheck": true,
+    "moduleResolution": "bundler",
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+    "module": "ESNext",
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "checkJs": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "types": []
+  },
+  "include": ["./src", "../src/api/api*"]
+}
