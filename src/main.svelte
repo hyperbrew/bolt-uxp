@@ -17,8 +17,12 @@
 
   // BOLT_WEBVIEW_START
   import { webviewInitHost } from "./webview-setup-host";
+  import type { WebviewAPI } from "../webview-ui/src/webview";
+  let webviewAPI: WebviewAPI;
   if (import.meta.env.VITE_BOLT_WEBVIEW_UI === "true") {
-    onMount(() => webviewInitHost());
+    onMount(async () => {
+      webviewAPI = await webviewInitHost();
+    });
   }
   // BOLT_WEBVIEW_END
 

@@ -12,7 +12,7 @@
     "checkJs": true,
     "isolatedModules": true,
     "jsx": "react-jsx",
-    "types": ["@adobe/cc-ext-uxp-types", "@types/photoshop", "@types/node", "./src/uxp-types.d.ts"]
+    "types": ["@adobe/cc-ext-uxp-types", "@types/photoshop", "@types/node"]
   },
-  "include": ["./src"]
+  "include": ["./src", "./webview-ui/src/webview.ts"]
 }

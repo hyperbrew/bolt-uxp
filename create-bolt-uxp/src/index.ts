@@ -168,6 +168,24 @@ const initData: BoltInitData = {
       ],
     },
     {
+      name: "webview",
+      type: "boolean",
+      message:
+        "Do you want to use a Webview UI with full CSS/HTML support but 2 separate contexts?\n( more info: https://github.com/hyperbrew/bolt-uxp#webview-ui-option )",
+      initialValue: false,
+      required: true,
+      alias: "w",
+      describe: "Use a Webivew UI for full CSS/HTML Support (default: false)",
+      options: [
+        {
+          value: "true",
+          label: "Yes",
+          files: ["webview-ui/**/*"],
+        },
+        { value: "false", label: "No", files: [] },
+      ],
+    },
+    {
       name: "installDeps",
       type: "boolean",
       message: "Install dependencies?",

@@ -201,6 +201,53 @@ If you have UXP Beta access to any of the other Adobe apps, you can add them as 
 
 _Note: Bolt UXP will not work out of-the-box for apps in UXP beta, you will need beta access from Adobe app teams as they become available. Hyper Brew cannot assist you in this, you will need to contact Adobe app teams directly for access._
 
+## Webview UI Option
+
+Bolt UXP now comes with the option of enabling a Webview UI when you create a new project.
+
+_If you are new to UXP, we recommend you leaving the Webview option disabled as it adds to the complexity of your project._
+
+Enabling the Webview UI option now allows you to build your User Interface with full CSS/HTML/JS DOM support following Edge on Windows and Safari on MacOS.
+
+Enabling Webview UI will however add to the complexity of your project creating 2 separate contexts for:
+
+- UI >> `webview-ui/*`
+- UXP Backed >> `src/*`
+
+All Exported Functions in your uxp and app files are exposed to the Webview:
+
+- `src/api/uxp.ts` - Global Functions
+- `src/api/(photoshop/indesign/premierepro/etc).ts` - App-Specific Functions
+
+In the Webview context, you can call these async methods and get responses with type-safety with the `api` object:
+
+**Call UXP Functions from Webview**
+
+```js
+await api.getProjectInfo();
+await api.getUXPInfo();
+```
+
+In a similar way, you can write functions in the webview context that get called by the UXP context by writring:
+
+- `webview-ui/src/webview-api.ts` - Webview functions exposed to UXP
+
+**Call Webview Functions from UXP**
+
+```js
+await webviewAPI.pingWebview();
+```
+
+Since the Webview and UXP are separate contexts, make sure to only return primative types (strings, numbers, booleans, arrays, static objects, etc). Any references or object instances returned will not be preserved.
+
+## Webview UI - How Does it Work?
+
+In `dev` mode, a separate Vite server is spun up for the Webview UI Frontend. The webview element in UXP is aimed at that localhost port.
+
+When `build` is run, the webview first builds to a single `index.html` file in the `public/webview-ui` directory which is then copied to `dist`.
+
+Fast communication between UXP and Webview contexts is accomplished via Comlink interface over the `postMessage()` APIs with full type-safety between contexts.
+
 ## Multi-Window panels
 
 To add additional windows to a UXP Plugin, you'll need to do 2 things:

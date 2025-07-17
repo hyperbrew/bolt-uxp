@@ -21,9 +21,10 @@ const hostEndpoint = {
   },
 };
 
-export const initWebview = (): API => {
+export const initWebview = (webviewAPI: object): API => {
   const endpoint = Comlink.windowEndpoint(hostEndpoint);
   const comlinkAPI = Comlink.wrap(endpoint);
+  Comlink.expose(webviewAPI, endpoint);
   //@ts-ignore
   const api = comlinkAPI.api as API;
   return api;

@@ -1,20 +1,21 @@
 <script lang="ts">
   import boltUxpLogo from "../../src/assets/bolt-uxp.png";
+  import * as webviewAPI from "./webview-api";
 
   import { initWebview } from "./webview-setup";
-  const api = initWebview();
+  const api = initWebview(webviewAPI);
 
-  const comlinkAlert = async () => await api.notify("Hello World");
+  const simpleAlert = async () => await api.notify("Hello World");
 
   let projectInfo: string = $state("");
-  const comlinkProjectInfo = async () => {
+  const getProjectInfo = async () => {
     const info = await api.getProjectInfo();
     projectInfo = JSON.stringify(info, null, 2);
     console.log("Project Info:", { info });
   };
 
   let uxpInfo: string = $state("");
-  const comlinkUXPInfo = async () => {
+  const getUXPInfo = async () => {
     const info = await api.getUXPInfo();
     uxpInfo = JSON.stringify(info, null, 2);
     console.log("Project Info:", { info });
@@ -27,9 +28,9 @@
     <img class="logo-lg" src={boltUxpLogo} alt="" />
   </div>
   <div class="button-group">
-    <button onclick={comlinkAlert}>Alert</button>
-    <button onclick={comlinkProjectInfo}>Get Project Info</button>
-    <button onclick={comlinkUXPInfo}>Get UXP Info</button>
+    <button onclick={simpleAlert}>Alert</button>
+    <button onclick={getProjectInfo}>Get Project Info</button>
+    <button onclick={getUXPInfo}>Get UXP Info</button>
   </div>
   <textarea spellcheck="false">{projectInfo}</textarea>
   <textarea spellcheck="false">{uxpInfo}</textarea>
