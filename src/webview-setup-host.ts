@@ -12,7 +12,6 @@ interface UXPHTMLWebViewElement extends HTMLElement {
 export const webviewInitHost = (
   webview?: UXPHTMLWebViewElement,
 ): Promise<WebviewAPI> => {
-  console.log("webviewInitHost called", webview);
   return new Promise((resolve, reject) => {
     if (!webview) {
       webview = document.createElement("webview") as UXPHTMLWebViewElement;
@@ -23,19 +22,14 @@ export const webviewInitHost = (
           ? `http://localhost:${import.meta.env.VITE_BOLT_WEBVIEW_PORT}/`
           : "plugin:/webview-ui/index.html";
 
-      console.log("Webview Element Created:", webview, webview.src);
       webview = document
         .getElementById("app")!
         .appendChild(webview) as UXPHTMLWebViewElement;
     } else {
-      console.log("Webview Element Reused:", webview, webview.src);
+      // webview element reused
     }
 
     webview.addEventListener("loadstop", () => {
-      console.log("webview loaded", webview);
-
-      // Show webview after loading
-      // setTimeout(() => (webview.style.opacity = "1"), 50);
       const backendAPI = { api };
       const backendEndpoint = {
         postMessage: (msg: any) => {

@@ -55,7 +55,7 @@ export const App = () => {
         <button onClick={increment}>count is {count}</button>
         <button onClick={simpleAlert}>Alert</button>
         <button onClick={getProjectInfo}>Get Project Info</button>
-        <button onClick={getUXPInfo}>Get Project Info</button>
+        <button onClick={getUXPInfo}>Get UXP Info</button>
       </div>
       <div>
         <p>

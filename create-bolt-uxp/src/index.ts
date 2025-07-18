@@ -105,6 +105,14 @@ const initData: BoltInitData = {
       ["tsconfig.react.json", "tsconfig.json"],
       ["tsconfig.vue.json", "tsconfig.json"],
 
+      ["webview-ui/package.svelte.jsonc", "webview-ui/package.json"],
+      ["webview-ui/package.react.jsonc", "webview-ui/package.json"],
+      ["webview-ui/package.vue.jsonc", "webview-ui/package.json"],
+
+      ["webview-ui/tsconfig.svelte.json", "webview-ui/tsconfig.json"],
+      ["webview-ui/tsconfig.react.json", "webview-ui/tsconfig.json"],
+      ["webview-ui/tsconfig.vue.json", "webview-ui/tsconfig.json"],
+
       [".npmignore", ".gitignore"],
     ],
   },
