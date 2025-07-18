@@ -33,3 +33,4 @@ src/hybrid/win/.vs
 
 .env
 scripts/mac-sign.sh
+public/webview-ui/*
