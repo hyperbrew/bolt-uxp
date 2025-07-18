@@ -15,11 +15,12 @@
   import svelteLogo from "./assets/svelte.png";
   import { onMount } from "svelte";
 
+  const webviewUI = import.meta.env.VITE_BOLT_WEBVIEW_UI === "true";
   // BOLT_WEBVIEW_START
   import { webviewInitHost } from "./webview-setup-host";
   import type { WebviewAPI } from "../webview-ui/src/webview";
   let webviewAPI: WebviewAPI;
-  if (import.meta.env.VITE_BOLT_WEBVIEW_UI === "true") {
+  if (webviewUI) {
     onMount(async () => {
       webviewAPI = await webviewInitHost();
     });
@@ -27,9 +28,7 @@
   // BOLT_WEBVIEW_END
 
   let count: number = $state(0);
-
   const increment = () => (count += 1);
-
   const hostName = (uxp?.host?.name || ("" as string)).toLowerCase();
 
   //* Call Functions Conditionally by App
@@ -55,7 +54,7 @@
   // BOLT_ILST_END
 
   //* Or call the unified API object directly and the correct app function will be used
-  const helloWorld = () => {
+  const simpleAlert = () => {
     api.notify("Hello World");
   };
 
@@ -76,41 +75,43 @@
   // BOLT_SAMPLECODE_END
 </script>
 
-<main>
-  <!-- BOLT_SAMPLECODE_START -->
-  <div>
-    <img class="logo-lg" src={boltUxpLogo} alt="" />
-  </div>
-  <div class="stack-icons">
-    <img src={viteLogo} class="logo" alt="" />
-    <span> + </span>
-    <img src={svelteLogo} class="logo" alt="" />
-    <span> + </span>
-    <img src={tsLogo} class="logo" alt="" />
-    <span> + </span>
-    <img src={sassLogo} class="logo" alt="" />
-  </div>
-  <div class="button-group">
-    <button on:click={increment}>
-      count is {count}
-    </button>
-    <button on:click={helloWorld}>Hello World</button>
-    <!-- BOLT_HYBRID_START -->
-    <button on:click={hybridTest}>Hybrid</button>
-    <!-- BOLT_HYBRID_END -->
-  </div>
-  <div>
-    <p>
-      Edit <span class="code">main.svelte</span> and save to test HMR updates.
-    </p>
-  </div>
-  <div class="button-group">
-    <a href="https://github.com/hyperbrew/bolt-uxp/">Bolt UXP Docs</a>
-    <a href="https://svelte.dev">Svelte Docs</a>
-    <a href="https://vitejs.dev/">Vite Docs</a>
-  </div>
-  <!-- BOLT_SAMPLECODE_END -->
-</main>
+{#if !webviewUI}
+  <main>
+    <!-- BOLT_SAMPLECODE_START -->
+    <div>
+      <img class="logo-lg" src={boltUxpLogo} alt="" />
+    </div>
+    <div class="stack-icons">
+      <img src={viteLogo} class="logo" alt="" />
+      <span> + </span>
+      <img src={svelteLogo} class="logo" alt="" />
+      <span> + </span>
+      <img src={tsLogo} class="logo" alt="" />
+      <span> + </span>
+      <img src={sassLogo} class="logo" alt="" />
+    </div>
+    <div class="button-group">
+      <button onclick={increment}>
+        count is {count}
+      </button>
+      <button onclick={simpleAlert}>Alert</button>
+      <!-- BOLT_HYBRID_START -->
+      <button onclick={hybridTest}>Hybrid</button>
+      <!-- BOLT_HYBRID_END -->
+    </div>
+    <div>
+      <p>
+        Edit <span class="code">main.svelte</span> and save to test HMR updates.
+      </p>
+    </div>
+    <div class="button-group">
+      <a href="https://github.com/hyperbrew/bolt-uxp/">Bolt UXP Docs</a>
+      <a href="https://svelte.dev">Svelte Docs</a>
+      <a href="https://vitejs.dev/">Vite Docs</a>
+    </div>
+    <!-- BOLT_SAMPLECODE_END -->
+  </main>
+{/if}
 
 <!-- BOLT_SAMPLECODE_START -->
 <!-- Example of a secondary panel entrypoint -->

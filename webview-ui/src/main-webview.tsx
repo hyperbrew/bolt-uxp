@@ -18,6 +18,7 @@ export const App = () => {
   // BOLT_SAMPLECODE_START
   const [count, setCount] = useState(0);
   const increment = () => setCount((prev) => prev + 1);
+  // BOLT_SAMPLECODE_END
 
   const simpleAlert = async () => await api.notify("Hello World");
 
@@ -35,11 +36,6 @@ export const App = () => {
     await api.notify(uxpInfo);
   };
 
-  //* Or call the unified API object directly and the correct app function will be used
-  const helloWorld = () => {
-    api.notify("Hello World");
-  };
-  // BOLT_SAMPLECODE_END
   return (
     <main>
       {/* BOLT_SAMPLECODE_START */}
@@ -63,8 +59,8 @@ export const App = () => {
       </div>
       <div>
         <p>
-          Edit <span className="code">main.tsx</span> and save to test HMR
-          updates.
+          Edit <span className="code">webview-ui/src/main-webview.tsx</span> and
+          save to test HMR updates.
         </p>
       </div>
       <div className="button-group">

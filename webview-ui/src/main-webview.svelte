@@ -1,5 +1,15 @@
 <script lang="ts">
+  // BOLT_SAMPLECODE_START
   import boltUxpLogo from "../../src/assets/bolt-uxp.png";
+  import viteLogo from "../../src/assets/vite.png";
+  import tsLogo from "../../src/assets/typescript.png";
+  import sassLogo from "../../src/assets/sass.png";
+  import svelteLogo from "../../src/assets/svelte.png";
+  let count: number = $state(0);
+
+  const increment = () => (count += 1);
+  // BOLT_SAMPLECODE_END
+
   import * as webviewAPI from "./webview-api";
 
   import { initWebview } from "./webview-setup";
@@ -25,43 +35,39 @@
 </script>
 
 <main>
-  <h2>Bolt UXP Webview</h2>
+  <!-- BOLT_SAMPLECODE_START -->
   <div>
     <img class="logo-lg" src={boltUxpLogo} alt="" />
   </div>
+  <div class="stack-icons">
+    <img src={viteLogo} class="logo" alt="" />
+    <span> + </span>
+    <img src={svelteLogo} class="logo" alt="" />
+    <span> + </span>
+    <img src={tsLogo} class="logo" alt="" />
+    <span> + </span>
+    <img src={sassLogo} class="logo" alt="" />
+  </div>
   <div class="button-group">
+    <button onclick={increment}>
+      count is {count}
+    </button>
     <button onclick={simpleAlert}>Alert</button>
     <button onclick={getProjectInfo}>Get Project Info</button>
     <button onclick={getUXPInfo}>Get UXP Info</button>
   </div>
+  <div>
+    <p>
+      Edit <span class="code">webview-ui/src/main-webview.svelte</span> and save
+      to test HMR updates.
+    </p>
+  </div>
+  <div class="button-group">
+    <a href="https://github.com/hyperbrew/bolt-uxp/">Bolt UXP Docs</a>
+    <a href="https://svelte.dev">Svelte Docs</a>
+    <a href="https://vitejs.dev/">Vite Docs</a>
+  </div>
 </main>
 
 <style lang="scss">
-  .button-group {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-  button {
-    transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    outline: none;
-  }
-  button:hover {
-    filter: drop-shadow(0 0 2em #20639b);
-    padding-right: 2rem;
-    padding-left: 2rem;
-  }
-  textarea {
-    width: calc(100vw - 8rem);
-    height: 110px;
-    background-color: transparent;
-    border-radius: 5px;
-    resize: none;
-    margin-top: 1rem;
-    color: #43aaff;
-    padding: 1rem;
-  }
-  .logo-lg {
-    height: 6rem;
-  }
 </style>

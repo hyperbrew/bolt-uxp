@@ -13,7 +13,6 @@ export const webviewInitHost = (
   webview?: UXPHTMLWebViewElement,
 ): Promise<WebviewAPI> => {
   console.log("webviewInitHost called", webview);
-  window.webview = webview; // Store the webview globally for debugging
   return new Promise((resolve, reject) => {
     if (!webview) {
       webview = document.createElement("webview") as UXPHTMLWebViewElement;
@@ -34,30 +33,29 @@ export const webviewInitHost = (
 
     webview.addEventListener("loadstop", () => {
       console.log("webview loaded", webview);
-      // webview.style.opacity = "1"; // Make webview visible
+
+      // Show webview after loading
+      // setTimeout(() => (webview.style.opacity = "1"), 50);
       const backendAPI = { api };
       const backendEndpoint = {
         postMessage: (msg: any) => {
           console.log("running postMessage", msg);
-          return webview.postMessage(msg);
+          return webview!.postMessage(msg);
         },
         addEventListener: (type: string, handler: any) => {
-          console.log("running addEventListener", webview.addEventListener);
-          webview.addEventListener("message", handler);
+          console.log("running addEventListener", webview!.addEventListener);
+          webview!.addEventListener("message", handler);
         },
         removeEventListener: (type: string, handler: any) => {
           console.log(
             "running removeEventListener",
-            webview.removeEventListener,
+            webview!.removeEventListener,
           );
-          webview.removeEventListener("message", handler);
+          webview!.removeEventListener("message", handler);
         },
       };
 
-      // React & Svelte Works
       const endpoint = Comlink.windowEndpoint(backendEndpoint);
-      // Vue Attempt
-      // const endpoint = Comlink.windowEndpoint(backendEndpoint, webview);
       Comlink.expose(backendAPI, endpoint);
       //@ts-ignore
       const comlinkAPI = Comlink.wrap(endpoint) as WebviewAPI;
