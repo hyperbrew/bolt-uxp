@@ -3,7 +3,20 @@
 import { ref } from "vue";
 import { uxp, indesign, photoshop } from "./globals";
 import { api } from "./api/api";
+// BOLT_SAMPLECODE_END
 
+// BOLT_WEBVIEW_START
+import { webviewInitHost } from "./webview-setup-host";
+import type { WebviewAPI } from "../webview-ui/src/webview";
+
+let webviewAPI: WebviewAPI;
+console.log("webview-ui", import.meta.env.VITE_BOLT_WEBVIEW_UI);
+if (import.meta.env.VITE_BOLT_WEBVIEW_UI === "true") {
+  webviewInitHost().then((api) => (webviewAPI = api));
+}
+// BOLT_WEBVIEW_END
+
+// BOLT_SAMPLECODE_START
 let count = ref(0);
 
 const hostName = (uxp.host.name as string).toLowerCase();

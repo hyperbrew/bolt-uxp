@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 // BOLT_SAMPLECODE_START
 import boltUxpLogo from "./assets/bolt-uxp.png";
@@ -10,6 +10,11 @@ import reactLogo from "./assets/react.png";
 import { uxp, indesign, photoshop } from "./globals";
 import { api } from "./api/api";
 // BOLT_SAMPLECODE_END
+
+// BOLT_WEBVIEW_START
+import { webviewInitHost } from "./webview-setup-host";
+import type { WebviewAPI } from "../webview-ui/src/webview";
+// BOLT_WEBVIEW_END
 
 declare global {
   namespace JSX {
@@ -23,6 +28,15 @@ declare global {
 }
 
 export const App = () => {
+  // BOLT_WEBVIEW_START
+  let webviewAPI: WebviewAPI;
+  if (import.meta.env.VITE_BOLT_WEBVIEW_UI === "true") {
+    useEffect(() => {
+      webviewInitHost().then((res) => (webviewAPI = res));
+    }, []);
+  }
+  // BOLT_WEBVIEW_END
+
   // BOLT_SAMPLECODE_START
   const [count, setCount] = useState(0);
   const increment = () => setCount((prev) => prev + 1);
@@ -107,6 +121,7 @@ export const App = () => {
         </div>
         {/* BOLT_SAMPLECODE_END */}
       </main>
+
       {/* BOLT_SAMPLECODE_START */}
       {/* Example of a secondary panel entrypoint 
       <uxp-panel panelid="bolt.uxp.plugin.settings">

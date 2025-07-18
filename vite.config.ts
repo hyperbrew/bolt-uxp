@@ -46,7 +46,8 @@ export default defineConfig({
         "shell",
       ],
       output: {
-        format: "cjs",
+        // format: "cjs",
+        format: "iife", // Needed for Webview UI in Vue to prevent global overrides
       },
     },
   },

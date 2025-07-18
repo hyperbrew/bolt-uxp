@@ -35,7 +35,7 @@
     "comlink": "^4.4.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "vue": "^3.5.16"
+    "vue": "^3.5.17"
   },
   "devDependencies": {
     "@adobe/cc-ext-uxp-types": "https://github.com/justintaylor-dev/cc-ext-uxp-types.git",

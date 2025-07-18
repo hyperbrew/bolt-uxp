@@ -9,37 +9,55 @@ interface UXPHTMLWebViewElement extends HTMLElement {
   postMessage: (msg: any) => void;
 }
 
-export const webviewInitHost = (): Promise<WebviewAPI> => {
+export const webviewInitHost = (
+  webview?: UXPHTMLWebViewElement,
+): Promise<WebviewAPI> => {
+  console.log("webviewInitHost called", webview);
+  window.webview = webview; // Store the webview globally for debugging
   return new Promise((resolve, reject) => {
-    let webview = document.createElement("webview") as UXPHTMLWebViewElement;
+    if (!webview) {
+      webview = document.createElement("webview") as UXPHTMLWebViewElement;
+      webview.className = "webview-ui";
+      webview.uxpAllowInspector = "true";
+      webview.src =
+        import.meta.env.VITE_BOLT_MODE === "dev"
+          ? `http://localhost:${import.meta.env.VITE_BOLT_WEBVIEW_PORT}/`
+          : "plugin:/webview-ui/index.html";
 
-    webview.src =
-      import.meta.env.VITE_BOLT_MODE === "dev"
-        ? `http://localhost:${import.meta.env.VITE_BOLT_WEBVIEW_PORT}/`
-        : "plugin:/webview-ui/index.html";
-    webview.className = "webview-ui";
-    webview.uxpAllowInspector = "true";
-
-    console.log("Webview Element Created:", webview);
-
-    webview = document
-      .getElementById("app")!
-      .appendChild(webview) as UXPHTMLWebViewElement;
+      console.log("Webview Element Created:", webview, webview.src);
+      webview = document
+        .getElementById("app")!
+        .appendChild(webview) as UXPHTMLWebViewElement;
+    } else {
+      console.log("Webview Element Reused:", webview, webview.src);
+    }
 
     webview.addEventListener("loadstop", () => {
+      console.log("webview loaded", webview);
       // webview.style.opacity = "1"; // Make webview visible
       const backendAPI = { api };
       const backendEndpoint = {
-        postMessage: (msg: any) => webview.postMessage(msg),
+        postMessage: (msg: any) => {
+          console.log("running postMessage", msg);
+          return webview.postMessage(msg);
+        },
         addEventListener: (type: string, handler: any) => {
+          console.log("running addEventListener", webview.addEventListener);
           webview.addEventListener("message", handler);
         },
         removeEventListener: (type: string, handler: any) => {
+          console.log(
+            "running removeEventListener",
+            webview.removeEventListener,
+          );
           webview.removeEventListener("message", handler);
         },
       };
 
+      // React & Svelte Works
       const endpoint = Comlink.windowEndpoint(backendEndpoint);
+      // Vue Attempt
+      // const endpoint = Comlink.windowEndpoint(backendEndpoint, webview);
       Comlink.expose(backendAPI, endpoint);
       //@ts-ignore
       const comlinkAPI = Comlink.wrap(endpoint) as WebviewAPI;

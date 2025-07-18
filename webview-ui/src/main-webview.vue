@@ -32,7 +32,7 @@ let count = ref(0);
   <main>
     <!-- BOLT_SAMPLECODE_START -->
     <div>
-      <img class="logo-lg" src="./assets/bolt-uxp.png" alt="" />
+      <img class="logo-lg" src="../../src/assets/bolt-uxp.png" alt="" />
     </div>
     <div class="stack-icons">
       <img src="../../src/assets/vite.png" class="logo" alt="" />
