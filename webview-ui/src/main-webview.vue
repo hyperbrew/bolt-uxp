@@ -29,6 +29,12 @@ const getUXPInfo = async () => {
   console.log("Project Info:", { info });
   await api.notify(uxpInfo);
 };
+
+const clickLink = async (event: MouseEvent) => {
+  event.preventDefault();
+  const url = (event.target as HTMLAnchorElement).href;
+  await api.openURL(url);
+};
 </script>
 
 <template>
@@ -59,8 +65,11 @@ const getUXPInfo = async () => {
       </p>
     </div>
     <div class="button-group">
-      <a href="https://github.com/hyperbrew/bolt-uxp/">Bolt UXP Docs</a>
-      <a href="https://v3.vuejs.org/">Vue Docs</a>
+      <a href="https://github.com/hyperbrew/bolt-uxp/" @click="clickLink">
+        Bolt UXP Docs
+      </a>
+      <a href="https://v3.vuejs.org/" @click="clickLink">Vue Docs</a>
+      <a href="https://vitejs.dev/" @click="clickLink">Vite Docs</a>
     </div>
     <!-- BOLT_SAMPLECODE_END -->
   </main>

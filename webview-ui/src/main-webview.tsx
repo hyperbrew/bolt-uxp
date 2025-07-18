@@ -36,6 +36,12 @@ export const App = () => {
     await api.notify(uxpInfo);
   };
 
+  const clickLink = async (event: any) => {
+    event.preventDefault();
+    const url = (event.target as HTMLAnchorElement).href;
+    await api.openURL(url);
+  };
+
   return (
     <main>
       {/* BOLT_SAMPLECODE_START */}
@@ -64,9 +70,15 @@ export const App = () => {
         </p>
       </div>
       <div className="button-group">
-        <a href="https://github.com/hyperbrew/bolt-uxp/">Bolt UXP Docs</a>
-        <a href="https://svelte.dev">Svelte Docs</a>
-        <a href="https://vitejs.dev/">Vite Docs</a>
+        <a href="https://github.com/hyperbrew/bolt-uxp/" onClick={clickLink}>
+          Bolt UXP Docs
+        </a>
+        <a href="https://svelte.dev" onClick={clickLink}>
+          Svelte Docs
+        </a>
+        <a href="https://vitejs.dev/" onClick={clickLink}>
+          Vite Docs
+        </a>
       </div>
       {/* BOLT_SAMPLECODE_END */}
     </main>

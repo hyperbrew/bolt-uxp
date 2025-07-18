@@ -31,15 +31,15 @@ main {
   margin-left: 0.25rem;
   margin-right: 0.25rem;
 }
-// button {
-//   transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-//   outline: none;
-// }
-// button:hover {
-//   // filter: drop-shadow(0 0 2em #20639b);
-//   padding-right: 2rem;
-//   padding-left: 2rem;
-// }
+button {
+  transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  outline: none;
+}
+button:hover {
+  filter: drop-shadow(0 0 2em #20639b);
+  padding-right: 2rem;
+  padding-left: 2rem;
+}
 textarea {
   width: calc(100vw - 8rem);
   height: 110px;

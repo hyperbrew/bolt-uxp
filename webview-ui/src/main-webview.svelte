@@ -17,20 +17,24 @@
 
   const simpleAlert = async () => await api.notify("Hello World");
 
-  let projectInfo: string = $state("");
   const getProjectInfo = async () => {
     const info = await api.getProjectInfo();
-    projectInfo = JSON.stringify(info, null, 2);
+    const projectInfo = JSON.stringify(info, null, 2);
     console.log("Project Info:", { info });
     await api.notify(projectInfo);
   };
 
-  let uxpInfo: string = $state("");
   const getUXPInfo = async () => {
     const info = await api.getUXPInfo();
-    uxpInfo = JSON.stringify(info, null, 2);
+    const uxpInfo = JSON.stringify(info, null, 2);
     console.log("Project Info:", { info });
     await api.notify(uxpInfo);
+  };
+
+  const clickLink = async (event: MouseEvent) => {
+    event.preventDefault();
+    const url = (event.target as HTMLAnchorElement).href;
+    await api.openURL(url);
   };
 </script>
 
@@ -63,9 +67,11 @@
     </p>
   </div>
   <div class="button-group">
-    <a href="https://github.com/hyperbrew/bolt-uxp/">Bolt UXP Docs</a>
-    <a href="https://svelte.dev">Svelte Docs</a>
-    <a href="https://vitejs.dev/">Vite Docs</a>
+    <a href="https://github.com/hyperbrew/bolt-uxp/" onclick={clickLink}>
+      Bolt UXP Docs
+    </a>
+    <a href="https://svelte.dev" onclick={clickLink}>Svelte Docs</a>
+    <a href="https://vitejs.dev/" onclick={clickLink}>Vite Docs</a>
   </div>
 </main>
 

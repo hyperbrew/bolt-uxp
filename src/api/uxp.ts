@@ -21,3 +21,6 @@ export const getUXPInfo = async () => {
   };
   return info;
 };
+export const openURL = async (url: string) => {
+  uxp.shell.openExternal(url, "");
+};
