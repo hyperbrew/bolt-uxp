@@ -11,8 +11,8 @@ const extraPrefs = {
 };
 
 const manifest: UXP_Manifest = {
-  id: "bolt.uxp.plugin",
-  name: "Bolt UXP",
+  id: "bolt.uxp.plugin", // BOLT_ID_REPLACE
+  name: "Bolt UXP", // BOLT_DISPLAYNAME_REPLACE
   version,
   main: "index.html",
   manifestVersion: 6,
