@@ -3,12 +3,19 @@ import { version } from "./package.json";
 
 const extraPrefs = {
   hotReloadPort: 8080,
+  // BOLT_WEBVIEW_START
+  webviewUi: true,
+  webviewReloadPort: 8082,
+  // BOLT_WEBVIEW_END
   copyZipAssets: ["public-zip/*"],
 };
 
+const id = "bolt.uxp.plugin"; // BOLT_ID_REPLACE
+const name = "Bolt UXP"; // BOLT_DISPLAYNAME_REPLACE
+
 const manifest: UXP_Manifest = {
-  id: "bolt.uxp.plugin", // BOLT_ID_REPLACE
-  name: "Bolt UXP", // BOLT_DISPLAYNAME_REPLACE
+  id,
+  name,
   version,
   main: "index.html",
   manifestVersion: 6,
@@ -41,9 +48,9 @@ const manifest: UXP_Manifest = {
   entrypoints: [
     {
       type: "panel",
-      id: "bolt.uxp.plugin.panel",
+      id: `${id}.panel`,
       label: {
-        default: "Bolt UXP",
+        default: name,
       },
       minimumSize: { width: 230, height: 200 },
       maximumSize: { width: 2000, height: 2000 },
@@ -74,9 +81,9 @@ const manifest: UXP_Manifest = {
     //* tag in your entrypoint (.tsx, .vue, or .svelte) file
     // {
     //   type: "panel",
-    //   id: "bolt.uxp.plugin.settings",
+    //   id: `${id}.settings`,
     //   label: {
-    //     default: "Bolt UXP Settings",
+    //     default: `${name} Settings`,
     //   },
     //   minimumSize: { width: 230, height: 200 },
     //   maximumSize: { width: 2000, height: 2000 },
@@ -138,11 +145,9 @@ const manifest: UXP_Manifest = {
     clipboard: "readAndWrite",
     webview: {
       allow: "yes",
-      domains: [
-        // BOLT_SAMPLECODE_START
-        "https://*.hyperbrew.co",
-        // BOLT_SAMPLECODE_END
-      ],
+      allowLocalRendering: "yes",
+      domains: "all",
+      enableMessageBridge: "localAndRemote",
     },
     ipc: {
       enablePluginCommunication: true,
