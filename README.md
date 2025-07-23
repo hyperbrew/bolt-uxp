@@ -240,6 +240,14 @@ await webviewAPI.pingWebview();
 
 Since the Webview and UXP are separate contexts, make sure to only return primative types (strings, numbers, booleans, arrays, static objects, etc). Any references or object instances returned will not be preserved.
 
+## Webview UI - Debugging
+
+The Webview UI option will create 2 separate JS contexts, UXP & Webview UI.
+
+- **UXP Context:** Debug with the Adobe UXP Developer Tools
+- **Webview UI Context:** Debug with webview devtools with right click > "Inspect" on the UI
+  - _Note: this context menu can be overridden in production if desired_
+
 ## Webview UI - How Does it Work?
 
 In `dev` mode, a separate Vite server is spun up for the Webview UI Frontend. The webview element in UXP is aimed at that localhost port.
