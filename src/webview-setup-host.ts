@@ -11,6 +11,7 @@ interface UXPHTMLWebViewElement extends HTMLElement {
 
 export const webviewInitHost = (
   webview?: UXPHTMLWebViewElement,
+  page = "main",
 ): Promise<WebviewAPI> => {
   return new Promise((resolve, reject) => {
     if (!webview) {
@@ -19,8 +20,8 @@ export const webviewInitHost = (
       webview.uxpAllowInspector = "true";
       webview.src =
         import.meta.env.VITE_BOLT_MODE === "dev"
-          ? `http://localhost:${import.meta.env.VITE_BOLT_WEBVIEW_PORT}/`
-          : "plugin:/webview-ui/index.html";
+          ? `http://localhost:${import.meta.env.VITE_BOLT_WEBVIEW_PORT}?page=${page}`
+          : `plugin:/webview-ui/index.html?page=${page}`;
 
       webview = document
         .getElementById("app")!

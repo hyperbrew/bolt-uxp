@@ -14,6 +14,7 @@
 
   import { initWebview } from "./webview-setup";
   const api = initWebview(webviewAPI);
+  const page = new URL(location.href).searchParams.get("page");
 
   const simpleAlert = async () => await api.notify("Hello World");
 
@@ -65,6 +66,7 @@
       Edit <span class="code">webview-ui/src/main-webview.svelte</span> and save
       to test HMR updates.
     </p>
+    <p>Webview page: {page}</p>
   </div>
   <div class="button-group">
     <a href="https://github.com/hyperbrew/bolt-uxp/" onclick={clickLink}>
