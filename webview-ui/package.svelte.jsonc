@@ -1,0 +1,22 @@
+{
+  "name": "webview-ui",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "comlink": "^4.4.2"
+  },
+  "devDependencies": {
+    "vite-plugin-singlefile": "^2.3.0",
+    "@sveltejs/vite-plugin-svelte": "^5.1.0",
+    "@tsconfig/svelte": "^5.0.4",
+    "sass": "^1.69.5",
+    "svelte": "^5.33.14",
+    "svelte-check": "^4.2.1",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.5"
+  }
+}

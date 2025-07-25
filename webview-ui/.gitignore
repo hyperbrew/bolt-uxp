@@ -22,15 +22,5 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-_other-bundlers
-_dummy
-vite.config.ts.timestamp*
 
-ccx
-zip
-
-src/hybrid/win/.vs
-
-.env
-scripts/mac-sign.sh
-public/webview-ui/*
+public/webview-ui

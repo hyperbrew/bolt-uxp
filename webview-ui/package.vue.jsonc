@@ -1,0 +1,21 @@
+{
+  "name": "webview-ui",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "comlink": "^4.4.2",
+    "vue": "^3.5.16"
+  },
+  "devDependencies": {
+    "vite-plugin-singlefile": "^2.3.0",
+    "@sveltejs/vite-plugin-svelte": "^5.1.0",
+    "@vitejs/plugin-vue": "^5.2.4",
+    "sass": "^1.69.5",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.5"
+  }
+}
