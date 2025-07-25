@@ -10,7 +10,7 @@ const extraPrefs = {
   copyZipAssets: ["public-zip/*"],
 };
 
-const id = "bolt.uxp.plugin"; // BOLT_ID_REPLACE
+export const id = "bolt.uxp.plugin"; // BOLT_ID_REPLACE
 const name = "Bolt UXP"; // BOLT_DISPLAYNAME_REPLACE
 
 const manifest: UXP_Manifest = {
@@ -48,7 +48,7 @@ const manifest: UXP_Manifest = {
   entrypoints: [
     {
       type: "panel",
-      id: `${id}.panel`,
+      id: `${id}.main`,
       label: {
         default: name,
       },
@@ -79,35 +79,35 @@ const manifest: UXP_Manifest = {
     // * Example of a UXP Secondary panel
     // * Must also enable the <uxp-panel panelid="bolt.uxp.plugin.settings">
     //* tag in your entrypoint (.tsx, .vue, or .svelte) file
-    // {
-    //   type: "panel",
-    //   id: `${id}.settings`,
-    //   label: {
-    //     default: `${name} Settings`,
-    //   },
-    //   minimumSize: { width: 230, height: 200 },
-    //   maximumSize: { width: 2000, height: 2000 },
-    //   preferredDockedSize: { width: 230, height: 300 },
-    //   preferredFloatingSize: { width: 230, height: 300 },
-    //   icons: [
-    //     {
-    //       width: 23,
-    //       height: 23,
-    //       path: "icons/dark-panel.png",
-    //       scale: [1, 2],
-    //       theme: ["darkest", "dark", "medium"],
-    //       species: ["chrome"],
-    //     },
-    //     {
-    //       width: 23,
-    //       height: 23,
-    //       path: "icons/light-panel.png",
-    //       scale: [1, 2],
-    //       theme: ["lightest", "light"],
-    //       species: ["chrome"],
-    //     },
-    //   ],
-    // },
+    {
+      type: "panel",
+      id: `${id}.settings`,
+      label: {
+        default: `${name} Settings`,
+      },
+      minimumSize: { width: 230, height: 200 },
+      maximumSize: { width: 2000, height: 2000 },
+      preferredDockedSize: { width: 230, height: 300 },
+      preferredFloatingSize: { width: 230, height: 300 },
+      icons: [
+        {
+          width: 23,
+          height: 23,
+          path: "icons/dark-panel.png",
+          scale: [1, 2],
+          theme: ["darkest", "dark", "medium"],
+          species: ["chrome"],
+        },
+        {
+          width: 23,
+          height: 23,
+          path: "icons/light-panel.png",
+          scale: [1, 2],
+          theme: ["lightest", "light"],
+          species: ["chrome"],
+        },
+      ],
+    },
 
     // * Example of a UXP Command
     // {

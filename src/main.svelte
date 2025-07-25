@@ -14,15 +14,19 @@
   import sassLogo from "./assets/sass.png";
   import svelteLogo from "./assets/svelte.png";
   import { onMount } from "svelte";
+  import { id } from "../uxp.config";
 
   const webviewUI = import.meta.env.VITE_BOLT_WEBVIEW_UI === "true";
   // BOLT_WEBVIEW_START
   import { webviewInitHost } from "./webview-setup-host";
   import type { WebviewAPI } from "../webview-ui/src/webview";
-  let webviewAPI: WebviewAPI;
+  let webviewAPIs: WebviewAPI[];
+  let mainWebviewAPI: WebviewAPI;
   if (webviewUI) {
     onMount(async () => {
-      webviewAPI = await webviewInitHost();
+      webviewAPIs = await webviewInitHost({ multi: true });
+      [mainWebviewAPI] = webviewAPIs;
+      // [mainWebviewAPI, settingsWebviewAPI] = webviewAPIs; // for multi webviews
     });
   }
   // BOLT_WEBVIEW_END
@@ -115,10 +119,10 @@
 
 <!-- BOLT_SAMPLECODE_START -->
 <!-- Example of a secondary panel entrypoint -->
-<!-- <uxp-panel panelid="bolt.uxp.plugin.settings">
+<uxp-panel panelid={`${id}.settings`}>
   <h1>Settings Panel</h1>
   <p>count is: {count}</p>
-</uxp-panel> -->
+</uxp-panel>
 
 <!-- BOLT_SAMPLECODE_END -->
 

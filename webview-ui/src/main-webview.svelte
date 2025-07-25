@@ -16,7 +16,8 @@
   const api = initWebview(webviewAPI);
   const page = new URL(location.href).searchParams.get("page");
 
-  const simpleAlert = async () => await api.notify("Hello World");
+  const simpleAlert = async () =>
+    await api.notify(`Hello from Webview: ${page}`);
 
   const getProjectInfo = async () => {
     const info = await api.getProjectInfo();

@@ -14,5 +14,5 @@
     "jsx": "react-jsx",
     "types": ["@adobe/cc-ext-uxp-types", "@types/photoshop", "@types/node"]
   },
-  "include": ["./src", "./webview-ui/src/webview.ts"]
+  "include": ["./src", "./webview-ui/src/webview.ts", "./uxp.config.ts"]
 }
