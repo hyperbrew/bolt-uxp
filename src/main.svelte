@@ -26,6 +26,7 @@
     onMount(async () => {
       webviewAPIs = await webviewInitHost({ multi: true });
       [mainWebviewAPI] = webviewAPIs;
+      window.mainWebviewAPI = mainWebviewAPI;
       // [mainWebviewAPI, settingsWebviewAPI] = webviewAPIs; // for multi webviews
     });
   }

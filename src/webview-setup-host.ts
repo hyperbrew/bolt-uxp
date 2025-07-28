@@ -30,6 +30,7 @@ export const webviewInitHost = ({
       // if (i > 0) return;
       let webview = document.createElement("webview") as UXPHTMLWebViewElement;
       webview.className = "webview-ui";
+      webview.id = `webview-${i}`;
       webview.uxpAllowInspector = "true";
       const origin =
         import.meta.env.VITE_BOLT_MODE === "dev"
@@ -47,11 +48,15 @@ export const webviewInitHost = ({
       console.log({ parent });
       webview = parent!.appendChild(webview) as UXPHTMLWebViewElement;
 
-      webview.addEventListener("loadstop", () => {
+      webview.addEventListener("message", (e) => {
+        console.log("webview message", page, e.message);
+      });
+
+      webview.addEventListener("loadstop", (e) => {
         const backendAPI = { api };
         const backendEndpoint = {
-          postMessage: (msg: any) => {
-            console.log("running postMessage", page, msg);
+          postMessage: (msg: any, transferrables: any) => {
+            console.log("running postMessage", page, msg), transferrables;
             return webview!.postMessage(msg);
           },
           addEventListener: (type: string, handler: any) => {
@@ -69,22 +74,20 @@ export const webviewInitHost = ({
 
         console.log({ origin });
 
-        const endpoint = Comlink.windowEndpoint(
-          backendEndpoint,
-          undefined,
-          // origin, // doesn't work in prod
-        );
+        const endpoint = Comlink.windowEndpoint(backendEndpoint);
 
-        Comlink.expose(
-          backendAPI,
-          endpoint,
-          // [origin] // doesn't work in prod
-        );
+        // Now we bind to the Webview's APIs
         //@ts-ignore
         const comlinkAPI = Comlink.wrap(endpoint) as WebviewAPI;
         // TODO: might need to adjust for multi webviews
         apis.push(comlinkAPI);
+        // Once - At End
         if (apis.length === pages.length) {
+          Comlink.expose(
+            backendAPI,
+            endpoint,
+            // [origin] // doesn't work in prod
+          );
           console.log("webviewInitHost resolved");
           resolve(apis);
         }
