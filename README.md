@@ -378,9 +378,26 @@ https://www.npmjs.com/package/@spectrum-web-components/bundle
   It is possible to build a UXP panel will the entire UI built inside a webview. While this will create 2 separate contexts, a Webview Frontend and UXP backend, you can use the same CSS/HTML/JS features you would per OS (Edge on Windows, Safari on MacOS) This will require a separte build system for the frontend, and you'll need to build to a single HTML file if you're not hosting the backend with a Hybrid Plugin.
   For more details on this process, view the UXP Webview docs [here](https://developer.adobe.com/photoshop/uxp/2022/uxp-api/reference-js/Global%20Members/HTML%20Elements/HTMLWebViewElement/).
 
-- **How do I know which CSS Styles are supported and which ones aren't?**
+## Additional UXP Resources
 
-See the UXP Validator extension for VS Code [here](https://github.com/jardicc/vscode-uxp-validator)
+**Official Docs**
+
+- Photoshop UXP: [https://developer.adobe.com/photoshop/uxp/2022/](https://developer.adobe.com/photoshop/uxp/2022/)
+- InDesign UXP: [https://developer.adobe.com/indesign/uxp/](https://developer.adobe.com/indesign/uxp/)
+- Premiere Pro UXP: [https://developer.adobe.com/premiere-pro/uxp](https://developer.adobe.com/premiere-pro/uxp)
+
+**Forums**
+
+- Official Adobe UXP Forums: [https://forums.creativeclouddeveloper.com/](https://forums.creativeclouddeveloper.com/)
+- Official UXP Forums: [https://forums.creativeclouddeveloper.com/](https://forums.creativeclouddeveloper.com/)
+
+**Developer Tools**
+
+- Adobe UXP Developer Tool Overview [https://developer.adobe.com/photoshop/uxp/2022/guides/devtool/](https://developer.adobe.com/photoshop/uxp/2022/guides/devtool/)
+- Alchemist by Jarda for BatchPlay in Photoshop UXP [https://github.com/jardicc/alchemist](https://github.com/jardicc/alchemist)
+- UXP Validator for VS Code by Jarda [https://github.com/jardicc/vscode-uxp-validator](https://github.com/jardicc/vscode-uxp-validator)
+
+---
 
 ---
 
