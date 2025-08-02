@@ -9,6 +9,11 @@ import { config } from "./uxp.config";
 
 const action = process.env.BOLT_ACTION;
 const mode = process.env.MODE;
+process.env.VITE_BOLT_MODE = mode;
+// BOLT_WEBVIEW_START
+process.env.VITE_BOLT_WEBVIEW_UI = (config.webviewUi === true).toString();
+process.env.VITE_BOLT_WEBVIEW_PORT = config.webviewReloadPort.toString();
+// BOLT_WEBVIEW_END
 
 if (action) runAction(config, action);
 
@@ -41,7 +46,8 @@ export default defineConfig({
         "shell",
       ],
       output: {
-        format: "cjs",
+        // format: "cjs",
+        format: "iife", // Needed for Webview UI in Vue to prevent global overrides
       },
     },
   },
