@@ -151,9 +151,9 @@ Download here: https://aescripts.com/learn/zxp-installer/ Simply drag and drop t
 
 As long as file associations are set up correctly, you can simply double click the CCX file to install it and you can follow the prompts in the Adobe CC app to complete the install
 
-### C. UPIA (Adobe's UXP Plugin Installer)
+### C. UPIA or Unified Plugin Installer Agent (Adobe's UXP Plugin Installer)
 
-You can install via the command line directly with the UPIA tool.
+You can install via the command line directly with the UPIA tool. Error codes are in the [documentation](https://helpx.adobe.com/creative-cloud/apps/troubleshoot/plugin-installation-issues/plugin-installation-errors-using-exman-or-upia.html).
 
 Windows:
 
