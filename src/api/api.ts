@@ -16,7 +16,7 @@ let host = {} as
   & typeof premierepro // BOLT_PPRO_ONLY
   & typeof illustrator; // BOLT_ILST_ONLY
 
-export type API = typeof host;
+export type API = typeof host & typeof uxpLib;
 
 if (hostName.startsWith("photoshop")) host = photoshop; // BOLT_PHXS_ONLY
 if (hostName.startsWith("indesign")) host = indesgin; // BOLT_IDSN_ONLY

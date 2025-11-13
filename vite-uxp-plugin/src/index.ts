@@ -153,6 +153,15 @@ export const uxp = (config: UXP_Config, mode?: string): Plugin => {
       if (config.webviewUi) {
         console.log("🌐 Webview UI is enabled");
         const pm = getPackageManager() || "npm";
+        if (!existsSync("./webview-ui/node_modules")) {
+          console.warn("🛑 WEBVIEW MODULES NOT INSTALLED!");
+          console.warn("👉 Install the dependencies in webview-ui with");
+          console.warn(`  cd webview-ui && ${pm} install`);
+          console.warn(
+            `Then you can run build / dev again in the main directory`,
+          );
+          process.exit(0);
+        }
         if (mode === "dev") {
           execAsync(
             `cd webview-ui && ${pm} run dev --port ${config.webviewReloadPort}`,

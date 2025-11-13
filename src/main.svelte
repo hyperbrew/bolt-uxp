@@ -120,10 +120,10 @@
 
 <!-- BOLT_SAMPLECODE_START -->
 <!-- Example of a secondary panel entrypoint -->
-<uxp-panel panelid={`${id}.settings`}>
+<!-- <uxp-panel panelid={`${id}.settings`}>
   <h1>Settings Panel</h1>
   <p>count is: {count}</p>
-</uxp-panel>
+</uxp-panel> -->
 
 <!-- BOLT_SAMPLECODE_END -->
 
