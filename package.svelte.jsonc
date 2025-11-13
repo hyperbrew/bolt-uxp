@@ -22,7 +22,9 @@
     // BOLT_HYBRID_END
     "hmr": "vite"
   },
-  "dependencies": {},
+  "dependencies": {
+    "comlink": "^4.4.2" // BOLT_WEBVIEW_ONLY
+  },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^5.1.0",
     "@tsconfig/svelte": "^5.0.4",
@@ -40,6 +42,6 @@
     "vite": "^6.3.5",
     "ws": "^8.14.2",
     "dotenv": "^16.4.5",
-    "vite-uxp-plugin": "^1.1.1"
+    "vite-uxp-plugin": "^1.2.0"
   }
 }

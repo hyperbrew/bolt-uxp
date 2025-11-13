@@ -20,6 +20,7 @@ import {
 import path = require("path");
 
 import { packageSync, zipPackage } from "meta-bolt/dist/plugin-utils";
+import { getPackageManager, execAsync } from "meta-bolt/dist/utils";
 import { resetLog } from "meta-bolt/dist/lib";
 
 export type { UXP_Config, UXP_Manifest };
@@ -148,6 +149,33 @@ export const uxp = (config: UXP_Config, mode?: string): Plugin => {
       uxpSetup(config, mode);
       if (mode === "dev" && config.manifest.addon) {
         copyHybridBinaries(config, true);
+      }
+      if (config.webviewUi) {
+        console.log("🌐 Webview UI is enabled");
+        const pm = getPackageManager() || "npm";
+        if (!existsSync("./webview-ui/node_modules")) {
+          console.warn("🛑 WEBVIEW MODULES NOT INSTALLED!");
+          console.warn("👉 Install the dependencies in webview-ui with");
+          console.warn(`  cd webview-ui && ${pm} install`);
+          console.warn(
+            `Then you can run build / dev again in the main directory`,
+          );
+          process.exit(0);
+        }
+        if (mode === "dev") {
+          execAsync(
+            `cd webview-ui && ${pm} run dev --port ${config.webviewReloadPort}`,
+          );
+        } else {
+          execSync(`cd webview-ui && ${pm} run build`);
+          config.manifest.entrypoints.map((entryPoint) => {
+            const name = entryPoint.id.split(".").pop();
+            copyFileSync(
+              "public/webview-ui/index.html",
+              `public/webview-ui/${name}.html`,
+            );
+          });
+        }
       }
     },
     transform(code, id, options) {

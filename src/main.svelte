@@ -1,17 +1,39 @@
 <script lang="ts">
   // BOLT_SAMPLECODE_START
-  import { uxp, indesign, photoshop } from "./globals";
+  import {
+    uxp,
+    indesign,
+    photoshop,
+    premierepro,
+    illustrator,
+  } from "./globals";
   import { api } from "./api/api";
   import boltUxpLogo from "./assets/bolt-uxp.png";
   import viteLogo from "./assets/vite.png";
   import tsLogo from "./assets/typescript.png";
   import sassLogo from "./assets/sass.png";
   import svelteLogo from "./assets/svelte.png";
+  import { onMount } from "svelte";
+  import { id } from "../uxp.config";
+
+  const webviewUI = import.meta.env.VITE_BOLT_WEBVIEW_UI === "true";
+  // BOLT_WEBVIEW_START
+  import { webviewInitHost } from "./webview-setup-host";
+  import type { WebviewAPI } from "../webview-ui/src/webview";
+  let webviewAPIs: WebviewAPI[];
+  let mainWebviewAPI: WebviewAPI;
+  if (webviewUI) {
+    onMount(async () => {
+      webviewAPIs = await webviewInitHost({ multi: true });
+      [mainWebviewAPI] = webviewAPIs;
+      window.mainWebviewAPI = mainWebviewAPI;
+      // [mainWebviewAPI, settingsWebviewAPI] = webviewAPIs; // for multi webviews
+    });
+  }
+  // BOLT_WEBVIEW_END
 
   let count: number = $state(0);
-
   const increment = () => (count += 1);
-
   const hostName = (uxp?.host?.name || ("" as string)).toLowerCase();
 
   //* Call Functions Conditionally by App
@@ -27,17 +49,17 @@
   // BOLT_IDSN_END
   // BOLT_PPRO_START
   if (hostName === "premierepro") {
-    console.log("Hello from Premiere Pro", indesign);
+    console.log("Hello from Premiere Pro", premierepro);
   }
   // BOLT_PPRO_END
   // BOLT_ILST_START
   if (hostName === "illustrator") {
-    console.log("Hello from Illustrator", indesign);
+    console.log("Hello from Illustrator", illustrator);
   }
   // BOLT_ILST_END
 
   //* Or call the unified API object directly and the correct app function will be used
-  const helloWorld = () => {
+  const simpleAlert = () => {
     api.notify("Hello World");
   };
 
@@ -58,45 +80,47 @@
   // BOLT_SAMPLECODE_END
 </script>
 
-<main>
-  <!-- BOLT_SAMPLECODE_START -->
-  <div>
-    <img class="logo-lg" src={boltUxpLogo} alt="" />
-  </div>
-  <div class="stack-icons">
-    <img src={viteLogo} class="logo" alt="" />
-    <span> + </span>
-    <img src={svelteLogo} class="logo" alt="" />
-    <span> + </span>
-    <img src={tsLogo} class="logo" alt="" />
-    <span> + </span>
-    <img src={sassLogo} class="logo" alt="" />
-  </div>
-  <div class="button-group">
-    <button on:click={increment}>
-      count is {count}
-    </button>
-    <button on:click={helloWorld}>Hello World</button>
-    <!-- BOLT_HYBRID_START -->
-    <button on:click={hybridTest}>Hybrid</button>
-    <!-- BOLT_HYBRID_END -->
-  </div>
-  <div>
-    <p>
-      Edit <span class="code">main.svelte</span> and save to test HMR updates.
-    </p>
-  </div>
-  <div class="button-group">
-    <a href="https://github.com/hyperbrew/bolt-uxp/">Bolt UXP Docs</a>
-    <a href="https://svelte.dev">Svelte Docs</a>
-    <a href="https://vitejs.dev/">Vite Docs</a>
-  </div>
-  <!-- BOLT_SAMPLECODE_END -->
-</main>
+{#if !webviewUI}
+  <main>
+    <!-- BOLT_SAMPLECODE_START -->
+    <div>
+      <img class="logo-lg" src={boltUxpLogo} alt="" />
+    </div>
+    <div class="stack-icons">
+      <img src={viteLogo} class="logo" alt="" />
+      <span> + </span>
+      <img src={svelteLogo} class="logo" alt="" />
+      <span> + </span>
+      <img src={tsLogo} class="logo" alt="" />
+      <span> + </span>
+      <img src={sassLogo} class="logo" alt="" />
+    </div>
+    <div class="button-group">
+      <button onclick={increment}>
+        count is {count}
+      </button>
+      <button onclick={simpleAlert}>Alert</button>
+      <!-- BOLT_HYBRID_START -->
+      <button onclick={hybridTest}>Hybrid</button>
+      <!-- BOLT_HYBRID_END -->
+    </div>
+    <div>
+      <p>
+        Edit <span class="code">main.svelte</span> and save to test HMR updates.
+      </p>
+    </div>
+    <div class="button-group">
+      <a href="https://github.com/hyperbrew/bolt-uxp/">Bolt UXP Docs</a>
+      <a href="https://svelte.dev">Svelte Docs</a>
+      <a href="https://vitejs.dev/">Vite Docs</a>
+    </div>
+    <!-- BOLT_SAMPLECODE_END -->
+  </main>
+{/if}
 
 <!-- BOLT_SAMPLECODE_START -->
 <!-- Example of a secondary panel entrypoint -->
-<!-- <uxp-panel panelid="bolt.uxp.plugin.settings">
+<!-- <uxp-panel panelid={`${id}.settings`}>
   <h1>Settings Panel</h1>
   <p>count is: {count}</p>
 </uxp-panel> -->

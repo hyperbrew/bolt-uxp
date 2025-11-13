@@ -10,7 +10,7 @@ const extraPrefs = {
   copyZipAssets: ["public-zip/*"],
 };
 
-const id = "bolt.uxp.plugin"; // BOLT_ID_REPLACE
+export const id = "bolt.uxp.plugin"; // BOLT_ID_REPLACE
 const name = "Bolt UXP"; // BOLT_DISPLAYNAME_REPLACE
 
 const manifest: UXP_Manifest = {
@@ -48,7 +48,7 @@ const manifest: UXP_Manifest = {
   entrypoints: [
     {
       type: "panel",
-      id: `${id}.panel`,
+      id: `${id}.main`,
       label: {
         default: name,
       },

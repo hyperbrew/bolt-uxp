@@ -13,6 +13,11 @@ const frameworkOptions: ArgOpt[] = [
       "src/main.svelte",
       "package.svelte.jsonc",
       "tsconfig.svelte.json",
+
+      "webview-ui/src/index-webview-svelte.ts",
+      "webview-ui/src/main-webview.svelte",
+      "webview-ui/package.svelte.jsonc",
+      "webview-ui/tsconfig.svelte.json",
     ],
   },
   {
@@ -23,6 +28,11 @@ const frameworkOptions: ArgOpt[] = [
       "src/main.tsx",
       "package.react.jsonc",
       "tsconfig.react.json",
+
+      "webview-ui/src/index-webview-react.tsx",
+      "webview-ui/src/main-webview.tsx",
+      "webview-ui/package.react.jsonc",
+      "webview-ui/tsconfig.react.json",
     ],
   },
   {
@@ -33,6 +43,11 @@ const frameworkOptions: ArgOpt[] = [
       "src/main.vue",
       "package.vue.jsonc",
       "tsconfig.vue.json",
+
+      "webview-ui/src/index-webview-vue.ts",
+      "webview-ui/src/main-webview.vue",
+      "webview-ui/package.vue.jsonc",
+      "webview-ui/tsconfig.vue.json",
     ],
   },
 ];
@@ -89,6 +104,14 @@ const initData: BoltInitData = {
       ["tsconfig.svelte.json", "tsconfig.json"],
       ["tsconfig.react.json", "tsconfig.json"],
       ["tsconfig.vue.json", "tsconfig.json"],
+
+      ["webview-ui/package.svelte.jsonc", "webview-ui/package.json"],
+      ["webview-ui/package.react.jsonc", "webview-ui/package.json"],
+      ["webview-ui/package.vue.jsonc", "webview-ui/package.json"],
+
+      ["webview-ui/tsconfig.svelte.json", "webview-ui/tsconfig.json"],
+      ["webview-ui/tsconfig.react.json", "webview-ui/tsconfig.json"],
+      ["webview-ui/tsconfig.vue.json", "webview-ui/tsconfig.json"],
 
       [".npmignore", ".gitignore"],
     ],
@@ -163,6 +186,24 @@ const initData: BoltInitData = {
           value: "true",
           label: "Yes",
           files: ["public-hybrid/**/*", "src/hybrid/**/*", "scripts/**/*"],
+        },
+        { value: "false", label: "No", files: [] },
+      ],
+    },
+    {
+      name: "webview",
+      type: "boolean",
+      message:
+        "(BETA) Do you want to use a Webview UI Beta with full CSS/HTML support but 2 separate contexts?\n( more info: https://github.com/hyperbrew/bolt-uxp#webview-ui-option )",
+      initialValue: false,
+      required: true,
+      alias: "w",
+      describe: "Use a Webivew UI for full CSS/HTML Support (default: false)",
+      options: [
+        {
+          value: "true",
+          label: "Yes",
+          files: ["webview-ui/**/*"],
         },
         { value: "false", label: "No", files: [] },
       ],

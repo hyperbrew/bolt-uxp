@@ -1,9 +1,28 @@
 <script setup lang="ts">
 // BOLT_SAMPLECODE_START
 import { ref } from "vue";
-import { uxp, indesign, photoshop } from "./globals";
+import { uxp, indesign, photoshop, illustrator, premierepro } from "./globals";
 import { api } from "./api/api";
+import boltUxpLogo from "./assets/bolt-uxp.png";
+import viteLogo from "./assets/vite.png";
+import tsLogo from "./assets/typescript.png";
+import sassLogo from "./assets/sass.png";
+import vueLogo from "./assets/vue.png";
+// BOLT_SAMPLECODE_END
 
+const webviewUI = import.meta.env.VITE_BOLT_WEBVIEW_UI === "true";
+
+// BOLT_WEBVIEW_START
+import { webviewInitHost } from "./webview-setup-host";
+import type { WebviewAPI } from "../webview-ui/src/webview";
+
+let webviewAPI: WebviewAPI;
+if (webviewUI) {
+  webviewInitHost().then((api) => (webviewAPI = api));
+}
+// BOLT_WEBVIEW_END
+
+// BOLT_SAMPLECODE_START
 let count = ref(0);
 
 const hostName = (uxp.host.name as string).toLowerCase();
@@ -21,17 +40,17 @@ if (hostName === "indesign") {
 // BOLT_IDSN_END
 // BOLT_PPRO_START
 if (hostName === "premierepro") {
-  console.log("Hello from Premiere Pro", indesign);
+  console.log("Hello from Premiere Pro", premierepro);
 }
 // BOLT_PPRO_END
 // BOLT_ILST_START
 if (hostName === "illustrator") {
-  console.log("Hello from Illustrator", indesign);
+  console.log("Hello from Illustrator", illustrator);
 }
 // BOLT_ILST_END
 
 //* Or call the unified API object directly and the correct app function will be used
-const helloWorld = () => {
+const simpleAlert = () => {
   api.notify("Hello World");
 };
 
@@ -53,23 +72,23 @@ const hybridTest = async () => {
 </script>
 
 <template>
-  <main>
+  <main v-if="!webviewUI">
     <!-- BOLT_SAMPLECODE_START -->
     <div>
-      <img class="logo-lg" src="./assets/bolt-uxp.png" alt="" />
+      <img class="logo-lg" :src="boltUxpLogo" alt="" />
     </div>
     <div class="stack-icons">
-      <img src="./assets/vite.png" class="logo" alt="" />
+      <img :src="viteLogo" class="logo" alt="" />
       <span> + </span>
-      <img src="./assets/vue.png" class="logo" alt="" />
-      <!-- <span> + </span> -->
-      <!-- <img src="./assets/vite.png" class="logo" alt="" />
+      <img :src="vueLogo" class="logo" alt="" />
       <span> + </span>
-      <img src="./assets/sass.png" class="logo" alt="" /> -->
+      <img :src="tsLogo" class="logo" alt="" />
+      <span> + </span>
+      <img :src="sassLogo" class="logo" alt="" />
     </div>
     <div class="button-group">
       <button @click="count++">count is {{ count }}</button>
-      <button @click="helloWorld">Hello World</button>
+      <button @click="simpleAlert">Alert</button>
       <!-- BOLT_HYBRID_START -->
       <button @click="hybridTest">Hybrid</button>
       <!-- BOLT_HYBRID_END -->

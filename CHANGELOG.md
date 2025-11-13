@@ -1,5 +1,24 @@
 # Bolt UXP Changelog
 
+## Version 1.2.1 (2025-11-13)
+
+- Webview File Fix
+
+## Version 1.2.0 (2025-11-13)
+
+- Webview UI Beta Initial Release
+
+## Version 1.1.3 (2025-07-23)
+
+- Entrypoint ID Fix
+- Entrypoint Name Fix
+
+## Version 1.1.2 (2025-07-22)
+
+- Create Script ID & Name Fixes
+- Svelte default template
+- Photoshop Utils for BatchPlay
+
 ## Version 1.1.1 (2025-06-16)
 
 - Add Changelog

@@ -11,8 +11,8 @@
     "allowJs": true,
     "checkJs": true,
     "isolatedModules": true,
-    "jsx": "react-jsx",
-    "types": ["@adobe/cc-ext-uxp-types", "@types/photoshop", "@types/node"]
+    "jsx": "preserve",
+    "types": []
   },
-  "include": ["./src", "./webview-ui/src/webview.ts", "./uxp.config.ts"]
+  "include": ["./src", "../src/api/api*"]
 }
