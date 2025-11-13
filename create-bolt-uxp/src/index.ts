@@ -194,7 +194,7 @@ const initData: BoltInitData = {
       name: "webview",
       type: "boolean",
       message:
-        "Do you want to use a Webview UI with full CSS/HTML support but 2 separate contexts?\n( more info: https://github.com/hyperbrew/bolt-uxp#webview-ui-option )",
+        "(BETA) Do you want to use a Webview UI Beta with full CSS/HTML support but 2 separate contexts?\n( more info: https://github.com/hyperbrew/bolt-uxp#webview-ui-option )",
       initialValue: false,
       required: true,
       alias: "w",

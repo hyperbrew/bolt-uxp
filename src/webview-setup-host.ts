@@ -51,8 +51,10 @@ export const webviewInitHost = ({
       webview.addEventListener("message", (e) => {
         console.log("webview message", page, e.message);
       });
-
+      let loaded = false;
       webview.addEventListener("loadstop", (e) => {
+        if (loaded) return;
+        loaded = true;
         const backendAPI = { api };
         const backendEndpoint = {
           postMessage: (msg: any, transferrables: any) => {
