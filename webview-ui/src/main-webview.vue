@@ -12,7 +12,7 @@ let count = ref(0);
 
 import * as webviewAPI from "./webview-api";
 import { initWebview } from "./webview-setup";
-const api = initWebview(webviewAPI);
+const { api, page } = initWebview(webviewAPI);
 
 const simpleAlert = async () => await api.notify("Hello World");
 
@@ -63,6 +63,7 @@ const clickLink = async (event: MouseEvent) => {
         Edit <span class="code">webview-ui/src/main-webview.vue</span> and save
         to test HMR updates.
       </p>
+      <p>Webview page: {{ page }}</p>
     </div>
     <div class="button-group">
       <a href="https://github.com/hyperbrew/bolt-uxp/" @click="clickLink">

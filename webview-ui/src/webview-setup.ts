@@ -21,7 +21,10 @@ const hostEndpoint = {
   },
 };
 
-export const initWebview = (webviewAPI: object): API => {
+export const initWebview = (webviewAPI: object): { page: string; api: API } => {
+  const page =
+    new URL(location.href).searchParams.get("page") ||
+    location.href.split("/").pop()!.replace(".html", "");
   console.log("initWebview called", webviewAPI);
   const endpoint = Comlink.windowEndpoint(hostEndpoint);
   // const endpoint = Comlink.windowEndpoint(hostEndpoint, window);
@@ -29,7 +32,7 @@ export const initWebview = (webviewAPI: object): API => {
   Comlink.expose(webviewAPI, endpoint);
   //@ts-ignore
   const api = comlinkAPI.api as API;
-  return api;
+  return { api, page };
 };
 
 // basic way to send a message

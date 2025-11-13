@@ -14,7 +14,7 @@ import * as webviewAPI from "./webview-api";
 import { initWebview } from "./webview-setup";
 
 export const App = () => {
-  const api = initWebview(webviewAPI);
+  const { api, page } = initWebview(webviewAPI);
   // BOLT_SAMPLECODE_START
   const [count, setCount] = useState(0);
   const increment = () => setCount((prev) => prev + 1);
@@ -68,6 +68,7 @@ export const App = () => {
           Edit <span className="code">webview-ui/src/main-webview.tsx</span> and
           save to test HMR updates.
         </p>
+        <p>Webview page: {page}</p>
       </div>
       <div className="button-group">
         <a href="https://github.com/hyperbrew/bolt-uxp/" onClick={clickLink}>

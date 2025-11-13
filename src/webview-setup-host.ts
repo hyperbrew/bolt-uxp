@@ -35,7 +35,7 @@ export const webviewInitHost = ({
       const origin =
         import.meta.env.VITE_BOLT_MODE === "dev"
           ? `http://localhost:${import.meta.env.VITE_BOLT_WEBVIEW_PORT}/?page=${page}`
-          : `plugin:/webview-ui/index.html?page=${page}`;
+          : `plugin:/webview-ui/${page}.html`;
       webview.src = origin;
 
       const appElement = document.getElementById("app")!;
@@ -82,12 +82,12 @@ export const webviewInitHost = ({
         // TODO: might need to adjust for multi webviews
         apis.push(comlinkAPI);
         // Once - At End
+        Comlink.expose(
+          backendAPI,
+          endpoint,
+          [origin], // doesn't work in prod
+        );
         if (apis.length === pages.length) {
-          Comlink.expose(
-            backendAPI,
-            endpoint,
-            // [origin] // doesn't work in prod
-          );
           console.log("webviewInitHost resolved");
           resolve(apis);
         }
@@ -104,7 +104,7 @@ export const webviewInitHost = ({
 
         // Get Basic Messages from Webview
         // let lastEventId = ''
-        // window.addEventListener("message", (e) => console.log(e));
+        window.addEventListener("message", (e) => console.log("MESSAGE:", e));
       });
     });
   });

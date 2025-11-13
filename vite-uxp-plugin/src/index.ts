@@ -159,6 +159,13 @@ export const uxp = (config: UXP_Config, mode?: string): Plugin => {
           );
         } else {
           execSync(`cd webview-ui && ${pm} run build`);
+          config.manifest.entrypoints.map((entryPoint) => {
+            const name = entryPoint.id.split(".").pop();
+            copyFileSync(
+              "public/webview-ui/index.html",
+              `public/webview-ui/${name}.html`,
+            );
+          });
         }
       }
     },

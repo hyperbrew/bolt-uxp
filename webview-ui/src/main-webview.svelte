@@ -13,8 +13,7 @@
   import * as webviewAPI from "./webview-api";
 
   import { initWebview } from "./webview-setup";
-  const api = initWebview(webviewAPI);
-  const page = new URL(location.href).searchParams.get("page");
+  const { api, page } = initWebview(webviewAPI);
 
   const simpleAlert = async () =>
     await api.notify(`Hello from Webview: ${page}`);
