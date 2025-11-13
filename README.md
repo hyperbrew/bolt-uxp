@@ -226,6 +226,8 @@ If you are new to UXP, we recommend you leaving the Webview option disabled as i
 
 Enabling the Webview UI option now allows you to build your User Interface with full CSS/HTML/JS DOM support following Edge on Windows and Safari on MacOS.
 
+Webview UI option **must** be enabled during the `create bolt-uxp` script setup to copy the correct files.
+
 Enabling Webview UI will however add to the complexity of your project creating 2 separate contexts for:
 
 - UI >> `webview-ui/*`
