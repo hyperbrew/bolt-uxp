@@ -98,6 +98,12 @@ Install Dependencies (if not already done by create command)
 - npm - `npm i`
 - pnpm - `pnpm i`
 
+(Webview UI Only) Install Webview Dependencies
+
+- yarn - `cd webview-ui && yarn && cd ..`
+- npm - `cd webview-ui && npm i && cd ..`
+- pnpm - `cd webview-ui && pnpm i && cd ..`
+
 Build the plugin (must run before `dev`, can also run after for panel to work statically without the process)
 
 - yarn `yarn build`
