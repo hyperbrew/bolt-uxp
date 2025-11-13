@@ -212,9 +212,11 @@ Note: Unlike CEP Extensions which multi-panel extensions behave as separate isol
 
 ## Webview UI Option
 
+_⚠️ Webview UI is currently in Beta_
+
 Bolt UXP now comes with the option of enabling a Webview UI when you create a new project.
 
-_If you are new to UXP, we recommend you leaving the Webview option disabled as it adds to the complexity of your project._
+If you are new to UXP, we recommend you leaving the Webview option disabled as it adds to the complexity of your project.
 
 Enabling the Webview UI option now allows you to build your User Interface with full CSS/HTML/JS DOM support following Edge on Windows and Safari on MacOS.
 
@@ -280,19 +282,21 @@ mainWebviewAPI.doThisFunction();
 settingsWebviewAPI.doThatFunction();
 ```
 
-In your Webview UI, you can conditionally render UI for different windows with the `page` variable from the url param.
+In your Webview UI, you can conditionally render UI for different windows with the `page` variable from the `initWebview()` function.
 
 ```js
-const page = new URL(location.href).searchParams.get("page"); // e.g. 'main' | 'settings'
+import { initWebview } from "./webview-setup";
+const { api, page } = initWebview(webviewAPI);
+page; // e.g. 'main' | 'settings'
 ```
 
 ## Webview UI - How Does it Work?
 
 In `dev` mode, a separate Vite server is spun up for the Webview UI Frontend. The webview element in UXP is aimed at that localhost port.
 
-When `build` is run, the webview first builds to a single `index.html` file in the `public/webview-ui` directory which is then copied to `dist`.
+When `build` is run, the webview first builds to a single `index.html` source, then copied into individual HTML files per panel (e.g. `main.html` and `settings.html`) file in the `public/webview-ui` directory which is then copied to `dist`.
 
-Fast communication between UXP and Webview contexts is accomplished via Comlink interface over the `postMessage()` APIs with full type-safety between contexts.
+Fast communication between UXP and Webview contexts is accomplished via [Comlink](https://github.com/GoogleChromeLabs/comlink) interface over the `postMessage()` APIs with full type-safety between contexts.
 
 ## GitHub Actions CCX Releases
 
