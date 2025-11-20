@@ -1,5 +1,9 @@
 # Bolt UXP Changelog
 
+## Version 1.2.2 (2025-11-20)
+
+- npm fix for webview ui dev mode
+
 ## Version 1.2.1 (2025-11-13)
 
 - Webview File Fix

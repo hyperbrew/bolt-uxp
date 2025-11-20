@@ -163,9 +163,15 @@ export const uxp = (config: UXP_Config, mode?: string): Plugin => {
           process.exit(0);
         }
         if (mode === "dev") {
-          execAsync(
-            `cd webview-ui && ${pm} run dev --port ${config.webviewReloadPort}`,
-          );
+          if (pm === "npm") {
+            execAsync(
+              `cd webview-ui && ${pm} run dev -- --port ${config.webviewReloadPort}`,
+            );
+          } else {
+            execAsync(
+              `cd webview-ui && ${pm} run dev --port ${config.webviewReloadPort}`,
+            );
+          }
         } else {
           execSync(`cd webview-ui && ${pm} run build`);
           config.manifest.entrypoints.map((entryPoint) => {
