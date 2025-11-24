@@ -86,7 +86,7 @@ Create your new Bolt UXP project (follow CLI prompts)
 
 - yarn - `yarn create bolt-uxp`
 - npm - `npx create-bolt-uxp`
-- pnpm - `pnpm create-bolt-uxp`
+- pnpm - `pnpm create bolt-uxp`
 
 Change directory to the new project
 

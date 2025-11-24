@@ -1,5 +1,10 @@
 # Bolt UXP Changelog
 
+## Version 1.2.3 (2025-11-24)
+
+- pnpm docs fixed
+- Package JSON comma fix for non-Webview UI
+
 ## Version 1.2.2 (2025-11-20)
 
 - npm fix for webview ui dev mode
