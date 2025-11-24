@@ -77,6 +77,8 @@ Bolt UXP Info Page Link: https://hyperbrew.co/resources/bolt-uxp
   - NPM (comes with Node.js)
   - [Yarn](https://classic.yarnpkg.com/lang/en/docs/install/) ( ensure by running `yarn set version classic` )
   - [PNPM](https://pnpm.io/installation) ( ensure by running `pnpm --version` )
+- Git required for non-published packages
+  - [Git] https://git-scm.com/
 
 ## Quick Start
 
