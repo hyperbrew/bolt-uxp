@@ -93,4 +93,5 @@ export type UXP_Config = {
   webviewUi: boolean;
   webviewReloadPort: number;
   copyZipAssets: string[];
+  uniqueIds?: boolean;
 };

@@ -8,6 +8,7 @@ const extraPrefs = {
   webviewReloadPort: 8082,
   // BOLT_WEBVIEW_END
   copyZipAssets: ["public-zip/*"],
+  uniqueIds: false,
 };
 
 export const id = "bolt.uxp.plugin"; // BOLT_ID_REPLACE

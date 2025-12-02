@@ -327,6 +327,16 @@ If you have assets that you would like copied with your ccx into a zip archive f
   copyZipAssets: ["public-zip/*"],
 ```
 
+### A Note on IDs for Multi-App UXP Plugins
+
+Currently while a UXP plugin manifest can have multiple hosts in dev mode (loaded via UDT), it cannot have multiple hosts once built to a CCX. Multiple CCX files are needed, one per app.
+
+Additionally, since all UXP Plugin IDs have to be unique, this can cause a clash unless otherwise hanlded.
+
+In version `1.2.5` and onward, the default behavior is to build UXP plugins with unique IDs per host app at build time.
+
+This can result in duplicate installs if you started your UXP plugin prior to version `1.2.5` so if you would like to keep your current ID to avoid the need for users to uninstall before installing a new version, you can opt-out of the new behavior with the optional property `uniqueIds: false` in the `uxp.config.ts`
+
 ## Hybrid Plugin Development
 
 UXP Hybrid Plugins allow you to write C++ functions and call them from UXP. This is useful for performance critical operations and accessing system methods not yet part of the UXP APIs.

@@ -3188,10 +3188,10 @@ validate-npm-package-license@^3.0.1:
     spdx-correct "^3.0.0"
     spdx-expression-parse "^3.0.0"
 
-vite-uxp-plugin@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/vite-uxp-plugin/-/vite-uxp-plugin-1.2.0.tgz#60b4460ffa682b87ef918b4dc5fdb2c1f3edcd0d"
-  integrity sha512-mNTVmiND+z+G9EA1n4gpr0fknDLVxgs0IKiLB2/54YFNQmzPSFQgjl6j8MKmnlpRDLpjoT5y3ClUUVMvOWVhrQ==
+vite-uxp-plugin@^1.2.5:
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/vite-uxp-plugin/-/vite-uxp-plugin-1.2.5.tgz#824330579dba78858aca29fff134af903693c428"
+  integrity sha512-+LAkgHDUs68cF1ZmFUM+7rS//dtbHan6eByggxByo7v4RPQHI4y98u7lE89glHGbqzKadIFo+bi+4a1IvEk9Mw==
   dependencies:
     archiver "5.3.0"
     meta-bolt "^0.0.17"

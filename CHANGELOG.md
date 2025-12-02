@@ -1,5 +1,10 @@
 # Bolt UXP Changelog
 
+## Version 1.2.5 (2025-12-01)
+
+- Unique IDs per hots app in CCX Manifest
+- Can set uniqueIds: false to keep id as is
+
 ## Version 1.2.4 (2025-11-24)
 
 - git added to docs
