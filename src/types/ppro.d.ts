@@ -87,7 +87,7 @@ export declare type AudioComponentChainStatic = {};
 export declare type AudioComponentChain = {
   createInsertComponentAction(
     component: object,
-    componentInsertionIndex: number
+    componentInsertionIndex: number,
   ): Action; //Creates and returns an insert component action
   createAppendComponentAction(component: object): Action; //Creates and returns an append component action
   createRemoveComponentAction(component: object): Action; //Creates and returns an remove component action
@@ -158,7 +158,7 @@ export declare type ClipProjectItem = {
   createSetInPointAction(tickTime: any): Action; //Returns an action which Sets the in point of the Project item
   createSetOverridePixelAspectRatioAction(
     inNumerator: any,
-    inDenominator: any
+    inDenominator: any,
   ): Action; //Returns an action which sets Override pixel aspect ratio
   createSetOverrideFrameRateAction(inOverriddenFrameRateValue: any): Action; //Returns an action which sets the override frame rate
   createSetOutPointAction(tickTime: any): Action; //Returns an action which Sets the in point of the Project item
@@ -171,7 +171,7 @@ export declare type CloseProjectOptions = {
   setPromptIfDirty(promptIfDirty: boolean): CloseProjectOptions; //Set whether to prompt if a project is dirty on project open/close
   setShowCancelButton(showCancelButton: boolean): CloseProjectOptions; //Set whether to show the cancel button on project open/close
   setIsAppBeingPreparedToQuit(
-    isAppBeingPreparedToQuit: boolean
+    isAppBeingPreparedToQuit: boolean,
   ): CloseProjectOptions; //Set whether the app should be prepared to quit when open/closing a project
   setSaveWorkspace(isAppBeingPreparedToQuit: boolean): CloseProjectOptions; //Set whether to save your workspaces when opening/closing a project
   promptIfDirty: boolean; //Get whether a prompt is shown if a project is dirty on project open/close
@@ -199,7 +199,7 @@ export declare type EncoderManager = {
     exportType: Constants.ExportType,
     outputFile?: string,
     presetFile?: string,
-    exportFull?: boolean
+    exportFull?: boolean,
   ): boolean; //Export a sequence. If no output file and preset is specified, the sequence will be exported with the applied export settings or standard export rules will be applied.
   isAMEInstalled: boolean; //Check if AME is installed.
 };
@@ -211,7 +211,7 @@ export declare type ExporterStatic = {
     filename: string,
     filepath: string,
     width: number,
-    height: number
+    height: number,
   ): boolean; //Exports from a sequence. Supported formats are bmp, dpx, gif, jpg, exr, png, tga and tif
 };
 
@@ -329,7 +329,7 @@ export declare type Markers = {
     markerType?: string,
     startTime?: TickTime,
     duration?: TickTime,
-    comments?: string
+    comments?: string,
   ): object; //Add a new marker
 };
 
@@ -339,16 +339,16 @@ export declare type MetadataStatic = {
   createSetProjectMetadataAction(
     projectItem: ProjectItem,
     metadata: string,
-    updatedFields: []
+    updatedFields: [],
   ): Action; //Get set project metadata action
   createSetXMPMetadataAction(
     projectItem: ProjectItem,
-    metadata: string
+    metadata: string,
   ): Action; //Get set project XMP metadata action
   addPropertyToProjectMetadataSchema(
     name: string,
     label: string,
-    type: number
+    type: number,
   ): boolean; //Add name and label property to project metadata schema
   getProjectColumnsMetadata(projectItem: ProjectItem): string; //Get project column metadata from project item
   getProjectPanelMetadata(): string; //Get project panel metadata
@@ -363,7 +363,7 @@ export declare type Metadata = {};
 
 export declare type OpenProjectOptions = {
   setShowConvertProjectDialog(
-    showConvertProjectDialog: boolean
+    showConvertProjectDialog: boolean,
   ): OpenProjectOptions; //Set whether to show the convert project dialog on project open/close
   setShowLocateFileDialog(showLocateFileDialog: boolean): OpenProjectOptions; //Set whether to show the locate file dialog on project open/close
   setShowWarningDialog(showConvertProjectDialog: boolean): OpenProjectOptions; //Set whether to show the warning file dialog on project open/close
@@ -400,7 +400,7 @@ export declare type Project = {
   createSequenceFromMedia(
     name: string,
     clipProjectItems: [],
-    targetBin?: ProjectItem
+    targetBin?: ProjectItem,
   ): Sequence; //Create a new sequence with a given name and medias
   getColorSettings(): ProjectColorSettings; //Get project color settings object
   deleteSequence(sequence: Sequence): boolean; //Delete a given sequence from the project
@@ -410,14 +410,14 @@ export declare type Project = {
   importAEComps(
     aepPath: string,
     compNames: [],
-    TargetBin?: ProjectItem
+    TargetBin?: ProjectItem,
   ): boolean;
   importAllAEComps(aepPath: string, TargetBin?: ProjectItem): boolean;
   importFiles(
     filePaths: [],
     suppressUI?: boolean,
     targetBin?: ProjectItem,
-    asNumberedStills?: boolean
+    asNumberedStills?: boolean,
   ): boolean; //Import files in root/target bin of the project
   close(closeProjectOptions?: CloseProjectOptions): boolean; //Close a project
   save(): boolean; //Save the project
@@ -473,7 +473,7 @@ export declare type ProjectItem = {
 export declare type ProjectSettingsStatic = {
   createSetScratchDiskSettingsAction(
     project: Project,
-    projectScratchDiskSettings: ProjectScratchDiskSettings
+    projectScratchDiskSettings: ProjectScratchDiskSettings,
   ): Action; //Returns an action which sets ScratchDiskSetting
   getScratchDiskSettings(project: Project): ProjectScratchDiskSettings; //Returns project ScratchDiskSettings
 };
@@ -517,7 +517,7 @@ export declare type ScratchDiskSettingsStatic = {
 export declare type ScratchDiskSettings = {
   setScratchDiskPath(
     ScratchDiskType: string,
-    ScratchDiskValue: string
+    ScratchDiskValue: string,
   ): boolean; //Sets project ScratchDisk Path
   getScratchDiskPath(ScratchDiskType: string): string; //Gets the scratchDisk location for specific disktype
 };
@@ -556,7 +556,7 @@ export declare type Sequence = {
 export declare type SequenceUtilsStatic = {
   performSceneEditDetectionOnSelection(
     clipOperation: string,
-    TrackItemSelection: trackItemSelection
+    TrackItemSelection: trackItemSelection,
   ): boolean; //Performs cut detection on the sequence selection
   SEQUENCE_OPERATION_APPLYCUT: string; //ApplyCuts
   SEQUENCE_OPERATION_CREATEMARKER: string; //CreateMarkers
@@ -568,7 +568,7 @@ export declare type SequenceUtils = {};
 export declare type TickTimeStatic = {
   createWithFrameAndFrameRate(
     frameCount: number,
-    frameRate: FrameRate
+    frameRate: FrameRate,
   ): TickTime; //Constructs a TickTime object with a frame and a frame rate.
   createWithSeconds(seconds: number): TickTime; //Constructs a TickTime object with seconds.
   createWithTicks(ticks: string): TickTime; //Constructs a TickTime object with ticks as a string.
@@ -594,7 +594,7 @@ export declare type TimeDisplay = {
 
 export declare type TrackItemSelectionStatic = {
   createEmptySelection(
-    callback0: (selection: TrackItemSelection) => void
+    callback0: (selection: TrackItemSelection) => void,
   ): boolean; //Create empty selection
 };
 
@@ -627,7 +627,7 @@ export declare type VideoClipTrackItemStatic = {
 export declare type VideoClipTrackItem = {
   createAddVideoTransitionAction(
     videoTransition: VideoTransition,
-    addTransitionOptionsProperties?: AddTransitionOptions
+    addTransitionOptionsProperties?: AddTransitionOptions,
   ): Action; //Create add transition action for sequence
   createRemoveVideoTransitionAction(transitionPosition?: number): Action; //Returns true if trackItem has transition
   getMatchName(): string; //Returns the value of internal matchname for this trackItem
@@ -656,7 +656,7 @@ export declare type VideoComponentChainStatic = {};
 export declare type VideoComponentChain = {
   createInsertComponentAction(
     component: object,
-    componentInsertionIndex: number
+    componentInsertionIndex: number,
   ): Action; //Creates and returns an insert component action
   createAppendComponentAction(component: object): Action; //Creates and returns an append component action
   createRemoveComponentAction(component: object): Action; //Creates and returns an remove component action

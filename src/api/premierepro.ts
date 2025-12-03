@@ -1,4 +1,5 @@
 import { premierepro } from "../globals";
+import { asLocked } from "./utils/premierepro-utils";
 
 export const notify = async (message: string) => {
   alert(message);
@@ -20,4 +21,11 @@ export const getProjectInfo = async () => {
     id: project.guid.toString(),
   };
   return info;
+};
+
+export const renameItem = async () => {
+  const proj = await premierepro.Project.getActiveProject();
+  const root = await proj.getRootItem();
+  const items = await root.getItems();
+  await asLocked(proj, [items[0].createSetNameAction("TEST")]);
 };
