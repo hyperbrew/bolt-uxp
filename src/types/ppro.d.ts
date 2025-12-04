@@ -1,3 +1,5 @@
+// Reference Original: https://github.com/AdobeDocs/uxp-premiere-pro/blob/main/src/pages/ppro_reference/types.d.ts
+
 export declare type premierepro = {
   AppPreference: AppPreferenceStatic;
   AudioClipTrackItem: AudioClipTrackItemStatic;

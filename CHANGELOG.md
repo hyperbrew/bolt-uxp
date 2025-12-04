@@ -1,5 +1,10 @@
 # Bolt UXP Changelog
 
+## Version 1.2.6 (2026-12-04)
+
+- PPRO Types Updated
+- PPRO Utils Added
+
 ## Version 1.2.5 (2025-12-01)
 
 - Unique IDs per hots app in CCX Manifest

@@ -57,7 +57,7 @@ const appOptions: ArgOpt[] = [
   { value: "idsn", label: "InDesign", files: ["src/api/indesign.ts"] },
   {
     value: "ppro",
-    label: "Premiere Pro (Beta)",
+    label: "Premiere Pro",
     files: ["src/api/premierepro.ts"],
   },
   {
@@ -176,7 +176,8 @@ const initData: BoltInitData = {
     {
       name: "hybrid",
       type: "boolean",
-      message: "Do you want to include UXP Hybrid Plugin (C++) files?",
+      message:
+        "Do you want to include UXP Hybrid Plugin (C++) files? (PS & ID only)",
       initialValue: true,
       required: true,
       alias: "h",
