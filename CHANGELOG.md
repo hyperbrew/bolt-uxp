@@ -1,5 +1,10 @@
 # Bolt UXP Changelog
 
+## Version 1.2.7 (2026-12-05)
+
+- UXP Theme color test blocks added
+- Webview bool fix
+
 ## Version 1.2.6 (2026-12-04)
 
 - PPRO Types Updated

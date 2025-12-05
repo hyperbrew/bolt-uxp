@@ -104,6 +104,18 @@
       <button onclick={hybridTest}>Hybrid</button>
       <!-- BOLT_HYBRID_END -->
     </div>
+    <div class="stack-colors">
+      <div class="stack-colors-a"></div>
+      <div class="stack-colors-b"></div>
+      <div class="stack-colors-c"></div>
+      <div class="stack-colors-d"></div>
+      <div class="stack-colors-e"></div>
+      <div class="stack-colors-f"></div>
+      <div class="stack-colors-g"></div>
+      <div class="stack-colors-h"></div>
+      <div class="stack-colors-i"></div>
+      <div class="stack-colors-j"></div>
+    </div>
     <div>
       <p>
         Edit <span class="code">main.svelte</span> and save to test HMR updates.

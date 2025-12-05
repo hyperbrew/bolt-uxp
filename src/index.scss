@@ -70,6 +70,50 @@ p {
   }
 }
 
+.stack-colors {
+  display: flex;
+  flex-direction: row;
+
+  div {
+    height: 0.75rem;
+    width: 1.5rem;
+    margin-right: 0.5rem;
+    border-radius: 5px;
+    transition: 1rem;
+    background-color: black;
+  }
+}
+.stack-colors-a {
+  background-color: var(--uxp-host-background-color) !important;
+}
+.stack-colors-b {
+  background-color: var(--uxp-host-text-color) !important;
+}
+.stack-colors-c {
+  background-color: var(--uxp-host-border-color) !important;
+}
+.stack-colors-d {
+  background-color: var(--uxp-host-link-text-color) !important;
+}
+.stack-colors-e {
+  background-color: var(--uxp-host-widget-hover-background-color) !important;
+}
+.stack-colors-f {
+  background-color: var(--uxp-host-widget-hover-text-color) !important;
+}
+.stack-colors-g {
+  background-color: var(--uxp-host-widget-hover-border-color) !important;
+}
+.stack-colors-h {
+  background-color: var(--uxp-host-text-color-secondary) !important;
+}
+.stack-colors-i {
+  background-color: var(--uxp-host-link-hover-text-color) !important;
+}
+.stack-colors-j {
+  background-color: var(--uxp-host-label-text-color) !important;
+}
+
 // BOLT_SAMPLECODE_END
 
 // BOLT_WEBVIEW_START
