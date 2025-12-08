@@ -2,6 +2,11 @@
 
 ## Version 1.2.8 (2026-12-08)
 
+- UXP Theme colors examples updates
+- UXP Theme colors docs update
+
+## Version 1.2.8 (2026-12-08)
+
 - UXP Theme color test blocks added
 - Webview bool fix
 

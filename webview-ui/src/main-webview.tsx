@@ -63,6 +63,18 @@ export const App = () => {
         <button onClick={getProjectInfo}>Get Project Info</button>
         <button onClick={getUXPInfo}>Get UXP Info</button>
       </div>
+      <div className="stack-colors">
+        <div className="stack-colors-a"></div>
+        <div className="stack-colors-b"></div>
+        <div className="stack-colors-c"></div>
+        <div className="stack-colors-d"></div>
+        <div className="stack-colors-e"></div>
+        <div className="stack-colors-f"></div>
+        <div className="stack-colors-g"></div>
+        <div className="stack-colors-h"></div>
+        <div className="stack-colors-i"></div>
+        <div className="stack-colors-j"></div>
+      </div>
       <div>
         <p>
           Edit <span className="code">webview-ui/src/main-webview.tsx</span> and

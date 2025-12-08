@@ -11,13 +11,11 @@ interface UXPHTMLWebViewElement extends HTMLElement {
   postMessage: (msg: any) => void;
 }
 
-export const webviewInitHost = ({
-  // webview,
-  multi,
-}: {
+export const webviewInitHost = (params: {
   // webview?: UXPHTMLWebViewElement;
   multi: boolean | string[];
 }): Promise<WebviewAPI[]> => {
+  const multi = params ? params.multi : false;
   return new Promise((resolve, reject) => {
     let pages = ["main"];
     if (multi === true || Array.isArray(multi)) {

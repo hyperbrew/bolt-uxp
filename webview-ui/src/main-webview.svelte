@@ -32,10 +32,6 @@
     await api.notify(uxpInfo);
   };
 
-  const test = async () => {
-    await api.renameItemCurrent();
-  };
-
   const clickLink = async (event: MouseEvent) => {
     event.preventDefault();
     const url = (event.target as HTMLAnchorElement).href;
@@ -64,7 +60,6 @@
     <button onclick={simpleAlert}>Alert</button>
     <button onclick={getProjectInfo}>Get Project Info</button>
     <button onclick={getUXPInfo}>Get UXP Info</button>
-    <button onclick={test}>TEST</button>
   </div>
   <div class="stack-colors">
     <div class="stack-colors-a"></div>

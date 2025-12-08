@@ -308,6 +308,40 @@ When `build` is run, the webview first builds to a single `index.html` source, t
 
 Fast communication between UXP and Webview contexts is accomplished via [Comlink](https://github.com/GoogleChromeLabs/comlink) interface over the `postMessage()` APIs with full type-safety between contexts.
 
+## App Color Schemes
+
+UXP implements [Global CSS Variables](https://developer.adobe.com/photoshop/uxp/2022/guides/theme-awareness/) in order to use the app's color scheme. Currently Photoshop has full support, while support is pending with [InDesign](https://forums.creativeclouddeveloper.com/t/theme-awareness-css-variables-indesign/8287/9) and [Premiere Pro](https://forums.creativeclouddeveloper.com/t/theme-colors-for-premiere-pro-uxp/11586) support.
+
+Bolt UXP polyfills Color Vars per theme mode (light, dark, lightest, darkest), and updates these to the Webview UI as well.
+
+You can use the following variables to make your panel match the host app:
+
+```css
+--uxp-host-background-color
+--uxp-host-text-color
+--uxp-host-border-color
+--uxp-host-link-text-color
+--uxp-host-widget-hover-background-color
+--uxp-host-widget-hover-text-color
+--uxp-host-widget-hover-border-color
+--uxp-host-text-color-secondary
+--uxp-host-link-hover-text-color
+--uxp-host-label-text-color
+```
+
+Additionally you can take advantage of the following color schemes in a standard UXP plugin (not Webview UI currently)
+
+```css
+@media (prefers-color-scheme: dark) {
+}
+@media (prefers-color-scheme: darkest) {
+}
+@media (prefers-color-scheme: light) {
+}
+@media (prefers-color-scheme: lightest) {
+}
+```
+
 ## GitHub Actions CCX Releases
 
 This repo comes with a configured GitHub Action workflow to build a CCX and add to the releases each time a git tag is added.
