@@ -3,6 +3,7 @@ import { api } from "./api/api";
 
 import type { WebviewAPI } from "../webview-ui/src/webview";
 import { id, config } from "../uxp.config";
+import { getColorScheme } from "./api/uxp";
 
 interface UXPHTMLWebViewElement extends HTMLElement {
   uxpAllowInspector: string;
@@ -91,6 +92,13 @@ export const webviewInitHost = ({
         );
         if (apis.length === pages.length) {
           console.log("webviewInitHost resolved");
+          for (const api of apis) {
+            api.updateColorScheme(getColorScheme());
+            //@ts-ignore
+            document.theme.onUpdated.addListener(() =>
+              api.updateColorScheme(getColorScheme()),
+            );
+          }
           resolve(apis);
         }
         // else {

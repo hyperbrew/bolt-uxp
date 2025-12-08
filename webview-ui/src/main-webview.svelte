@@ -66,6 +66,18 @@
     <button onclick={getUXPInfo}>Get UXP Info</button>
     <button onclick={test}>TEST</button>
   </div>
+  <div class="stack-colors">
+    <div class="stack-colors-a"></div>
+    <div class="stack-colors-b"></div>
+    <div class="stack-colors-c"></div>
+    <div class="stack-colors-d"></div>
+    <div class="stack-colors-e"></div>
+    <div class="stack-colors-f"></div>
+    <div class="stack-colors-g"></div>
+    <div class="stack-colors-h"></div>
+    <div class="stack-colors-i"></div>
+    <div class="stack-colors-j"></div>
+  </div>
   <div>
     <p>
       Edit <span class="code">webview-ui/src/main-webview.svelte</span> and save

@@ -20,6 +20,7 @@
   // BOLT_WEBVIEW_START
   import { webviewInitHost } from "./webview-setup-host";
   import type { WebviewAPI } from "../webview-ui/src/webview";
+  import { getColorScheme } from "./api/uxp";
   let webviewAPIs: WebviewAPI[];
   let mainWebviewAPI: WebviewAPI;
   if (webviewUI) {

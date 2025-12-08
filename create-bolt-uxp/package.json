@@ -1,6 +1,6 @@
 {
   "name": "create-bolt-uxp",
-  "version": "1.2.7",
+  "version": "1.2.8",
   "license": "MIT",
   "bin": {
     "create-bolt-uxp": "dist/index.js"
@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@types/prettier": "^3.0.0",
-    "bolt-uxp": "^1.2.7",
+    "bolt-uxp": "^1.2.8",
     "meta-bolt": "^0.0.17",
     "prettier": "^3.1.0",
     "typescript": "^4.9.5"
