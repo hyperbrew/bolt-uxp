@@ -1,6 +1,10 @@
 # Bolt UXP Changelog
 
-## Version 1.2.8 (2026-12-08)
+## Version 1.2.10 (2026-12-17)
+
+- Webview UI Theme Update on Hot-Reload
+
+## Version 1.2.9 (2026-12-08)
 
 - UXP Theme colors examples updates
 - UXP Theme colors docs update

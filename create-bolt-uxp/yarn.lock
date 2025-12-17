@@ -459,10 +459,10 @@ base64-js@^1.3.1:
   resolved "https://registry.yarnpkg.com/base64-js/-/base64-js-1.5.1.tgz#1b1b440160a5bf7ad40b650f095963481903930a"
   integrity sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==
 
-bolt-uxp@^1.2.9:
-  version "1.2.9"
-  resolved "https://registry.yarnpkg.com/bolt-uxp/-/bolt-uxp-1.2.9.tgz#b75bab684129af1c773e1b9f2cb367919d858aa6"
-  integrity sha512-/Z36H6OzlvujM6h44CZDQA8TBhV9ny9NMG8Ufv+08wu5IzUuBoAnmRgHwAaGH5/SIM7P5vxw+FALE6xrMQ5iog==
+bolt-uxp@^1.2.10:
+  version "1.2.10"
+  resolved "https://registry.yarnpkg.com/bolt-uxp/-/bolt-uxp-1.2.10.tgz#2e494ea7c84d92590a1b6cd60ce525bfc6c14ece"
+  integrity sha512-hpnffVy53ZcoNyubsAZCU5NluyzDHY8eLpwUU748rB9jQYBsaB/8jLFPhr0rSW1u1gcAAaEWQVx7PmO7g7UeWQ==
   dependencies:
     comlink "^4.4.2"
     react "^19.1.0"

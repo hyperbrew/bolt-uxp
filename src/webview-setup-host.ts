@@ -91,10 +91,14 @@ export const webviewInitHost = (params: {
         if (apis.length === pages.length) {
           console.log("webviewInitHost resolved");
           for (const api of apis) {
-            api.updateColorScheme(getColorScheme());
+            getColorScheme().then((scheme) => {
+              api.updateColorScheme(scheme);
+            });
             //@ts-ignore
             document.theme.onUpdated.addListener(() =>
-              api.updateColorScheme(getColorScheme()),
+              getColorScheme().then((scheme) => {
+                api.updateColorScheme(scheme);
+              }),
             );
           }
           resolve(apis);

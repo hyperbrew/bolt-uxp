@@ -1,6 +1,7 @@
 import * as Comlink from "comlink";
 
 import type { API } from "../../src/api/api";
+import { updateColorScheme } from "./webview-api";
 
 interface UXPWebviewWindow extends Window {
   uxpHost: {
@@ -32,6 +33,10 @@ export const initWebview = (webviewAPI: object): { page: string; api: API } => {
   Comlink.expose(webviewAPI, endpoint);
   //@ts-ignore
   const api = comlinkAPI.api as API;
+  // update color scheme on load
+  api.getColorScheme().then((scheme) => {
+    updateColorScheme(scheme);
+  });
   return { api, page };
 };
 

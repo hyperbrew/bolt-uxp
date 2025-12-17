@@ -76,7 +76,7 @@ const colorTable = {
   },
 };
 
-export const getColorScheme = () => {
+export const getColorScheme = async () => {
   //@ts-ignore
   const theme = document.theme.getCurrent() as
     | "light"
