@@ -1,3 +1,4 @@
+import { initUXP } from "./api/uxp";
 import "./app.css";
 import "./index.scss";
 import App from "./main.svelte";
@@ -13,6 +14,7 @@ const start = () =>
 if (typeof process !== "undefined" && process?.version?.includes("uxp")) {
   // UXP environment
   start();
+  initUXP();
 } else {
   // Browser environment
   document.addEventListener("DOMContentLoaded", start);

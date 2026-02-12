@@ -1,4 +1,5 @@
-import { uxp } from "../globals";
+import { config } from "../../uxp.config";
+import { photoshop, uxp } from "../globals";
 
 export const openUXPPanel = async (id: string) => {
   const plugins = Array.from(uxp.pluginManager.plugins);
@@ -85,4 +86,25 @@ export const getColorScheme = async () => {
     | "darkest";
   const colors = colorTable[theme];
   return { theme, colors };
+};
+
+export const psHideResizeHandle = async () => {
+  const info = await getUXPInfo();
+  if (info.hostName === "photoshop") {
+    try {
+      config.manifest.entrypoints.map((entry) => {
+        photoshop.core.suppressResizeGripper({
+          type: "panel",
+          target: entry.id,
+          value: true,
+        });
+      });
+    } catch (e) {
+      console.warn("Error hidiing resize handle", e);
+    }
+  }
+};
+
+export const initUXP = () => {
+  psHideResizeHandle();
 };
