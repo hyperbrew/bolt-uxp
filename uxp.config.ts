@@ -19,7 +19,7 @@ const manifest: UXP_Manifest = {
   name,
   version,
   main: "index.html",
-  manifestVersion: 6,
+  manifestVersion: 5,
   host: [
     // BOLT_PHXS_START
     {
