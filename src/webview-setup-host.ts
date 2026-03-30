@@ -50,10 +50,8 @@ export const webviewInitHost = (params: {
       webview.addEventListener("message", (e) => {
         console.log("webview message", page, e.message);
       });
-      let loaded = false;
-      webview.addEventListener("loadstop", (e) => {
-        if (loaded) return;
-        loaded = true;
+
+      const setupListeners = () => {
         const backendAPI = { api };
         const backendEndpoint = {
           postMessage: (msg: any, transferrables: any) => {
@@ -117,7 +115,20 @@ export const webviewInitHost = (params: {
         // Get Basic Messages from Webview
         // let lastEventId = ''
         window.addEventListener("message", (e) => console.log("MESSAGE:", e));
-      });
+      };
+
+      // Invoke Immediately
+
+      setupListeners();
+
+      // Invoke on loadStop event (seems to cause a race condition in dev mode)
+
+      // let loaded = false;
+      // webview.addEventListener("loadstop", (e) => {
+      // if (loaded) return;
+      // loaded = true;
+      // setupListeners()
+      // });
     });
   });
 };
