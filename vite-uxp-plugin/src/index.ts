@@ -241,28 +241,9 @@ export const uxp = (config: UXP_Config, mode?: string): Plugin => {
     // },
 
     generateBundle(output, bundle) {
-      // Object.keys(bundle)
-      //   .filter((file) => file.indexOf(".js") > 0)
-      //   .map((file) => {
-      //     console.log(`gen bundle ${file}`);
-      //     const current = bundle[file] as OutputChunk;
-
-      //     // const s = new MagicString(current.code);
-      //     // s.overwrite(0, 0, `${polyfills}\n`);
-
-      //     current.code = polyfills + "\n" + current.code;
-      //     console.log("file", file);
-      //     if (mode === "dev" && file.indexOf("index") > 0) {
-      //       // Add WS Snippet
-      //       current.code = wsListener(config) + "\n" + current.code;
-      //     }
-      //   });
-
       for (const fileName in bundle) {
         const chunk = bundle[fileName];
-
         if (chunk.type === "chunk" && chunk.map) {
-          // const sourceURLComment = `//# sourceURL=uxp-script://dist/${fileName}`;
           const sourceURLComment = `//# sourceURL=uxp-script://${fileName}`;
           chunk.code = `${chunk.code}\n${sourceURLComment}`;
         }
