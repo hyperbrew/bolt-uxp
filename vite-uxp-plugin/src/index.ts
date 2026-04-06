@@ -215,30 +215,30 @@ export const uxp = (config: UXP_Config, mode?: string): Plugin => {
       }
     },
 
-    // outputOptions(options) {
-    //   const projectRoot = process.cwd();
-    //   const originalTransform = options.sourcemapPathTransform;
-    //   options.sourcemapPathTransform = (relativeSourcePath, sourcemapPath) => {
-    //     let finalPath = relativeSourcePath;
+    outputOptions(options) {
+      const projectRoot = process.cwd();
+      const originalTransform = options.sourcemapPathTransform;
+      options.sourcemapPathTransform = (relativeSourcePath, sourcemapPath) => {
+        let finalPath = relativeSourcePath;
 
-    //     // Preserve the user's custom transform if they defined one in the config
-    //     if (typeof originalTransform === "function") {
-    //       finalPath =
-    //         originalTransform(relativeSourcePath, sourcemapPath) || finalPath;
-    //     }
+        // Preserve the user's custom transform if they defined one in the config
+        if (typeof originalTransform === "function") {
+          finalPath =
+            originalTransform(relativeSourcePath, sourcemapPath) || finalPath;
+        }
 
-    //     const mapDir = path.dirname(sourcemapPath);
+        const mapDir = path.dirname(sourcemapPath);
 
-    //     // Calculate the exact path from the project root
-    //     const absoluteSourcePath = path.resolve(mapDir, finalPath);
-    //     const relativeToRoot = path.relative(projectRoot, absoluteSourcePath);
-    //     const cleanPath = relativeToRoot.replace(/\\/g, "/");
+        // Calculate the exact path from the project root
+        const absoluteSourcePath = path.resolve(mapDir, finalPath);
+        const relativeToRoot = path.relative(projectRoot, absoluteSourcePath);
+        const cleanPath = relativeToRoot.replace(/\\/g, "/");
 
-    //     return `uxp-plugin://${cleanPath}`;
-    //   };
+        return `uxp-plugin://${cleanPath}`;
+      };
 
-    //   return options;
-    // },
+      return options;
+    },
 
     generateBundle(output, bundle) {
       for (const fileName in bundle) {
