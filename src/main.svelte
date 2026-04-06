@@ -61,6 +61,7 @@
 
   //* Or call the unified API object directly and the correct app function will be used
   const simpleAlert = () => {
+    debugger;
     api.notify("Hello World");
   };
 
