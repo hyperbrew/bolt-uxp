@@ -2,7 +2,10 @@
 html,
 body {
   height: 100vh;
-  background-color: #242424;
+  // background-color: red;
+  background-color: var(--uxp-host-background-color);
+  // background-color: var(---uxp-host-border-color);
+  // background-color: var(--uxp-host-border-color) !important;
 }
 
 main {
@@ -78,9 +81,10 @@ p {
     height: 0.75rem;
     width: 1.5rem;
     margin-right: 0.5rem;
-    border-radius: 5px;
+    // border-radius: 5px;
     transition: 1rem;
     background-color: black;
+    border-bottom: 1px solid black;
   }
 }
 .stack-colors-a {

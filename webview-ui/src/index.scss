@@ -2,6 +2,7 @@
 html,
 body {
   background-color: #1b1b1b;
+  background-color: var(--uxp-host-background-color);
   font:
     100%/1.5 "Helvetica Neue",
     Helvetica,
@@ -55,7 +56,7 @@ p {
   color: $font;
 }
 .app {
-  background-color: #282c34;
+  // background-color: #282c34;
   text-align: center;
 }
 
