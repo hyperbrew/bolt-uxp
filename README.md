@@ -398,6 +398,8 @@ Supported platforms include:
 - Windows x64
 - Windows arm64 (debug only)
   - You can build and debug UXP Hybrid Plugins on Windows ARM devices with Bolt and by copying UDT from an x64 machine, however since Hybrid Plugins have not been officially supported on WinARM by Adobe, no installation method exists for final build CCX files. Only loading in UDT will work until full support arrives from Adobe for WinARM. 
+  - For CCX on WinARM, you can manually rename your .ccx to .zip, extract the contents, and move it to the following folder, however this installation method is unsupported and could change without notice so it's not recommended for production:
+    - C:\Users\<username>\AppData\Roaming\Adobe\UXP\Plugins\External
 
 (note that Windows arm64 for Hybrid Plugins is not currently supported by Adobe UXP applications)
 
