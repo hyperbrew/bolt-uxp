@@ -26,5 +26,6 @@ export const updateColorScheme = (val: {
     const color = colors[key];
     root.style.setProperty(key, color);
   }
+  document.documentElement.dataset.theme = theme;
   return "hello from webview";
 };
