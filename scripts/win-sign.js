@@ -34,7 +34,7 @@ const sign = (binPath) => {
     `azuresigntool sign -kvu "${AZURE_URL}" -kvi "${AZURE_CLIENT_ID}" -kvt "${AZURE_TENANT_ID}"  -kvs "${AZURE_SECRET_VALUE}" -kvc "${AZURE_CERT_NAME}" -tr http://timestamp.digicert.com -v "${binPath}"`,
     {
       encoding: "utf-8",
-    }
+    },
   );
   console.log("Win Sign result:");
   console.log(res);
@@ -43,5 +43,6 @@ const sign = (binPath) => {
 
 const main = async () => {
   await sign("./public-hybrid/win/x64/bolt-uxp-hybrid.uxpaddon");
+  await sign("./public-hybrid/win/arm64/bolt-uxp-hybrid.uxpaddon");
 };
 main();
