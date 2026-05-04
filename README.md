@@ -159,9 +159,9 @@ Download here: https://aescripts.com/learn/zxp-installer/ Simply drag and drop t
 
 As long as file associations are set up correctly, you can simply double click the CCX file to install it and you can follow the prompts in the Adobe CC app to complete the install
 
-### C. UPIA (Adobe's UXP Plugin Installer)
+### C. UPIA or Unified Plugin Installer Agent (Adobe's UXP Plugin Installer)
 
-You can install via the command line directly with the UPIA tool.
+You can install via the command line directly with the UPIA tool. Error codes are in the [documentation](https://helpx.adobe.com/creative-cloud/apps/troubleshoot/plugin-installation-issues/plugin-installation-errors-using-exman-or-upia.html).
 
 Windows:
 
@@ -396,6 +396,10 @@ Supported platforms include:
 - MacOS x64
 - MacOS arm64
 - Windows x64
+- Windows arm64 (debug only)
+  - You can build and debug UXP Hybrid Plugins on Windows ARM devices with Bolt and by copying UDT from an x64 machine, however since Hybrid Plugins have not been officially supported on WinARM by Adobe, no installation method exists for final build CCX files. Only loading in UDT will work until full support arrives from Adobe for WinARM. 
+  - For CCX on WinARM, you can manually rename your .ccx to .zip, extract the contents, and move it to the following folder, however this installation method is unsupported and could change without notice so it's not recommended for production:
+    - C:\Users\<username>\AppData\Roaming\Adobe\UXP\Plugins\External
 
 (note that Windows arm64 for Hybrid Plugins is not currently supported by Adobe UXP applications)
 

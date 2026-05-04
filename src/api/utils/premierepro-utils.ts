@@ -13,6 +13,18 @@ export const asTransaction = async (
   }, description);
 };
 
+export const asTransactionSafe = async (
+  proj: Project,
+  actions: Array<() => Action>,
+  description: string,
+) => {
+  return proj.executeTransaction(async (compAction) => {
+    for (const action of actions) {
+      compAction.addAction(action());
+    }
+  }, description);
+};
+
 export const lockedTransaction = async (
   proj: Project,
   actions: Action[],
