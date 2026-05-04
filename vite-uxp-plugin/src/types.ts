@@ -87,11 +87,14 @@ export type UXP_Manifest = {
   };
   icons?: UXP_Icon[];
 };
-export type UXP_Config = {
-  manifest: UXP_Manifest;
+export interface UXP_Config_Extra {
   hotReloadPort: number;
   webviewUi: boolean;
   webviewReloadPort: number;
   copyZipAssets: string[];
   uniqueIds?: boolean;
-};
+  debugger?: "udt" | "vscode";
+}
+export interface UXP_Config extends UXP_Config_Extra {
+  manifest: UXP_Manifest;
+}

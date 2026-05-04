@@ -29,7 +29,6 @@ export default defineConfig({
   ],
   build: {
     sourcemap: mode && ["dev", "build"].includes(mode) ? "inline" : false,
-    // sourcemap: mode && ["dev", "build"].includes(mode) ? true : false,
     minify: false,
     emptyOutDir: !shouldNotEmptyDir,
     rollupOptions: {

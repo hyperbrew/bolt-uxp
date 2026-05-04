@@ -1,10 +1,10 @@
 import * as os from "os";
 import { execSync } from "child_process";
 
-import type { OutputChunk } from "rollup";
+import type { OutputBundle, OutputChunk } from "rollup";
 import type { Plugin } from "vite";
 
-import type { UXP_Config, UXP_Manifest } from "./types";
+import type { UXP_Config, UXP_Manifest, UXP_Config_Extra } from "./types";
 import { hotReloadServer, wsUpdate } from "./hot-reload";
 import { generateCCX } from "./cxx";
 import { polyfills, wsListener } from "./polyfill";
@@ -24,7 +24,7 @@ import { getPackageManager, execAsync } from "meta-bolt/dist/utils";
 import { resetLog } from "meta-bolt/dist/lib";
 import MagicString from "magic-string";
 
-export type { UXP_Config, UXP_Manifest };
+export type { UXP_Config, UXP_Manifest, UXP_Config_Extra };
 
 export const uxpSetup = (config: UXP_Config, mode?: string) => {
   if (mode === "dev") {
@@ -240,13 +240,17 @@ export const uxp = (config: UXP_Config, mode?: string): Plugin => {
     //   return options;
     // },
 
-    generateBundle(output, bundle) {
-      for (const fileName in bundle) {
-        const chunk = bundle[fileName];
-        if (chunk.type === "chunk" && chunk.map) {
-          const sourceURLComment = `//# sourceURL=uxp-script://${fileName}`;
-          chunk.code = `${chunk.code}\n${sourceURLComment}`;
+    generateBundle(output: any, bundle: any) {
+      if (config.debugger === "udt") {
+        for (const fileName in bundle) {
+          const chunk = bundle[fileName];
+          if (chunk.type === "chunk" && chunk.map) {
+            const sourceURLComment = `//# sourceURL=uxp-script://${fileName}`;
+            chunk.code = `${chunk.code}\n${sourceURLComment}`;
+          }
         }
+      } else if (config.debugger === "vscode") {
+        // leave out sourceURL comment
       }
 
       //@ts-ignore
