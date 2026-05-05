@@ -1,5 +1,13 @@
 # Bolt UXP Changelog
 
+## Version 1.3.0 (2026-5-4)
+
+- Debugging Support for UDT Debugger
+- Debugging Support for VS Code Debugger
+- Hybird Plugin added for WinARM Binary
+- PPRO Types Update
+- WebView Setup Timing Fix
+
 ## Version 1.2.11 (2026-2-12)
 
 - Hide Resize Handle in Photoshop on Launch

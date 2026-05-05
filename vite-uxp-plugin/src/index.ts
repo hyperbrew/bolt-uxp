@@ -1,10 +1,10 @@
 import * as os from "os";
 import { execSync } from "child_process";
 
-import type { OutputChunk } from "rollup";
+import type { OutputBundle, OutputChunk } from "rollup";
 import type { Plugin } from "vite";
 
-import type { UXP_Config, UXP_Manifest } from "./types";
+import type { UXP_Config, UXP_Manifest, UXP_Config_Extra } from "./types";
 import { hotReloadServer, wsUpdate } from "./hot-reload";
 import { generateCCX } from "./cxx";
 import { polyfills, wsListener } from "./polyfill";
@@ -22,8 +22,9 @@ import path = require("path");
 import { packageSync, zipPackage } from "meta-bolt/dist/plugin-utils";
 import { getPackageManager, execAsync } from "meta-bolt/dist/utils";
 import { resetLog } from "meta-bolt/dist/lib";
+import MagicString from "magic-string";
 
-export type { UXP_Config, UXP_Manifest };
+export type { UXP_Config, UXP_Manifest, UXP_Config_Extra };
 
 export const uxpSetup = (config: UXP_Config, mode?: string) => {
   if (mode === "dev") {
@@ -186,22 +187,72 @@ export const uxp = (config: UXP_Config, mode?: string): Plugin => {
     },
     transform(code, id, options) {
       // console.log("id", id);
+      // console.log(`transform ${id}`);
     },
     transformIndexHtml(html) {
       return html.replace('<script type="module" crossorigin', "<script");
     },
-    generateBundle(output, bundle) {
-      Object.keys(bundle)
-        .filter((file) => file.indexOf(".js") > 0)
-        .map((file) => {
-          const current = bundle[file] as OutputChunk;
-          current.code = polyfills + "\n" + current.code;
-          console.log("file", file);
-          if (mode === "dev" && file.indexOf("index") > 0) {
-            // Add WS Snippet
-            current.code = wsListener(config) + "\n" + current.code;
+    renderChunk: (code: string, chunk: any) => {
+      const id: string = chunk.fileName;
+      if (id.indexOf("js") > -1) {
+        const s = new MagicString(code);
+        console.log(`renderChunk ${id}`);
+
+        s.prepend(`${polyfills}\n`);
+
+        if (mode === "dev" && id.indexOf("index") > 0) {
+          // Add WS Snippet
+          s.prepend(`${wsListener(config)}\n`);
+        }
+        return {
+          code: s.toString(),
+          map: s.generateMap({
+            source: id,
+            file: `${id}.map`,
+            includeContent: true,
+          }),
+        };
+      }
+    },
+
+    // outputOptions(options) {
+    //   const projectRoot = process.cwd();
+    //   const originalTransform = options.sourcemapPathTransform;
+    //   options.sourcemapPathTransform = (relativeSourcePath, sourcemapPath) => {
+    //     let finalPath = relativeSourcePath;
+
+    //     // Preserve the user's custom transform if they defined one in the config
+    //     if (typeof originalTransform === "function") {
+    //       finalPath =
+    //         originalTransform(relativeSourcePath, sourcemapPath) || finalPath;
+    //     }
+
+    //     const mapDir = path.dirname(sourcemapPath);
+
+    //     // Calculate the exact path from the project root
+    //     const absoluteSourcePath = path.resolve(mapDir, finalPath);
+    //     const relativeToRoot = path.relative(projectRoot, absoluteSourcePath);
+    //     const cleanPath = relativeToRoot.replace(/\\/g, "/");
+
+    //     return `uxp-plugin://${cleanPath}`;
+    //   };
+
+    //   return options;
+    // },
+
+    generateBundle(output: any, bundle: any) {
+      if (config.debugger === "udt") {
+        for (const fileName in bundle) {
+          const chunk = bundle[fileName];
+          if (chunk.type === "chunk" && chunk.map) {
+            const sourceURLComment = `//# sourceURL=uxp-script://${fileName}`;
+            chunk.code = `${chunk.code}\n${sourceURLComment}`;
           }
-        });
+        }
+      } else if (config.debugger === "vscode") {
+        // leave out sourceURL comment
+      }
+
       //@ts-ignore
       this.emitFile(generateManifest(config));
 

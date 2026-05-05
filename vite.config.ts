@@ -28,7 +28,7 @@ export default defineConfig({
     svelte(), // BOLT_SVELTE_ONLY
   ],
   build: {
-    sourcemap: mode && ["dev", "build"].includes(mode) ? true : false,
+    sourcemap: mode && ["dev", "build"].includes(mode) ? "inline" : false,
     minify: false,
     emptyOutDir: !shouldNotEmptyDir,
     rollupOptions: {

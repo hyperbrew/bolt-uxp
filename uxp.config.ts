@@ -1,14 +1,15 @@
-import { UXP_Manifest, UXP_Config } from "vite-uxp-plugin";
+import { UXP_Manifest, UXP_Config, UXP_Config_Extra } from "vite-uxp-plugin";
 import { version } from "./package.json";
 
-const extraPrefs = {
+const extraPrefs: UXP_Config_Extra = {
   hotReloadPort: 8080,
   // BOLT_WEBVIEW_START
-  webviewUi: true,
+  webviewUi: false, //! Testing Only, Revert
   webviewReloadPort: 8082,
   // BOLT_WEBVIEW_END
   copyZipAssets: ["public-zip/*"],
   uniqueIds: true,
+  debugger: "udt",
 };
 
 export const id = "bolt.uxp.plugin"; // BOLT_ID_REPLACE
