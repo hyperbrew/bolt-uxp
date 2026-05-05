@@ -84,6 +84,7 @@ const initData: BoltInitData = {
       ".prettierrc",
       ".env.example",
       "public-zip/**/*",
+      ".vscode/**/*",
     ],
     globalExcludes: [
       ".env",
@@ -95,6 +96,8 @@ const initData: BoltInitData = {
       "src/hybrid/win/x64/**/*",
       "src/hybrid/win/x86/**/*",
       "src/hybrid/win/build",
+      ".vscode/extensions.json",
+      ".github/FUNDING.yml",
     ],
     fileRenames: [
       ["package.svelte.jsonc", "package.json"],
