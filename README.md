@@ -239,7 +239,7 @@ There is a 3rd party UXP Debugger for VS Code publised by Jaroslav Bereza. This 
 - Open UDT
   - Press "Load" to load the plugin (Note: Do not press "Debug", this will break the connection)
 - Open VS Code
-  - Press Sidebar > Debug > "Attach to UXP Plugin" (or F5 shortcut)
+  - Press Sidebar > Debug > "Attach to UXP Plugin"
   - Set a breakpoint in the desired line of code
   - Code will now halt on Breakpoints for line-by-line debugging in `build` or `dev` mode
 
