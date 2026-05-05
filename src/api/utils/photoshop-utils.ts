@@ -7,10 +7,12 @@ import { photoshop, uxp } from "../../globals";
 const { executeAsModal } = photoshop.core;
 const { batchPlay } = photoshop.action;
 
+/** Run function in a Modal scope */
 export const asModal = async (commandName: string, callback: Function) => {
   return await executeAsModal(async () => await callback(), { commandName });
 };
 
+/** Run a BatchPlay action in a Modal scope */
 export const bpModal = async (
   commandName: string,
   commands: ActionDescriptor[],
@@ -22,8 +24,7 @@ export const bpModal = async (
   );
 };
 
-export const bp = batchPlay;
-
+/** Deselect All Layers */
 export const deselectAllLayers = async () => {
   return await bpModal("Deselect All Layers", [
     {

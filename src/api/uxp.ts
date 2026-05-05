@@ -1,17 +1,6 @@
 import { config } from "../../uxp.config";
 import { photoshop, uxp } from "../globals";
 
-export const openUXPPanel = async (id: string) => {
-  const plugins = Array.from(uxp.pluginManager.plugins);
-
-  const plugin = plugins.find(
-    (plugin) => plugin.id === uxp.entrypoints._pluginInfo.id,
-  );
-  console.log("plugin", plugin, "opening panel: ", id);
-  if (plugin) await plugin.showPanel(id);
-  else console.error("No plugin found");
-};
-
 export const getUXPInfo = async () => {
   const info = {
     version: uxp.versions.uxp as string,
