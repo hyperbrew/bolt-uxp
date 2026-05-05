@@ -8,6 +8,7 @@ if (typeof require === "undefined") {
 }
 
 export const uxp = require("uxp") as typeof import("uxp");
+export const os = require("os") as typeof import("os");
 const hostName = uxp && uxp?.host?.name?.toLowerCase();
 
 export const photoshop = (
