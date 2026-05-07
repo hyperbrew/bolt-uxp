@@ -7,7 +7,6 @@ import {
   ProjectItem,
   Sequence,
   VideoTrack,
-  ProjectItemStatic,
 } from "../../types/ppro";
 
 /** Easily run a transaction */
@@ -51,6 +50,7 @@ export const lockedTransaction = async (
   );
 };
 
+//TODO: check for potential bugs - in extendscript were cases tracks indices don't match UI order
 /** Loop over each audio track */
 export const forEachAudioTrack = async (
   sequence: Sequence,
@@ -71,6 +71,7 @@ export const forEachAudioTrack = async (
   }
 };
 
+//TODO: check for potential bugs - in extendscript were cases tracks indices don't match UI order
 /** Loop over each video track */
 export const forEachVideoTrack = async (
   sequence: Sequence,
@@ -133,8 +134,10 @@ export const forEachChild = async (
   }
 };
 
-//TODO: TEST EDGE CASES AND MODIFICATIONS OF THE BINS
-/** Loop over each item inside a bin and all its sub-bins */
+//TODO: add throw guards
+
+//TODO: edge tests. Test cases where callback modifies some descendants
+/** Loop over each item inside a bin and all its sub-bins.  */
 export const forEachDescendant = async (
   item: ProjectItem | FolderItem,
   callback: (child: ProjectItem, depth: number) => void | Promise<void>,
@@ -144,12 +147,16 @@ export const forEachDescendant = async (
   if (!folder) return;
   const items = await folder.getItems();
   for (const child of items) {
-    await callback(child, depth);
-    await forEachDescendant(child, callback, depth + 1);
+    const childFolder = premierepro.FolderItem.cast(child);
+    if (childFolder) {
+      await forEachDescendant(child, callback, depth + 1);
+    } else {
+      await callback(child, depth);
+    }
   }
 };
 
-//TODO: TEST EDGE CASES AND PROJECT ITEM TYPES
+//TODO: test with edge cases and different item types
 /** Delete a project item (bin, sequence, clip) */
 export const deleteItem = async (item: ProjectItem) => {
   const parent = item.getParentBin();
@@ -162,35 +169,50 @@ export const deleteItem = async (item: ProjectItem) => {
   );
 };
 
-//TODO: TEST EDGE CASES + PROJECT SWITCHES + ITEMS AS PARENTS FOR OTHER ITEMS
+//TODO: REVISIT. Implement more optimised approach. Test edge cases - stale items, parents removals, offline files, different projects, different types
 /** Safely delete several project items in a single undo step.
- * Groups projects itemss by project and removes the groupd as invidual undo step  */
+ * Multi-project aware: groups by owning project, one transaction per project.
+ * Parent/child optimization: if an ancestor is also being deleted, the descendant
+ * is skipped - removing the ancestor takes its contents with it*/
 export const deleteItems = async (items: ProjectItem[]) => {
-  // Group items by their owning project so cross-project arrays still work
+  const ids = new Set(items.map((i) => i.getId()));
   const byProject = new Map<string, { proj: Project; actions: Action[] }>();
 
   for (const item of items) {
     const parent = item.getParentBin();
-    if (!parent) continue; // rootItem or detached - skip
+    if (!parent) continue;
+
+    // skip if any ancestor is also in the set
+    let p: FolderItem | null = parent;
+    let coveredByAncestor = false;
+    while (p) {
+      //TODO: remake or add inf loop stopped to avoid freezing for unexpcted 'while' cases
+      const asItem = premierepro.ProjectItem.cast(p);
+      if (!asItem) break;
+      if (ids.has(asItem.getId())) {
+        coveredByAncestor = true;
+        break;
+      }
+      p = asItem.getParentBin();
+    }
+    if (coveredByAncestor) continue;
+
     const proj = await item.getProject();
     const key = proj.guid?.toString?.() ?? String(proj);
     let bucket = byProject.get(key);
-    if (!bucket) {
-      bucket = { proj, actions: [] };
-      byProject.set(key, bucket);
-    }
+    if (!bucket) byProject.set(key, (bucket = { proj, actions: [] }));
     bucket.actions.push(parent.createRemoveItemAction(item));
   }
 
   for (const { proj, actions } of byProject.values()) {
-    if (actions.length === 0) continue;
-    await asTransaction(proj, actions, "Delete Items");
+    if (actions.length) await asTransaction(proj, actions, "Delete Items");
   }
 };
 
+//TODO? extend or create separate function to abstract futher with friendlier types — e.g. SEQUENCE, MULTICAM_SOURCE, SUBCLIP, NEST, AUDIO, MEDIA, MOGRT
 /** Find a direct child of a bin or rootItem by name.
  * Optionally filter by item type. Optionally compare case-insensitively and/or space-insensitively.
- * **NOTE:** sequences, nests, subclips and multicam sources are all projectItemType of CLIP. Type ROOT is excluded since it never appears as a child.
+ * **NOTE:** sequences, nests, subclips and multicam sources are all type of CLIP. Type ROOT is excluded since it never appears as a child.
  */
 export const getChildByName = async (
   item: ProjectItem | FolderItem,
@@ -232,10 +254,3 @@ export const dbToDec = (x: number) => Math.pow(10, (x - 15) / 20);
 
 /** Convert a linear decimal gain value to dB */
 export const decToDb = (x: number) => 20 * Math.log(x) * Math.LOG10E + 15;
-
-// /**
-// ![](data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPSc3OTYnIGhlaWdodD0nMjAnPjx0ZXh0IHg9JzYnIHk9JzE0JyBmb250LWZhbWlseT0nbW9ub3NwYWNlJyBmb250LXNpemU9JzEyJyBmb250LXdlaWdodD0nYm9sZCcgZmlsbD0nIzdBNUZGRic+VmlvbGV0PC90ZXh0Pjx0ZXh0IHg9JzU4JyB5PScxNCcgZm9udC1mYW1pbHk9J21vbm9zcGFjZScgZm9udC1zaXplPScxMicgZm9udC13ZWlnaHQ9J2JvbGQnIGZpbGw9JyMzRjdFOEUnPklyaXM8L3RleHQ+PHRleHQgeD0nOTYnIHk9JzE0JyBmb250LWZhbWlseT0nbW9ub3NwYWNlJyBmb250LXNpemU9JzEyJyBmb250LXdlaWdodD0nYm9sZCcgZmlsbD0nIzREOEEzRSc+Q2FyaWJiZWFuPC90ZXh0Pjx0ZXh0IHg9JzE2OScgeT0nMTQnIGZvbnQtZmFtaWx5PSdtb25vc3BhY2UnIGZvbnQtc2l6ZT0nMTInIGZvbnQtd2VpZ2h0PSdib2xkJyBmaWxsPScjQTg2NEE4Jz5MYXZlbmRlcjwvdGV4dD48dGV4dCB4PScyMzUnIHk9JzE0JyBmb250LWZhbWlseT0nbW9ub3NwYWNlJyBmb250LXNpemU9JzEyJyBmb250LXdlaWdodD0nYm9sZCcgZmlsbD0nIzNFN0U5Nyc+Q2VydWxlYW48L3RleHQ+PHRleHQgeD0nMzAxJyB5PScxNCcgZm9udC1mYW1pbHk9J21vbm9zcGFjZScgZm9udC1zaXplPScxMicgZm9udC13ZWlnaHQ9J2JvbGQnIGZpbGw9JyM1QzZFMkUnPkZvcmVzdDwvdGV4dD48dGV4dCB4PSczNTMnIHk9JzE0JyBmb250LWZhbWlseT0nbW9ub3NwYWNlJyBmb250LXNpemU9JzEyJyBmb250LXdlaWdodD0nYm9sZCcgZmlsbD0nI0IzM0E0Ric+Um9zZTwvdGV4dD48dGV4dCB4PSczOTEnIHk9JzE0JyBmb250LWZhbWlseT0nbW9ub3NwYWNlJyBmb250LXNpemU9JzEyJyBmb250LXdlaWdodD0nYm9sZCcgZmlsbD0nI0MzNkIyQSc+TWFuZ288L3RleHQ+PHRleHQgeD0nNDM2JyB5PScxNCcgZm9udC1mYW1pbHk9J21vbm9zcGFjZScgZm9udC1zaXplPScxMicgZm9udC13ZWlnaHQ9J2JvbGQnIGZpbGw9JyM1QzJFQUEnPlB1cnBsZTwvdGV4dD48dGV4dCB4PSc0ODgnIHk9JzE0JyBmb250LWZhbWlseT0nbW9ub3NwYWNlJyBmb250LXNpemU9JzEyJyBmb250LXdlaWdodD0nYm9sZCcgZmlsbD0nIzJFNEZBQSc+Qmx1ZTwvdGV4dD48dGV4dCB4PSc1MjYnIHk9JzE0JyBmb250LWZhbWlseT0nbW9ub3NwYWNlJyBmb250LXNpemU9JzEyJyBmb250LXdlaWdodD0nYm9sZCcgZmlsbD0nIzNFOEE4QSc+VGVhbDwvdGV4dD48dGV4dCB4PSc1NjQnIHk9JzE0JyBmb250LWZhbWlseT0nbW9ub3NwYWNlJyBmb250LXNpemU9JzEyJyBmb250LXdlaWdodD0nYm9sZCcgZmlsbD0nI0EwMzU2QSc+TWFnZW50YTwvdGV4dD48dGV4dCB4PSc2MjMnIHk9JzE0JyBmb250LWZhbWlseT0nbW9ub3NwYWNlJyBmb250LXNpemU9JzEyJyBmb250LXdlaWdodD0nYm9sZCcgZmlsbD0nI0E4OTY3OCc+VGFuPC90ZXh0Pjx0ZXh0IHg9JzY1NCcgeT0nMTQnIGZvbnQtZmFtaWx5PSdtb25vc3BhY2UnIGZvbnQtc2l6ZT0nMTInIGZvbnQtd2VpZ2h0PSdib2xkJyBmaWxsPScjM0U4QTRGJz5HcmVlbjwvdGV4dD48dGV4dCB4PSc2OTknIHk9JzE0JyBmb250LWZhbWlseT0nbW9ub3NwYWNlJyBmb250LXNpemU9JzEyJyBmb250LXdlaWdodD0nYm9sZCcgZmlsbD0nIzdBNEYyRSc+QnJvd248L3RleHQ+PHRleHQgeD0nNzQ0JyB5PScxNCcgZm9udC1mYW1pbHk9J21vbm9zcGFjZScgZm9udC1zaXplPScxMicgZm9udC13ZWlnaHQ9J2JvbGQnIGZpbGw9JyNCM0EwM0UnPlllbGxvdzwvdGV4dD48L3N2Zz4=)*/
-// get/set scale
-// get/set position
-// get/set audioClip Volume By GUID is time varying?
-// get/set audioClip Channel
