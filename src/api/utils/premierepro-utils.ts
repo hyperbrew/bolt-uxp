@@ -247,6 +247,55 @@ export const getChildByName = async (
   );
 };
 
+/** Find a direct child of a bin or rootItem by id. */
+export const getChildById = async (
+  id: string,
+  item: ProjectItem | FolderItem,
+): Promise<ProjectItem | undefined> => {
+  const folder = premierepro.FolderItem.cast(item as ProjectItem);
+  if (!folder) return;
+  const items = await folder.getItems();
+  return items.find((child) => child.getId() === id);
+};
+
+/** Recursively find a descendant of a bin or rootItem by id. */
+export const getDescendantById = async (
+  id: string,
+  item: ProjectItem | FolderItem,
+): Promise<ProjectItem | undefined> => {
+  const folder = premierepro.FolderItem.cast(item as ProjectItem);
+  if (!folder) return;
+
+  const items = await folder.getItems();
+  for (const child of items) {
+    if (child.getId() === id) return child;
+    const childFolder = premierepro.FolderItem.cast(child);
+    if (childFolder) {
+      const found = await getDescendantById(id, child);
+      if (found) return found;
+    }
+  }
+  return undefined;
+};
+
+/** Recursively find an item by id.
+ * Optionally set `startFrom` to a Project or bin to scope. Defaults to active project. */
+export const getItemById = async (
+  id: string,
+  startFrom?: ProjectItem | FolderItem | Project,
+): Promise<ProjectItem | undefined> => {
+  // distinguish Project from bin by `getRootItem` property
+  if (startFrom && "getRootItem" in startFrom) {
+    const root = await startFrom.getRootItem();
+    return getDescendantById(id, root);
+  }
+  if (startFrom) return getDescendantById(id, startFrom);
+  const proj = await premierepro.Project.getActiveProject();
+  if (!proj) return;
+  const root = await proj.getRootItem();
+  return getDescendantById(id, root);
+};
+
 // Audio Conversions
 
 /** Convert dB to a linear decimal gain value */
