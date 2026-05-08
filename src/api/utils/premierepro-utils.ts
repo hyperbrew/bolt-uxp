@@ -92,7 +92,7 @@ export const forEachVideoTrack = async (
   }
 };
 
-/** Clone sequence and returned the cloned instance */
+/** Clone sequence and returne the cloned instance */
 export const cloneSequence = async (
   project: Project,
   sequence: Sequence,
@@ -133,8 +133,6 @@ export const forEachChild = async (
     await callback(items[i], i);
   }
 };
-
-//TODO: add throw guards
 
 //TODO: edge tests. Test cases where callback modifies some descendants
 /** Loop over each item inside a bin and all its sub-bins.  */
@@ -209,32 +207,58 @@ export const deleteItems = async (items: ProjectItem[]) => {
   }
 };
 
+/** Resolve passed item as a searchable FolderItem. */
+export const resolveToFolderItem = async (
+  item?: ProjectItem | FolderItem | Project,
+): Promise<FolderItem | undefined> => {
+  if (!item) return;
+  if ("getRootItem" in item) return item.getRootItem(); // only Project has "getRootItem"
+
+  // cast returns null if ProjectItem is not a bin type
+  return premierepro.FolderItem.cast(item as ProjectItem) ?? undefined;
+};
+
+/** Get the active project's rootItem. */
+export const getActiveRoot = async (): Promise<FolderItem | undefined> => {
+  const proj = await premierepro.Project.getActiveProject();
+  return proj ? proj.getRootItem() : undefined;
+};
+
+/** Resolve to a FolderItem, falling back to the active project's rootItem. */
+export const resolveOrActiveRoot = async (
+  item?: ProjectItem | FolderItem | Project,
+): Promise<FolderItem | undefined> =>
+  (await resolveToFolderItem(item)) ?? (await getActiveRoot());
+
 //TODO? extend or create separate function to abstract futher with friendlier types — e.g. SEQUENCE, MULTICAM_SOURCE, SUBCLIP, NEST, AUDIO, MEDIA, MOGRT
-/** Find a direct child of a bin or rootItem by name.
+/** Find a direct child of a bin/root by name.
+ *
  * Optionally filter by item type. Optionally compare case-insensitively and/or space-insensitively.
- * **NOTE:** sequences, nests, subclips and multicam sources are all type of CLIP. Type ROOT is excluded since it never appears as a child.
+ *
+ * **NOTE:** sequences, nests, subclips and multicam sources are all type of CLIP.
+ * Type ROOT is excluded since it never appears as a child
  */
 export const getChildByName = async (
-  item: ProjectItem | FolderItem,
   name: string,
+  parent: ProjectItem | FolderItem | Project,
   caseInsensitive?: boolean,
   spaceInsensitive?: boolean,
   projectItemType?: "CLIP" | "BIN" | "COMPOUND" | "FILE" | "STYLE",
 ): Promise<ProjectItem | undefined> => {
-  const folder = premierepro.FolderItem.cast(item as ProjectItem);
+  const folder = await resolveToFolderItem(parent);
   if (!folder) return;
 
   const type = projectItemType
-    ? premierepro.ProjectItem[`TYPE_${projectItemType}`]
+    ? premierepro.ProjectItem[`TYPE_${projectItemType}`] //look up the numeric type
     : undefined;
 
   const needNormalize = caseInsensitive || spaceInsensitive;
   const norm = needNormalize
-    ? (name: string) => {
-        let outName = name;
-        if (caseInsensitive) outName = outName.toLowerCase();
-        if (spaceInsensitive) outName = outName.replace(/\s+/g, "");
-        return outName;
+    ? (str: string) => {
+        let out = str;
+        if (caseInsensitive) out = out.toLowerCase();
+        if (spaceInsensitive) out = out.replace(/\s+/g, "");
+        return out;
       }
     : null;
   const target = norm ? norm(name) : name;
@@ -247,23 +271,23 @@ export const getChildByName = async (
   );
 };
 
-/** Find a direct child of a bin or rootItem by id. */
+/** Find a direct child of a bin/root by id.*/
 export const getChildById = async (
   id: string,
-  item: ProjectItem | FolderItem,
+  parent: ProjectItem | FolderItem | Project,
 ): Promise<ProjectItem | undefined> => {
-  const folder = premierepro.FolderItem.cast(item as ProjectItem);
+  const folder = await resolveToFolderItem(parent);
   if (!folder) return;
   const items = await folder.getItems();
   return items.find((child) => child.getId() === id);
 };
 
-/** Recursively find a descendant of a bin or rootItem by id. */
+/** Recursively find a descendant of a bin/root by id. */
 export const getDescendantById = async (
   id: string,
-  item: ProjectItem | FolderItem,
+  parent: ProjectItem | FolderItem | Project,
 ): Promise<ProjectItem | undefined> => {
-  const folder = premierepro.FolderItem.cast(item as ProjectItem);
+  const folder = await resolveToFolderItem(parent);
   if (!folder) return;
 
   const items = await folder.getItems();
@@ -279,21 +303,48 @@ export const getDescendantById = async (
 };
 
 /** Recursively find an item by id.
- * Optionally set `startFrom` to a Project or bin to scope. Defaults to active project. */
+ *
+ * Optionally set `parent` to a Project or bin to scope. Defaults to active project. */
 export const getItemById = async (
   id: string,
-  startFrom?: ProjectItem | FolderItem | Project,
+  parent?: ProjectItem | FolderItem | Project,
 ): Promise<ProjectItem | undefined> => {
-  // distinguish Project from bin by `getRootItem` property
-  if (startFrom && "getRootItem" in startFrom) {
-    const root = await startFrom.getRootItem();
-    return getDescendantById(id, root);
+  const root = await resolveOrActiveRoot(parent);
+  if (!root) return;
+
+  const findIn = async (
+    folder: FolderItem,
+  ): Promise<ProjectItem | undefined> => {
+    for (const child of await folder.getItems()) {
+      if (child.getId() === id) return child;
+      const childFolder = premierepro.FolderItem.cast(child);
+      if (childFolder) {
+        const found = await findIn(childFolder);
+        if (found) return found;
+      }
+    }
+  };
+
+  return findIn(root);
+};
+
+/** Find an item by combining a chain of bin names down the project tree.
+ *
+ * @example getItemByNameChain(["Assets", "Graphics", "logo.png"]);
+ *
+ * Optionally pass parent item to scope. Defaults to active project. */
+export const getItemByNameChain = async (
+  names: string[],
+  parent?: ProjectItem | FolderItem | Project,
+): Promise<ProjectItem | undefined> => {
+  let currentItem: ProjectItem | FolderItem | Project | undefined =
+    parent ?? (await getActiveRoot());
+
+  for (const name of names) {
+    if (!currentItem) return;
+    currentItem = await getChildByName(name, currentItem);
   }
-  if (startFrom) return getDescendantById(id, startFrom);
-  const proj = await premierepro.Project.getActiveProject();
-  if (!proj) return;
-  const root = await proj.getRootItem();
-  return getDescendantById(id, root);
+  return currentItem as ProjectItem | undefined;
 };
 
 // Audio Conversions
