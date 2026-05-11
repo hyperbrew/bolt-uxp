@@ -390,6 +390,28 @@ export const itemToSequence = async (
   return clipItem.getSequence();
 };
 
+/** Get a project item's duration.
+ *
+ * Synthetic items (adjustment layers, Color Matte, etc.) always return a
+ * `TickTime` of 43200s.
+ */
+export const getItemDuration = async (
+  item: ProjectItem,
+): Promise<TickTime | undefined> => {
+  const clipItem = premierepro.ClipProjectItem.cast(item);
+  if (!clipItem) return;
+
+  if (await clipItem.isSequence()) {
+    const seq = await clipItem.getSequence();
+    return await seq.getEndTime();
+  }
+
+  const media = await clipItem.getMedia();
+  if (!media) return;
+  const dur = await media.duration;
+  return dur;
+};
+
 // Audio Conversions
 
 /** Convert dB to a linear decimal gain value */
