@@ -380,6 +380,16 @@ export const getItemByNameChain = async (
   return currentItem as ProjectItem | undefined;
 };
 
+/** Get sequence from project item*/
+export const itemToSequence = async (
+  item: ProjectItem,
+): Promise<Sequence | undefined> => {
+  const clipItem = premierepro.ClipProjectItem.cast(item);
+  if (!clipItem) return;
+  if (!(await clipItem.isSequence())) return;
+  return clipItem.getSequence();
+};
+
 // Audio Conversions
 
 /** Convert dB to a linear decimal gain value */
