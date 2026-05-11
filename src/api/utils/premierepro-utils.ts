@@ -1,11 +1,14 @@
 import { premierepro } from "../../globals";
 import {
   Action,
+  AudioClipTrackItem,
   AudioTrack,
+  Constants,
   FolderItem,
   Project,
   ProjectItem,
   Sequence,
+  VideoClipTrackItem,
   VideoTrack,
 } from "../../types/ppro";
 
@@ -92,6 +95,35 @@ export const forEachVideoTrack = async (
   }
 };
 
+/**
+ * Loop over each clip on a track.
+ *
+ * Optionally set `includeEmpty` to true to also visit empty clips
+ * (the gaps in between and after clips). Empty clips are null
+ *
+ * Optionally set `reverse` to true to loop from the last clip
+ */
+export const forEachClip = async (
+  track: VideoTrack | AudioTrack,
+  callback: (
+    clip: VideoClipTrackItem | AudioClipTrackItem | null,
+    index: number,
+  ) => void | Promise<void>,
+  includeEmpty = false,
+  reverse?: boolean,
+) => {
+  const clips = track.getTrackItems(1, includeEmpty); // 1 = CLIP
+  if (reverse) {
+    for (let i = clips.length - 1; i > -1; i--) {
+      await callback(clips[i], i);
+    }
+  } else {
+    for (let i = 0; i < clips.length; i++) {
+      await callback(clips[i], i);
+    }
+  }
+};
+
 /** Clone sequence and returne the cloned instance */
 export const cloneSequence = async (
   project: Project,
@@ -167,6 +199,7 @@ export const deleteItem = async (item: ProjectItem) => {
   );
 };
 
+//REMOVE OR FINISH
 //TODO: REVISIT. Implement more optimised approach. Test edge cases - stale items, parents removals, offline files, different projects, different types
 /** Safely delete several project items in a single undo step.
  * Multi-project aware: groups by owning project, one transaction per project.
