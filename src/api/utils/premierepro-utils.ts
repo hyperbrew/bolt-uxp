@@ -393,7 +393,7 @@ export const itemToSequence = async (
 /** Get a project item's duration.
  *
  * Synthetic items (adjustment layers, Color Matte, etc.) always return a
- * `TickTime` of 43200s.
+ * `TickTime` of 43200s
  */
 export const getItemDuration = async (
   item: ProjectItem,
@@ -410,6 +410,36 @@ export const getItemDuration = async (
   if (!media) return;
   const dur = await media.duration;
   return dur;
+};
+
+/** Get an item's video frame rate.
+ *
+ * For synthetic items (adjustment layers, color matte, etc.) this exposes
+ * the frame rate set at creation - the Metadata panel doesn't have this info
+ *
+ * Audio-only items return undefined
+ */
+export const getFrameRate = async (
+  item: ProjectItem | ClipProjectItem | Sequence,
+): Promise<FrameRate | undefined> => {
+  //duck check if item is Sequence
+  if ("getVideoTrack" in item) {
+    return (await item.getSettings()).getVideoFrameRate();
+  }
+
+  //duck check if item is Clip, otherwise cast to it
+  const clipItem =
+    "getMedia" in item ? item : premierepro.ClipProjectItem.cast(item);
+  if (!clipItem) return;
+
+  //if sequence was passed as a project item, do recursive call
+  if (await clipItem.isSequence()) {
+    return getFrameRate(await clipItem.getSequence());
+  }
+
+  const fi = await clipItem.getFootageInterpretation();
+  const fps = fi?.getFrameRate();
+  return fps ? premierepro.FrameRate.createWithValue(fps) : undefined;
 };
 
 // Audio Conversions
