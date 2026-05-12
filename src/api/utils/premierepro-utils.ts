@@ -1,4 +1,4 @@
-import { premierepro } from "../../globals";
+import { premierepro, uxp } from "../../globals";
 import {
   Action,
   AudioClipTrackItem,
@@ -10,44 +10,35 @@ import {
   Sequence,
   VideoClipTrackItem,
   VideoTrack,
+  ClipProjectItem,
+  FrameRate,
+  Metadata,
 } from "../../types/ppro";
 
-/** Easily run a transaction */
-export const asTransaction = async (
-  proj: Project,
-  actions: Action[],
-  description: string,
-) => {
-  proj.executeTransaction(async (compAction) => {
-    for (const action of actions) {
-      compAction.addAction(action);
-    }
-  }, description);
-};
+/**
+ * premierepro-utils
+ *
+ * NOTE: Requires Adobe Premiere Pro 26.3.0+ (Build 68 or newer).
+ * Earlier versions use a different transaction API, so utils that rely on
+ * transactions (cloneSequence, deleteItem, setPrMetadata, etc.) may not work in erlier versions
+ */
 
-/** Safely run a transaction by creating actions in-scope  */
-export const asTransactionSafe = async (
+/**
+ * Run a transaction inside a locked project access, creating actions in-scope.
+ *
+ * Since Premiere 26.3.0+ actions must be created inside the locked +
+ * transaction scope, not before. Pass action factories (`() => Action`)
+ * rather than pre-built actions
+ */
+export const lockedTransactionSafe = async (
   proj: Project,
   actions: Array<() => Action>,
-  description: string,
-) => {
-  return proj.executeTransaction(async (compAction) => {
-    for (const action of actions) {
-      compAction.addAction(action());
-    }
-  }, description);
-};
-
-/** Easily a transaction in a Locked Access */
-export const lockedTransaction = async (
-  proj: Project,
-  actions: Action[],
   description: string,
 ) => {
   proj.lockedAccess(() =>
     proj.executeTransaction(async (compAction) => {
       for (const action of actions) {
-        compAction.addAction(action);
+        compAction.addAction(action());
       }
     }, description),
   );
@@ -124,16 +115,16 @@ export const forEachClip = async (
   }
 };
 
-/** Clone sequence and returne the cloned instance */
+/** Clone sequence and return the cloned instance */
 export const cloneSequence = async (
   project: Project,
   sequence: Sequence,
   name: string,
 ) => {
   const existingIds = (await project.getSequences()).map((s) => s.guid);
-  await asTransaction(
+  await lockedTransactionSafe(
     project,
-    [sequence.createCloneAction()],
+    [() => sequence.createCloneAction()],
     "Clone Sequence",
   );
   const clonedSequence = (await project.getSequences()).find(
@@ -141,9 +132,9 @@ export const cloneSequence = async (
   );
   if (clonedSequence) {
     const clonedProjItem = await clonedSequence.getProjectItem();
-    await asTransaction(
+    await lockedTransactionSafe(
       project,
-      [clonedProjItem.createSetNameAction(name)],
+      [() => clonedProjItem.createSetNameAction(name)],
       "Rename Cloned Sequence",
     );
   } else {
@@ -183,60 +174,6 @@ export const forEachDescendant = async (
     } else {
       await callback(child, depth);
     }
-  }
-};
-
-//TODO: test with edge cases and different item types
-/** Delete a project item (bin, sequence, clip) */
-export const deleteItem = async (item: ProjectItem) => {
-  const parent = item.getParentBin();
-  if (!parent) return; // rootItem or detached - nothing valid to delete
-  const proj = await item.getProject();
-  await asTransaction(
-    proj,
-    [parent.createRemoveItemAction(item)],
-    "Delete Item",
-  );
-};
-
-//REMOVE OR FINISH
-//TODO: REVISIT. Implement more optimised approach. Test edge cases - stale items, parents removals, offline files, different projects, different types
-/** Safely delete several project items in a single undo step.
- * Multi-project aware: groups by owning project, one transaction per project.
- * Parent/child optimization: if an ancestor is also being deleted, the descendant
- * is skipped - removing the ancestor takes its contents with it*/
-export const deleteItems = async (items: ProjectItem[]) => {
-  const ids = new Set(items.map((i) => i.getId()));
-  const byProject = new Map<string, { proj: Project; actions: Action[] }>();
-
-  for (const item of items) {
-    const parent = item.getParentBin();
-    if (!parent) continue;
-
-    // skip if any ancestor is also in the set
-    let p: FolderItem | null = parent;
-    let coveredByAncestor = false;
-    while (p) {
-      //TODO: remake or add inf loop stopped to avoid freezing for unexpcted 'while' cases
-      const asItem = premierepro.ProjectItem.cast(p);
-      if (!asItem) break;
-      if (ids.has(asItem.getId())) {
-        coveredByAncestor = true;
-        break;
-      }
-      p = asItem.getParentBin();
-    }
-    if (coveredByAncestor) continue;
-
-    const proj = await item.getProject();
-    const key = proj.guid?.toString?.() ?? String(proj);
-    let bucket = byProject.get(key);
-    if (!bucket) byProject.set(key, (bucket = { proj, actions: [] }));
-    bucket.actions.push(parent.createRemoveItemAction(item));
-  }
-
-  for (const { proj, actions } of byProject.values()) {
-    if (actions.length) await asTransaction(proj, actions, "Delete Items");
   }
 };
 
@@ -302,6 +239,24 @@ export const getChildByName = async (
       (norm ? norm(child.name) : child.name) === target &&
       (type === undefined || child.type === type),
   );
+};
+
+/**
+ * Find the first ClipProjectItem under `parent` whose media file path
+ * equals `path`. Recurses into sub-bins
+ */
+export const findItemByPath = async (
+  parent: ProjectItem | FolderItem,
+  path: string,
+): Promise<ClipProjectItem | undefined> => {
+  const folder = premierepro.FolderItem.cast(parent as ProjectItem);
+  if (!folder) return;
+  for (const child of await folder.getItems()) {
+    const clip = premierepro.ClipProjectItem.cast(child);
+    if (clip && (await clip.getMediaFilePath()) === path) return clip;
+    const found = await findItemByPath(child, path);
+    if (found) return found;
+  }
 };
 
 /** Find a direct child of a bin/root by id.*/
@@ -380,6 +335,18 @@ export const getItemByNameChain = async (
   return currentItem as ProjectItem | undefined;
 };
 
+/** Delete a project item (bin, sequence, clip) */
+export const deleteItem = async (item: ProjectItem) => {
+  const parent = item.getParentBin();
+  if (!parent) return; // rootItem or detached - nothing valid to delete
+  const proj = await item.getProject();
+  await lockedTransactionSafe(
+    proj,
+    [() => parent.createRemoveItemAction(item)],
+    "Delete Item",
+  );
+};
+
 /** Get sequence from project item*/
 export const itemToSequence = async (
   item: ProjectItem,
@@ -393,7 +360,7 @@ export const itemToSequence = async (
 /** Get a project item's duration.
  *
  * Synthetic items (adjustment layers, Color Matte, etc.) always return a
- * `TickTime` of 43200s
+ * `TickTime` of 43200s.
  */
 export const getItemDuration = async (
   item: ProjectItem,
@@ -408,7 +375,7 @@ export const getItemDuration = async (
 
   const media = await clipItem.getMedia();
   if (!media) return;
-  const dur = await media.duration;
+  const dur = media.duration;
   return dur;
 };
 
@@ -441,6 +408,62 @@ export const getFrameRate = async (
   const fps = fi?.getFrameRate();
   return fps ? premierepro.FrameRate.createWithValue(fps) : undefined;
 };
+
+//Metadata helpers
+const PPRO_META_URI = "http://ns.adobe.com/premierePrivateProjectMetaData/1.0/";
+
+/**
+ * Read Premiere project metadata fields off a ProjectItem. Missing fields are omitted from
+ *
+ * To discover available fields on an item use `listPrMetadataKeys(item)`
+ *
+ * @example await getPrMetadata(item, ["Column.Intrinsic.Name", "Column.Intrinsic.MediaType"])
+ */
+export const getPrMetadata = async (
+  projectItem: ProjectItem,
+  fields: string[],
+): Promise<Record<string, string>> => {
+  //@ts-ignore
+  const { XMPMeta } = uxp.xmp;
+  const xmpStr = await premierepro.Metadata.getProjectMetadata(projectItem);
+  const xmp = new XMPMeta(xmpStr);
+  const result: { [key: string]: string } = {};
+
+  for (const f of fields) {
+    if (xmp.doesPropertyExist(PPRO_META_URI, f)) {
+      result[f] = xmp.getProperty(PPRO_META_URI, f).value;
+    }
+  }
+  return result;
+};
+
+/**
+ * Discover field names on a ProjectItem's project metadata.
+ * Returns the local field names that can be fed back into `getPrMetadata`.
+ */
+export const listPrMetadataKeys = async (
+  projectItem: ProjectItem,
+): Promise<string[]> => {
+  //@ts-ignore
+  const { XMPMeta, XMPConst } = uxp.xmp;
+  const xmp = new XMPMeta(
+    await premierepro.Metadata.getProjectMetadata(projectItem),
+  );
+  const it = xmp.iterator(XMPConst.ITERATOR_JUST_CHILDREN, PPRO_META_URI, "");
+
+  const keys: string[] = [];
+  let n: any;
+  while ((n = it.next())) {
+    if (!n.path) continue;
+    if (n.path.includes("/")) continue; // skip nested struct internals
+    keys.push(n.path.replace(/^premierePrivateProjectMetaData:/, ""));
+  }
+  return keys;
+};
+
+//todo
+// setPrMetadata
+// removePrMetadata
 
 // Audio Conversions
 
