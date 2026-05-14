@@ -14,7 +14,7 @@
   import sassLogo from "./assets/sass.png";
   import svelteLogo from "./assets/svelte.png";
   import { onMount } from "svelte";
-  import { id } from "../uxp.config";
+  const id = uxp.entrypoints._pluginInfo.id;
 
   const webviewUI = import.meta.env.VITE_BOLT_WEBVIEW_UI === "true";
   // BOLT_WEBVIEW_START

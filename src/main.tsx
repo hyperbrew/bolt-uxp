@@ -11,6 +11,7 @@ import { uxp, indesign, photoshop, premierepro, illustrator } from "./globals";
 import { api } from "./api/api";
 // BOLT_SAMPLECODE_END
 
+const id = uxp.entrypoints._pluginInfo.id;
 // BOLT_WEBVIEW_START
 import { webviewInitHost } from "./webview-setup-host";
 import type { WebviewAPI } from "../webview-ui/src/webview";
@@ -141,7 +142,7 @@ export const App = () => {
 
       {/* BOLT_SAMPLECODE_START */}
       {/* Example of a secondary panel entrypoint 
-      <uxp-panel panelid="bolt.uxp.plugin.settings">
+      <uxp-panel panelid={`${id}.settings`}>
         <h1>Settings Panel</h1>
         <p>count is: {count}</p>
       </uxp-panel>
