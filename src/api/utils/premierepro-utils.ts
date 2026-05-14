@@ -13,6 +13,7 @@ import {
   ClipProjectItem,
   FrameRate,
   Metadata,
+  TickTime,
 } from "../../types/ppro";
 
 /**
@@ -409,6 +410,108 @@ export const getFrameRate = async (
   return fps ? premierepro.FrameRate.createWithValue(fps) : undefined;
 };
 
+/** Get the duration of a single frame as a TickTime at the given frame rate. */
+export const getFrameDuration = (frameRate: FrameRate): TickTime =>
+  premierepro.TickTime.createWithFrameAndFrameRate(1, frameRate);
+
+/** Convert a TickTime to a frame count at the given frame rate */
+export const timeToFrames = (time: TickTime, frameRate: FrameRate): number =>
+  time.ticksNumber / frameRate.ticksPerFrame;
+
+/**
+ * Parse a timecode string ("HH:MM:SS:FF" or "HH;MM;SS;FF") into a TickTime.
+ */
+export const timecodeToTime = (
+  timecode: string,
+  frameRate: FrameRate,
+): TickTime => {
+  const dropFrame = timecode.indexOf(";") > -1;
+  const [h, m, s, f] = timecode.split(/[:;]/).map((p) => parseInt(p, 10));
+  const fpsRound = Math.round(frameRate.value);
+
+  let totalFrames = h * 3600 * fpsRound + m * 60 * fpsRound + s * fpsRound + f;
+
+  if (dropFrame) {
+    const dropPerMin = Math.round(frameRate.value * 0.066666); // skip 2 frames per minute at 29.97, 4 at 59.94
+    const totalMinutes = h * 60 + m;
+    totalFrames -= dropPerMin * (totalMinutes - Math.floor(totalMinutes / 10));
+  }
+
+  return premierepro.TickTime.createWithFrameAndFrameRate(
+    totalFrames,
+    frameRate,
+  );
+};
+
+/**
+ * Format a TickTime as a Premiere timecode string.
+ *
+ * Pass `dropFrame: true` to produce SMPTE drop-frame ("HH;MM;SS;FF"),
+ * which is what Premiere shows on 29.97 / 59.94 timelines so displayed
+ * timecode tracks wall-clock time. Default is non-drop ("HH:MM:SS:FF").
+ */
+export const timeToTimecode = (
+  time: TickTime,
+  frameRate: FrameRate,
+  dropFrame = false,
+): string => {
+  const fpsRound = Math.round(frameRate.value);
+  const realFrames = Math.round(time.ticksNumber / frameRate.ticksPerFrame);
+
+  let labelFrames = realFrames;
+  if (dropFrame) {
+    const dropPerMin = Math.round(frameRate.value * 0.066666); // 2 @ 29.97, 4 @ 59.94
+    const framesPer10Min = Math.round(frameRate.value * 60 * 10);
+    const framesPerMin = fpsRound * 60 - dropPerMin;
+    const tenMinBlocks = Math.floor(realFrames / framesPer10Min);
+    const remainder = realFrames % framesPer10Min;
+    const skippedInBlocks = dropPerMin * 9 * tenMinBlocks;
+    const skippedInRemainder =
+      remainder > dropPerMin
+        ? dropPerMin * Math.floor((remainder - dropPerMin) / framesPerMin)
+        : 0;
+    labelFrames = realFrames + skippedInBlocks + skippedInRemainder;
+  }
+
+  const f = labelFrames % fpsRound;
+  const totalSec = Math.floor(labelFrames / fpsRound);
+  const s = totalSec % 60;
+  const m = Math.floor(totalSec / 60) % 60;
+  const h = Math.floor(totalSec / 3600);
+
+  const pad = (x: number) => x.toString().padStart(2, "0");
+  const sep = dropFrame ? ";" : ":";
+  return `${pad(h)}${sep}${pad(m)}${sep}${pad(s)}${sep}${pad(f)}`;
+};
+
+/** Check is the sequence displays drop-frame timecode ("HH;MM;SS;FF") */
+export const isSequenceDropFrame = async (
+  sequence: Sequence,
+): Promise<boolean> => {
+  const display = await (await sequence.getSettings()).getVideoDisplayFormat();
+  return display.type === 102 || display.type === 106; //102 = 29.97, 106 = 59.94 (both drop-frame)
+};
+
+/**Format a TickTime as the timecode that the given sequence would display*/
+export const getTimecodeFromSequence = async (
+  time: TickTime,
+  sequence: Sequence,
+): Promise<string> => {
+  const settings = await sequence.getSettings();
+  const frameRate = settings.getVideoFrameRate();
+  const dropFrame = await isSequenceDropFrame(sequence);
+  return timeToTimecode(time, frameRate, dropFrame);
+};
+
+/** Get the sequence length in frames. */
+export const getSequenceLengthInFrames = async (
+  sequence: Sequence,
+): Promise<number> => {
+  const end = await sequence.getEndTime();
+  const fps = (await sequence.getSettings()).getVideoFrameRate();
+  return timeToFrames(end, fps);
+};
+
 //Metadata helpers
 const PPRO_META_URI = "http://ns.adobe.com/premierePrivateProjectMetaData/1.0/";
 
@@ -460,10 +563,6 @@ export const listPrMetadataKeys = async (
   }
   return keys;
 };
-
-//todo
-// setPrMetadata
-// removePrMetadata
 
 // Audio Conversions
 
