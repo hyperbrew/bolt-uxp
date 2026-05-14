@@ -45,7 +45,6 @@ export const lockedTransactionSafe = async (
   );
 };
 
-//TODO: check for potential bugs - in extendscript were cases tracks indices don't match UI order
 /** Loop over each audio track */
 export const forEachAudioTrack = async (
   sequence: Sequence,
@@ -66,7 +65,6 @@ export const forEachAudioTrack = async (
   }
 };
 
-//TODO: check for potential bugs - in extendscript were cases tracks indices don't match UI order
 /** Loop over each video track */
 export const forEachVideoTrack = async (
   sequence: Sequence,
@@ -158,7 +156,6 @@ export const forEachChild = async (
   }
 };
 
-//TODO: edge tests. Test cases where callback modifies some descendants
 /** Loop over each item inside a bin and all its sub-bins.  */
 export const forEachDescendant = async (
   item: ProjectItem | FolderItem,
@@ -201,7 +198,6 @@ export const resolveOrActiveRoot = async (
 ): Promise<FolderItem | undefined> =>
   (await resolveToFolderItem(item)) ?? (await getActiveRoot());
 
-//TODO? extend or create separate function to abstract futher with friendlier types — e.g. SEQUENCE, MULTICAM_SOURCE, SUBCLIP, NEST, AUDIO, MEDIA, MOGRT
 /** Find a direct child of a bin/root by name.
  *
  * Optionally filter by item type. Optionally compare case-insensitively and/or space-insensitively.
@@ -516,9 +512,9 @@ export const getSequenceLengthInFrames = async (
 const PPRO_META_URI = "http://ns.adobe.com/premierePrivateProjectMetaData/1.0/";
 
 /**
- * Read Premiere project metadata fields off a ProjectItem. Missing fields are omitted from
+ * Read metadata fields off a ProjectItem. Missing or empty fields are omitted
  *
- * To discover available fields on an item use `listPrMetadataKeys(item)`
+ * To discover available fields on an item use `listPrMetadataIds` or `findColumnIdByName`
  *
  * @example await getPrMetadata(item, ["Column.Intrinsic.Name", "Column.Intrinsic.MediaType"])
  */
@@ -532,19 +528,19 @@ export const getPrMetadata = async (
   const xmp = new XMPMeta(xmpStr);
   const result: { [key: string]: string } = {};
 
-  for (const f of fields) {
-    if (xmp.doesPropertyExist(PPRO_META_URI, f)) {
-      result[f] = xmp.getProperty(PPRO_META_URI, f).value;
+  for (const field of fields) {
+    if (xmp.doesPropertyExist(PPRO_META_URI, field)) {
+      result[field] = xmp.getProperty(PPRO_META_URI, field).value;
     }
   }
   return result;
 };
 
 /**
- * Discover field names on a ProjectItem's project metadata.
+ * Helpter function to discover field names on a ProjectItem's project metadata.
  * Returns the local field names that can be fed back into `getPrMetadata`.
  */
-export const listPrMetadataKeys = async (
+export const listPrMetadataIds = async (
   projectItem: ProjectItem,
 ): Promise<string[]> => {
   //@ts-ignore
@@ -562,6 +558,155 @@ export const listPrMetadataKeys = async (
     keys.push(n.path.replace(/^premierePrivateProjectMetaData:/, ""));
   }
   return keys;
+};
+
+type PrMetaField =
+  | { name: string; id?: string; value: string; type?: "text" }
+  | { name: string; id?: string; value: number; type: "integer" | "real" }
+  | { name: string; id?: string; value: boolean; type: "boolean" };
+
+/**
+ * Set metadata fields on a ProjectItem. Update existing
+ * columns (e.g. `Column.PropertyText.Name`) or add new (e.g. `HyperbrewPlugin.Notes`)
+ *
+ * For built-in fields you must pass the real internal ColumnID — use
+ * `findColumnIdByName(item, "Description")` to look one up by display name
+ */
+export const setPrMetadata = async (
+  projectItem: ProjectItem,
+  fields: PrMetaField[],
+): Promise<void> => {
+  //@ts-ignore
+  const { XMPMeta } = uxp.xmp;
+  const project = await projectItem.getProject();
+
+  const xmp = new XMPMeta(
+    await premierepro.Metadata.getProjectMetadata(projectItem),
+  );
+  const updated: string[] = [];
+
+  for (const field of fields) {
+    const type = field.type ?? "text";
+
+    const typeCode = (premierepro.Metadata as any)[
+      `METADATA_TYPE_${type.toUpperCase()}` //get static numeric metadata type code
+    ];
+
+    //Ensure field is registered, returns false if already exists on schema
+    await premierepro.Metadata.addPropertyToProjectMetadataSchema(
+      field.name,
+      field.id ?? field.name,
+      typeCode,
+    );
+
+    // Booleans must be capitalized "True"/"False"; everything else stringifies fine
+    const value =
+      type === "boolean"
+        ? field.value
+          ? "True"
+          : "False"
+        : String(field.value);
+    xmp.setProperty(PPRO_META_URI, field.name, value);
+    updated.push(field.name);
+  }
+
+  await lockedTransactionSafe(
+    project,
+    [
+      () =>
+        premierepro.Metadata.createSetProjectMetadataAction(
+          projectItem,
+          xmp.serialize(),
+          updated,
+        ),
+    ],
+    "Set Project Metadata",
+  );
+};
+
+/** Field reference for `removePrMetadata`.
+ *
+ * Pass a bare string for text fields (full delete), or `{ name, type }` for
+ * typed fields so the function can reset them to a clean default
+ */
+type PrMetaRemoveField =
+  | string
+  | { name: string; type: "text" | "integer" | "real" | "boolean" };
+
+/**
+ * Remove or clear Premiere project metadata fields on a ProjectItem
+ *
+ * **Behavior depends on field type:**
+ * - **Text** fields are deleted from the XMP
+ * - **Bool/Int/Real** fields cannot be deleted - Premiere's schema layer
+ *   re-inserts a value. To avoid that the function
+ *   overwrite with a default (`False`/`0`/`0.000000`) so
+ *   the panel shows a sane empty state
+ *
+ * Note: this doesn't unregister the field from the project schema -
+ * the column will still appear in the Project panel's column
+ *
+ * @example
+ * await removePrMetadata(item, [
+ *   "Hyperbrew.SomeText",                           // string → text delete
+ *   { name: "Hyperbrew.SomeBool", type: "boolean" } // → reset to "False"
+ * ])
+ */
+export const removePrMetadata = async (
+  projectItem: ProjectItem,
+  fields: PrMetaRemoveField[],
+): Promise<void> => {
+  //@ts-ignore
+  const { XMPMeta } = uxp.xmp;
+  const project = await projectItem.getProject();
+  const xmp = new XMPMeta(
+    await premierepro.Metadata.getProjectMetadata(projectItem),
+  );
+
+  const touched: string[] = [];
+  for (const field of fields) {
+    const name = typeof field === "string" ? field : field.name;
+    const type = typeof field === "string" ? "text" : field.type;
+
+    if (!xmp.doesPropertyExist(PPRO_META_URI, name)) continue;
+
+    if (type === "text") {
+      // Text type field- fully delete from XMP
+      xmp.deleteProperty(PPRO_META_URI, name);
+    } else {
+      // custom set typed field - reset to default, otherwise Premiere always re-inserts a magic number
+      const defaultValue =
+        type === "boolean" ? "False" : type === "integer" ? "0" : "0.000000";
+      xmp.setProperty(PPRO_META_URI, name, defaultValue);
+    }
+    touched.push(name);
+  }
+
+  if (!touched.length) return;
+
+  await lockedTransactionSafe(
+    project,
+    [
+      () =>
+        premierepro.Metadata.createSetProjectMetadataAction(
+          projectItem,
+          xmp.serialize(),
+          touched,
+        ),
+    ],
+    "Remove Project Metadata",
+  );
+};
+
+/** Find a registered column's internal ID by its display name (e.g. "Description"). */
+export const findColumnIdByName = async (
+  item: ProjectItem,
+  displayName: string,
+): Promise<string | undefined> => {
+  const cols: { ColumnID: string; ColumnName: string }[] = JSON.parse(
+    await premierepro.Metadata.getProjectColumnsMetadata(item),
+  );
+  return cols.find((c) => c.ColumnName === displayName)?.ColumnID;
 };
 
 // Audio Conversions
