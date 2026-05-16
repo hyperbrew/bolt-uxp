@@ -2,8 +2,9 @@ import * as Comlink from "comlink";
 import { api } from "./api/api";
 
 import type { WebviewAPI } from "../webview-ui/src/webview";
-import { id, config } from "../uxp.config";
+import { config } from "../uxp.config";
 import { getColorScheme } from "./api/uxp";
+import { uxp } from "./globals";
 
 interface UXPHTMLWebViewElement extends HTMLElement {
   uxpAllowInspector: string;
@@ -16,6 +17,7 @@ export const webviewInitHost = (params: {
   multi: boolean | string[];
 }): Promise<WebviewAPI[]> => {
   const multi = params ? params.multi : false;
+  const id = uxp.entrypoints._pluginInfo.id;
   return new Promise((resolve, reject) => {
     let pages = ["main"];
     if (multi === true || Array.isArray(multi)) {

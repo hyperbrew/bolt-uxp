@@ -11,6 +11,7 @@ import vueLogo from "./assets/vue.png";
 // BOLT_SAMPLECODE_END
 
 const webviewUI = import.meta.env.VITE_BOLT_WEBVIEW_UI === "true";
+const id = uxp.entrypoints._pluginInfo.id;
 
 // BOLT_WEBVIEW_START
 import { webviewInitHost } from "./webview-setup-host";
@@ -120,7 +121,7 @@ const hybridTest = async () => {
 
   <!-- BOLT_SAMPLECODE_START -->
   <!-- Example of a secondary panel entrypoint -->
-  <!-- <uxp-panel panelid="bolt.uxp.plugin.settings">
+  <!-- <uxp-panel panelid="{id}.settings">
     <h1>Settings Panel</h1>
     <p>count is: {{ count }}</p>
   </uxp-panel> -->
