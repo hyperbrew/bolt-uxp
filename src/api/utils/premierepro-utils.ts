@@ -177,7 +177,7 @@ export const forEachDescendant = async (
 
 /** Resolve passed item as a searchable FolderItem. */
 export const resolveToFolderItem = async (
-  item?: ProjectItem | FolderItem | Project,
+  item: ProjectItem | FolderItem | Project,
 ): Promise<FolderItem | undefined> => {
   if (!item) return;
   if ("getRootItem" in item) return item.getRootItem(); // only Project has "getRootItem"
@@ -192,11 +192,32 @@ export const getActiveRoot = async (): Promise<FolderItem | undefined> => {
   return proj ? proj.getRootItem() : undefined;
 };
 
-/** Resolve to a FolderItem, falling back to the active project's rootItem. */
-export const resolveOrActiveRoot = async (
+/**
+ * Extended version of `resolveToFolderItem` that falls back to a root bin
+ * when the input isn't a searchable folder:
+ * - returns active project's root if nothing is passed
+ * - returns item's project's root if non-bin item (e.g. image) is passed
+ * - returns `undefined` only if no project is available
+ *
+ * Used by lookup helpers (`getItemById`, `getItemByNameChain`) to normalize
+ * an optional `parent` scope so callers can pass a bin, a clip, a project,
+ * or nothing at all.
+ *
+ * @example
+ * await getItemById("abc");              // searches active project
+ * await getItemById("abc", someBin);     // searches inside that bin
+ * await getItemById("abc", someClip);    // searches the clip's project
+ */
+export const resolveOrGetRoot = async (
   item?: ProjectItem | FolderItem | Project,
-): Promise<FolderItem | undefined> =>
-  (await resolveToFolderItem(item)) ?? (await getActiveRoot());
+): Promise<FolderItem | undefined> => {
+  if (!item) return getActiveRoot();
+  const folder = await resolveToFolderItem(item);
+  if (folder) return folder;
+  // non-bin ProjectItem - fall back to its own project's root
+  const proj = await (item as ProjectItem).getProject();
+  return proj?.getRootItem() ?? (await getActiveRoot());
+};
 
 /** Find a direct child of a bin/root by name.
  *
@@ -294,7 +315,7 @@ export const getItemById = async (
   id: string,
   parent?: ProjectItem | FolderItem | Project,
 ): Promise<ProjectItem | undefined> => {
-  const root = await resolveOrActiveRoot(parent);
+  const root = await resolveOrGetRoot(parent);
   if (!root) return;
 
   const findIn = async (
