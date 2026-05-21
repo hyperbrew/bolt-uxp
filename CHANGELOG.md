@@ -1,5 +1,15 @@
 # Bolt UXP Changelog
 
+## Version 1.3.4 (2026-5-21)
+
+- Swap types repo "@adobe/premierepro" for forked repo pending version fix
+- Removed "src\api\utils" (since now in separate `bolt-uxp-utils` dir & npm package)
+
+## Version 1.3.3 (2026-5-21)
+
+- Premiere Helper Library Expanded
+- bolt-uxp-utils abstracted into independent npm module (Premiere & Photoshop)
+
 ## Version 1.3.0 (2026-5-4)
 
 - Debugging Support for UDT Debugger

@@ -1,4 +1,5 @@
 import { premierepro } from "../globals";
+import { cloneSequence } from "bolt-uxp-utils/ppro";
 
 export const notify = async (message: string) => {
   alert(message);

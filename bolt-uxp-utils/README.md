@@ -13,9 +13,9 @@ Active development. Current helper count:
 
 There are two ways to use this library, depending on how your plugin is built:
 
-| Your plugin uses… | Use this path |
-|---|---|
-| A bundler (Bolt UXP, Vite, Webpack, esbuild, etc.) | **[Path A - with a bundler](#path-a--with-a-bundler)** |
+| Your plugin uses…                                            | Use this path                                                |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| A bundler (Bolt UXP, Vite, Webpack, esbuild, etc.)           | **[Path A - with a bundler](#path-a--with-a-bundler)**       |
 | Plain UXP plugin created with UXP Developer Tool, no bundler | **[Path B - without a bundler](#path-b--without-a-bundler)** |
 
 Not sure? If you have a `vite.config.ts`, `webpack.config.js`, or your project was created with Bolt UXP, you're on **Path A**. Otherwise you're on **Path B**.
@@ -33,6 +33,7 @@ npm install bolt-uxp-utils
 > If your project was created with Bolt UXP, the required UXP type packages (`@adobe/premierepro`, `@types/photoshop`, `@adobe/cc-ext-uxp-types`) are already included - no extra install needed.
 >
 > If you're starting from scratch, install them yourself:
+>
 > ```sh
 > npm install --save-dev @adobe/cc-ext-uxp-types @adobe/premierepro @types/photoshop
 > ```
@@ -42,6 +43,7 @@ npm install bolt-uxp-utils
 Three equivalent import styles, pick whichever fits your code style
 
 Named imports:
+
 ```ts
 //Premiere Pro
 import { getActiveRoot, cloneSequence, forEachClip } from "bolt-uxp-utils/ppro";
@@ -57,7 +59,6 @@ await asModal("My Command", async () => {
   await deselectAllLayers();
 });
 ```
-
 
 Default import (namespace style):
 
@@ -95,8 +96,6 @@ await bolt.asModal("My Command", async () => {
 });
 ```
 
-
-
 ---
 
 ## Path B - without a bundler
@@ -120,12 +119,14 @@ This creates a `bolt-uxp-utils/` folder next to your `manifest.json`. It ships i
 ### Step 3 - require it in your code
 
 Destructured (CommonJS):
+
 ```js
 const { getActiveRoot } = require("./bolt-uxp-utils/ppro");
 const { asModal, deselectAllLayers } = require("./bolt-uxp-utils/ps");
 ```
 
 Namespace (CommonJS):
+
 ```js
 const bolt = require("./bolt-uxp-utils/ppro");
 const root = await bolt.getActiveRoot();
@@ -139,14 +140,14 @@ Requires Adobe Premiere Pro **26.3.0+**. Earlier versions used a different trans
 
 ### Node version warning during install
 
-`@adobe/premierepro` declares Node 24.13.0+ as required, but is types-only at runtime -  the constraint is overly strict. If `yarn` refuses to install, use `yarn install --ignore-engines`. `npm` warns and installs without issue.
+Temporarily using the forked version of the Premiere Pro type `@adobe/premierepro` since the offical version requires Node 24.13.0+ as required, but is types-only at runtime - the constraint is overly strict. If `yarn` refuses to install, use `yarn install --ignore-engines`. `npm` warns and installs without issue.
 
 ### Build outputs (for contributors)
 
-| Folder | Format | Consumed via |
-|---|---|---|
-| `dist/esm/` | ES modules | `import` (bundlers, modern Node) |
-| `dist/cjs/` | CommonJS | `require()` (vanilla UXP) |
+| Folder        | Format                  | Consumed via                            |
+| ------------- | ----------------------- | --------------------------------------- |
+| `dist/esm/`   | ES modules              | `import` (bundlers, modern Node)        |
+| `dist/cjs/`   | CommonJS                | `require()` (vanilla UXP)               |
 | `dist/types/` | TypeScript declarations | Both - for autocomplete and type checks |
 
 The `exports` field in `package.json` picks the right one automatically.
