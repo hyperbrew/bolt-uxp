@@ -46,6 +46,18 @@ const manifest: UXP_Manifest = {
       minVersion: "18.5",
     },
     // BOLT_ILST_END
+    // BOLT_AEFT_START
+    {
+      app: "aftereffects",
+      minVersion: "22.3",
+    },
+    // BOLT_AEFT_END
+    // BOLT_AME_START
+    {
+      app: "ame",
+      minVersion: "22.3",
+    },
+    // BOLT_AME_END
   ],
   entrypoints: [
     {

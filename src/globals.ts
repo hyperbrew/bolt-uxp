@@ -18,9 +18,21 @@ export const photoshop = (
 export const indesign = (
   hostName === "indesign" ? require("indesign") : {}
 ) as any;
+
 export const premierepro = (
   hostName === "premierepro" ? require("premierepro") : {}
 ) as premiereproTypes;
+
+// Beta APIs
+
 export const illustrator = (
   hostName === "illustrator" ? require("illustrator") : {}
+) as any;
+
+export const aftereffects = (
+  hostName === "aftereffects" ? require("aftereffects") : {}
+) as any;
+
+export const mediaencoder = (
+  hostName === "mediaencoder" ? require("mediaencoder") : {}
 ) as any;

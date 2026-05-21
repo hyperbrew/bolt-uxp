@@ -65,6 +65,16 @@ const appOptions: ArgOpt[] = [
     label: "Illustrator (Beta)",
     files: ["src/api/illustrator.ts"],
   },
+  {
+    value: "aeft",
+    label: "After Effects (Beta)",
+    files: ["src/api/aftereffects.ts"],
+  },
+  {
+    value: "ame",
+    label: "Media Encoder (Beta)",
+    files: ["src/api/mediaencoder.ts"],
+  },
 ];
 
 const initData: BoltInitData = {
