@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "rootDir": "./src",
+    "types": ["@adobe/cc-ext-uxp-types", "@types/photoshop", "@types/node"]
+  },
+  "include": ["src/**/*"]
+}

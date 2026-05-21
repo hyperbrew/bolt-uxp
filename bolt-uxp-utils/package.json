@@ -1,0 +1,42 @@
+{
+  "name": "bolt-uxp-utils",
+  "version": "1.0.0",
+  "description": "Utils library to build UXP plugins for Premiere Pro and Photoshop",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "bolt-uxp-utils": "./scripts/setup.js"
+  },
+  "exports": {
+    "./ppro": {
+      "types": "./dist/types/ppro.d.ts",
+      "import": "./dist/esm/ppro.js",
+      "require": "./dist/cjs/ppro.js"
+    },
+    "./ps": {
+      "types": "./dist/types/ps.d.ts",
+      "import": "./dist/esm/ps.js",
+      "require": "./dist/cjs/ps.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.esm.json && tsc -p tsconfig.cjs.json && tsc -p tsconfig.types.json && node scripts/write-cjs-pkg.js"
+  },
+  "peerDependencies": {
+    "@adobe/cc-ext-uxp-types": "*",
+    "@adobe/premierepro": "*",
+    "@types/photoshop": "*"
+  },
+  "devDependencies": {
+    "@adobe/cc-ext-uxp-types": "github:justintaylor-dev/cc-ext-uxp-types",
+    "@adobe/premierepro": "^26.2.0",
+    "@types/node": "^20.8.7",
+    "@types/photoshop": "^25.0.2",
+    "typescript": "^5.8.3"
+  },
+  "files": [
+    "dist",
+    "scripts",
+    "README.md"
+  ]
+}
