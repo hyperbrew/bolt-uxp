@@ -522,6 +522,50 @@ Currently, hybrid plugins are only supported in Photoshop.
 
 ---
 
+### Handling Global Errors
+
+Adobe UXP does not currently have a global event handler. This means that any errors not handled in a try/catch will be silently ignored, which can make projects hard to debug.
+
+Adobe is working on adding the global event handler (e.g. `window.onError()`) but in the meantime, Bolt UXP ships with a polyfill. While it's impossible to polyfill catching unhanlded errors on the developer side, the following functions make handling errors easier, especially when integrating services like Sentry to track errors on the user side.
+
+_Note: This does not apply Webview, only to the UXP portion of your plugin. Webview global error handler works as expected and does not need polyfilling._
+
+`src\api\errors.ts`
+
+**1. Error Handler** - `polyFillGlobalErrorHandler()`
+
+First step is the error handler. This function polyfills `window.onerror()`. You can easily append any other logging or handling such as Sentry hooks to integrate other error handling services in this function.
+
+**2. Throw Error** - `throwErr()`
+
+While the keyword `throw` is of course reserved, you can instead use this function to trigger the global error handler anywhere in your UXP plugin.
+
+**3. Run Safely** - `safe()` & `safeAsync()`
+
+To make handling errors easier, you can wrap any error-prone function into `safe()` for synchronous functions or `safeAsync()` for asynchronous functions. Errors will be caught and sent to the global event handler. The result or an error will be returned. You can handle the error by checking the instanceof the value.
+
+**Sync Example**
+
+```ts
+const res = safe(() => window.notExist()); // error is sent to global error handler
+if (res instanceof Error) {
+  return console.log("there was an error"); // also handle error in-context
+}
+console.log("all good");
+```
+
+**Async Example**
+
+```ts
+const res = await safeAsync(async () => window.notExist()); // error is sent to global error handler
+if (res instanceof Error) {
+  return console.log("there was an error"); // also handle error in-context
+}
+console.log("all good");
+```
+
+---
+
 ### Notes on Spectrum
 
 There are several flavors of Adobe Spectrum:

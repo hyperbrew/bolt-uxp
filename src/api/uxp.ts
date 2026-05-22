@@ -1,5 +1,6 @@
 import { config } from "../../uxp.config";
 import { os, photoshop, uxp } from "../globals";
+import { polyFillGlobalErrorHandler } from "./errors";
 
 export const getUXPInfo = async () => {
   const info = {
@@ -211,4 +212,5 @@ export const psHideResizeHandle = async () => {
 
 export const initUXP = () => {
   psHideResizeHandle();
+  polyFillGlobalErrorHandler();
 };
