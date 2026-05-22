@@ -1,5 +1,9 @@
 # Bolt UXP Changelog
 
+## Version 1.3.5 (2026-5-22)
+
+- UXP Global Error Handler Helpers
+
 ## Version 1.3.4 (2026-5-21)
 
 - Swap types repo "@adobe/premierepro" for forked repo pending version fix
