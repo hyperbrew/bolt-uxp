@@ -37,3 +37,4 @@ scripts/mac-sign.sh
 public/webview-ui/*
 
 .demos
+scripts/decoded.json

@@ -30,7 +30,8 @@
     "win-build-debug": "msbuild /p:Configuration=Debug src/hybrid/win/bolt-uxp-hybrid.sln",
     "win-sign": "node ./scripts/win-sign.js",
     "dep": "cross-env BOLT_ACTION=dependencyCheck vite",
-    "udt": "yarn tsx scripts/udt-connect.ts"
+    "udt": "yarn tsx scripts/udt-connect.ts",
+    "udt-d": "yarn tsx scripts/decode.ts"
   },
   "dependencies": {
     "comlink": "^4.4.2",
