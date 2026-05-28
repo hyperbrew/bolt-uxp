@@ -368,9 +368,9 @@ Fast communication between UXP and Webview contexts is accomplished via [Comlink
 
 UXP implements [Global CSS Variables](https://developer.adobe.com/photoshop/uxp/2022/guides/theme-awareness/) in order to use the app's color scheme. Currently Photoshop has full support, while support is pending with [InDesign](https://forums.creativeclouddeveloper.com/t/theme-awareness-css-variables-indesign/8287/9) and [Premiere Pro](https://forums.creativeclouddeveloper.com/t/theme-colors-for-premiere-pro-uxp/11586) support.
 
-Bolt UXP polyfills Color Vars per theme mode (light, dark, lightest, darkest), and updates these to the Webview UI as well.
+Bolt UXP accurately polyfills Color Variables per os, app, and selected theme (e.g. light, dark, lightest, darkest), in both UXP and Webview UI.
 
-You can use the following variables to make your panel match the host app:
+You can use the following 10 CSS variables to make your panel match the host app:
 
 ```css
 --uxp-host-background-color
@@ -385,7 +385,9 @@ You can use the following variables to make your panel match the host app:
 --uxp-host-label-text-color
 ```
 
-Additionally you can take advantage of the following color schemes in a standard UXP plugin (not Webview UI currently)
+You can add additional CSS rules depending on theme in the following 2 ways depending on if your UXP plugin uses Webview or Vanilla UXP:
+
+**UXP Reactive Colors:**
 
 ```css
 @media (prefers-color-scheme: dark) {
@@ -397,6 +399,21 @@ Additionally you can take advantage of the following color schemes in a standard
 @media (prefers-color-scheme: lightest) {
 }
 ```
+
+**Webview UI Reactive Colors:**
+
+```css
+:root[data-theme="light"] {
+}
+:root[data-theme="lightest"] {
+}
+:root[data-theme="dark"] {
+}
+:root[data-theme="darkest"] {
+}
+```
+
+_Note: Do not use `prefers-color-scheme` on Webview as it will use the system's color scheme which may not always match the app's color scheme._
 
 ## GitHub Actions CCX Releases
 
