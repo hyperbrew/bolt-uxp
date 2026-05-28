@@ -1,7 +1,7 @@
 import { config } from "../../uxp.config";
 import { photoshop, uxp } from "../globals";
 
-export { getColorScheme } from "./theme";
+export { getColorScheme, loadThemeSupport } from "./theme";
 
 export const getUXPInfo = async () => {
   const info = {

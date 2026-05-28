@@ -3,29 +3,24 @@ export const pingWebview = () => {
   return "hello from webview";
 };
 
+// Applies the host's theme to <html> so the webview's SCSS picks it up
 export const updateColorScheme = (val: {
   theme: string;
-  colors: {
-    "--uxp-host-background-color": string;
-    "--uxp-host-text-color": string;
-    "--uxp-host-border-color": string;
-    "--uxp-host-link-text-color": string;
-    "--uxp-host-widget-hover-background-color": string;
-    "--uxp-host-widget-hover-text-color": string;
-    "--uxp-host-widget-hover-border-color": string;
-    "--uxp-host-text-color-secondary": string;
-    "--uxp-host-link-hover-text-color": string;
-    "--uxp-host-label-text-color": string;
-  };
+  host?: string | null;
+  colors: Record<string, string>;
+  spectrumStyle?: boolean;
 }) => {
-  const { theme, colors } = val;
-  console.log("update color scheme", theme, colors);
+  const { theme, host, colors, spectrumStyle } = val;
+  console.log("update color scheme", theme, host, colors);
+
+  //set CSS vars like --uxp-host-background-color
   const root = document.querySelector(":root") as HTMLElement;
   for (const key in colors) {
-    //@ts-ignore
-    const color = colors[key];
-    root.style.setProperty(key, color);
+    root.style.setProperty(key, colors[key]);
   }
-  document.documentElement.dataset.theme = theme;
+
+  // toggle bundled spectrum element styles via class on <html>
+  document.documentElement.classList.toggle("spectrum-style", !!spectrumStyle);
+
   return "hello from webview";
 };

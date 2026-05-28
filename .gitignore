@@ -36,4 +36,4 @@ src/hybrid/win/.vs
 scripts/mac-sign.sh
 public/webview-ui/*
 
-.demos
+.demostsconfig.tsbuildinfo

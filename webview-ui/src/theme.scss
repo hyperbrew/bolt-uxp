@@ -1,0 +1,284 @@
+// Spectrum-style element looks — applied with loadThemeSupport({ spectrumStyle: true })
+// Reads --uxp-host-* vars; pick looks with variant="accent"/ "secondary" "negative" "emphasized"
+
+body,
+html {
+  color: var(--uxp-host-text-color);
+  background-color: var(--uxp-host-background-color);
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue",
+    sans-serif;
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--uxp-host-heading-text-color);
+}
+
+a {
+  color: var(--uxp-host-link-text-color);
+  &:hover {
+    color: var(--uxp-host-link-hover-text-color);
+  }
+  &:active {
+    color: var(--uxp-host-link-active-text-color);
+  }
+  &[variant="disabled"] {
+    color: var(--uxp-host-link-disabled-text-color);
+    pointer-events: none;
+    cursor: default;
+  }
+}
+
+@mixin button-variant($name, $selector) {
+  #{$selector} {
+    background-color: var(--uxp-host-button-#{$name}-background-color);
+    color: var(--uxp-host-button-#{$name}-text-color);
+    &:hover {
+      background-color: var(--uxp-host-button-#{$name}-hover-background-color);
+      color: var(--uxp-host-button-#{$name}-hover-text-color);
+    }
+    &:active {
+      background-color: var(--uxp-host-button-#{$name}-down-background-color);
+      color: var(--uxp-host-button-#{$name}-down-text-color);
+    }
+    &:disabled {
+      background-color: var(
+        --uxp-host-button-#{$name}-disabled-background-color
+      );
+      color: var(--uxp-host-button-#{$name}-disabled-text-color);
+      cursor: not-allowed;
+    }
+  }
+}
+
+html.spectrum-style {
+  hr {
+    border: none;
+    border-top: 1px solid var(--uxp-host-border-color);
+  }
+
+  input[type="text"],
+  textarea,
+  select {
+    appearance: none;
+    -webkit-appearance: none;
+  }
+
+  input[type="text"],
+  input[type="number"],
+  textarea,
+  select {
+    background-color: var(--uxp-host-widget-background-color);
+    color: var(--uxp-host-widget-text-color);
+    border: 1px solid var(--uxp-host-widget-border-color);
+    padding: 0.2em 0.5em;
+    border-radius: 3px;
+    font-family: inherit;
+    font-size: inherit;
+    box-sizing: border-box;
+    outline: none;
+
+    &:hover {
+      background-color: var(--uxp-host-widget-hover-background-color);
+      color: var(--uxp-host-widget-hover-text-color);
+      border-color: var(--uxp-host-widget-hover-border-color);
+    }
+    &:focus,
+    &:active {
+      background-color: var(--uxp-host-widget-hover-background-color);
+      color: var(--uxp-host-widget-hover-text-color);
+      border-color: var(--uxp-host-widget-selected-border-color);
+    }
+    &:disabled {
+      background-color: var(--uxp-host-widget-disabled-background-color);
+      color: var(--uxp-host-widget-disabled-text-color);
+      border-color: transparent;
+      cursor: default;
+    }
+  }
+
+  //TODO input number ligh one must have contrast arrows
+  // input[type="number"] {
+  //   color-scheme: var(--uxp-host-input-number-color-scheme);
+  // }
+
+  input[type="range"] {
+    appearance: none;
+    -webkit-appearance: none;
+    height: 16px;
+    background: transparent;
+    cursor: pointer;
+
+    &::-webkit-slider-runnable-track {
+      height: 2px;
+      background-color: var(--uxp-host-slider-path-color);
+      border-radius: 1px;
+    }
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: var(--uxp-host-slider-thumb-fill-color);
+      border: 2px solid var(--uxp-host-slider-thumb-border-color);
+      margin-top: -4px;
+      cursor: pointer;
+    }
+    &:hover::-webkit-slider-thumb,
+    &:active::-webkit-slider-thumb {
+      border-color: var(--uxp-host-slider-thumb-hover-border-color);
+    }
+    &:active::-webkit-slider-thumb {
+      border-width: 3px;
+    }
+    &:disabled {
+      cursor: default;
+    }
+    &:disabled::-webkit-slider-thumb {
+      border-color: var(--uxp-host-slider-thumb-disabled-border-color);
+    }
+  }
+
+  input[type="checkbox"],
+  input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 13px;
+    height: 13px;
+    margin: 0 0.4em 0 0;
+    vertical-align: -2px;
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+    box-sizing: border-box;
+  }
+
+  input[type="checkbox"] {
+    border-radius: 3px;
+    background-color: var(--uxp-host-checkbox-background-color);
+    border: 2px solid var(--uxp-host-checkbox-border-color);
+
+    &:hover {
+      border-color: var(--uxp-host-checkbox-hover-border-color);
+    }
+    &:checked {
+      background-color: var(--uxp-host-checkbox-fill-color);
+      border-color: var(--uxp-host-checkbox-fill-color);
+    }
+    &:checked:hover {
+      background-color: var(--uxp-host-checkbox-hover-fill-color);
+      border-color: var(--uxp-host-checkbox-hover-fill-color);
+    }
+    &:active {
+      border-color: var(--uxp-host-checkbox-down-border-color);
+    }
+    &:checked:active {
+      background-color: var(--uxp-host-checkbox-down-fill-color);
+      border-color: var(--uxp-host-checkbox-down-fill-color);
+    }
+    &[variant="emphasized"]:checked {
+      background-color: var(--uxp-host-widget-selected-border-color);
+      border-color: var(--uxp-host-widget-selected-border-color);
+    }
+    &[variant="emphasized"]:hover {
+      border-color: var(--uxp-host-widget-selected-border-color);
+    }
+    &[variant="emphasized"]:active {
+      border-color: var(--uxp-host-link-active-text-color);
+    }
+    &[variant="emphasized"]:checked:active {
+      background-color: var(--uxp-host-link-active-text-color);
+      border-color: var(--uxp-host-link-active-text-color);
+    }
+    &:disabled {
+      border-color: var(--uxp-host-checkbox-disabled-border-color);
+      cursor: default;
+    }
+    &:disabled:checked {
+      background-color: var(--uxp-host-checkbox-disabled-fill-color);
+      border-color: var(--uxp-host-checkbox-disabled-fill-color);
+    }
+    &:checked::after {
+      content: "";
+      position: absolute;
+      left: 2px;
+      top: -1px;
+      width: 3px;
+      height: 7px;
+      border: solid var(--uxp-host-checkbox-background-color);
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px var(--uxp-host-checkbox-selected-border-color);
+    }
+  }
+
+  input[type="radio"] {
+    border-radius: 50%;
+    background-color: transparent;
+    border: 2px solid var(--uxp-host-radio-border-color);
+
+    &:hover {
+      border-color: var(--uxp-host-radio-hover-border-color);
+    }
+    &:checked {
+      border: 4px solid var(--uxp-host-radio-fill-color);
+    }
+    &:checked:hover {
+      border-color: var(--uxp-host-radio-hover-fill-color);
+    }
+    &:active {
+      border-color: var(--uxp-host-radio-down-border-color);
+    }
+    &:checked:active {
+      border-color: var(--uxp-host-radio-down-fill-color);
+    }
+    &[variant="emphasized"]:checked,
+    &[variant="emphasized"]:hover {
+      border-color: var(--uxp-host-widget-selected-border-color);
+    }
+    &[variant="emphasized"]:active,
+    &[variant="emphasized"]:checked:active {
+      border-color: var(--uxp-host-link-active-text-color);
+    }
+    &:disabled {
+      border-color: var(--uxp-host-radio-disabled-border-color);
+      cursor: default;
+    }
+    &:disabled:checked {
+      border-color: var(--uxp-host-radio-disabled-fill-color);
+    }
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px var(--uxp-host-radio-selected-border-color);
+    }
+  }
+
+  button {
+    border: none;
+    border-radius: 999px;
+    padding: 0.5em 1.2em;
+    font-weight: 600;
+    cursor: pointer;
+    outline: none;
+    transition: background-color 120ms ease;
+    &:focus-visible {
+      outline: 2px solid var(--uxp-host-widget-selected-border-color);
+      outline-offset: 2px;
+    }
+  }
+  @include button-variant("primary", "button"); //default one
+
+  @include button-variant("accent", "button[variant='accent']");
+  @include button-variant("secondary", "button[variant='secondary']");
+  @include button-variant("negative", "button[variant='negative']");
+}
