@@ -1,7 +1,7 @@
 import { config } from "../../uxp.config";
 import { os, photoshop, uxp } from "../globals";
 import { polyFillGlobalErrorHandler } from "./errors";
-import { getColorScheme } from "./themes";
+import { getColorScheme, polyfillUXPVars } from "./themes";
 
 export { getColorScheme };
 
@@ -39,4 +39,5 @@ export const psHideResizeHandle = async () => {
 export const initUXP = () => {
   psHideResizeHandle();
   polyFillGlobalErrorHandler();
+  polyfillUXPVars();
 };

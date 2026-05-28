@@ -197,15 +197,14 @@ export const premiere: ColorPaletteTable = {
 
 //! InDesign "Lightest" theme doesn't currently work, "light" is used instead
 //! Waiting on fix from Adobe: https://forums.creativeclouddeveloper.com/t/indesign-theme-bug-on-lightest-mode/11924
-// TODO
 export const indesign: ColorPaletteTable = {
   mac: {
     darkest: {
       "--uxp-host-background-color": "#323232",
-      "--uxp-host-text-color": "#D0D0D0",
-      "--uxp-host-border-color": "#303030",
-      "--uxp-host-link-text-color": "#4096F3",
-      "--uxp-host-link-hover-text-color": "#5EAAF7",
+      "--uxp-host-text-color": "#E1E1E1",
+      "--uxp-host-border-color": "#454545",
+      "--uxp-host-link-text-color": "#0098FA",
+      "--uxp-host-link-hover-text-color": "#3DACFE",
       "--uxp-host-label-text-color": "#B0B0B0",
       "--uxp-host-widget-hover-background-color": "#000000",
       "--uxp-host-widget-hover-text-color": "#D0D0D0",
@@ -213,11 +212,11 @@ export const indesign: ColorPaletteTable = {
       "--uxp-host-text-color-secondary": "#B0B0B0",
     },
     dark: {
-      "--uxp-host-background-color": "#323232",
-      "--uxp-host-text-color": "#D1D1D1",
-      "--uxp-host-border-color": "#3F3F3F",
-      "--uxp-host-link-text-color": "#54A3F6",
-      "--uxp-host-link-hover-text-color": "#72B7F9",
+      "--uxp-host-background-color": "#535353",
+      "--uxp-host-text-color": "#E1E1E1",
+      "--uxp-host-border-color": "#454545",
+      "--uxp-host-link-text-color": "#2DA5FD",
+      "--uxp-host-link-hover-text-color": "#57AFF0",
       "--uxp-host-label-text-color": "#B2B2B2",
       "--uxp-host-widget-hover-background-color": "#1D1D1D",
       "--uxp-host-widget-hover-text-color": "#D1D1D1",
@@ -225,11 +224,23 @@ export const indesign: ColorPaletteTable = {
       "--uxp-host-text-color-secondary": "#B2B2B2",
     },
     light: {
-      "--uxp-host-background-color": "#F8F8F8",
-      "--uxp-host-text-color": "#464646",
+      "--uxp-host-background-color": "#B8B8B8",
+      "--uxp-host-text-color": "#313131",
       "--uxp-host-border-color": "#E6E6E6",
-      "--uxp-host-link-text-color": "#147AF3",
-      "--uxp-host-link-hover-text-color": "#0265DC",
+      "--uxp-host-link-text-color": "#0067E4",
+      "--uxp-host-link-hover-text-color": "#0056BD",
+      "--uxp-host-label-text-color": "#6D6D6D",
+      "--uxp-host-widget-hover-background-color": "#FFFFFF",
+      "--uxp-host-widget-hover-text-color": "#464646",
+      "--uxp-host-widget-hover-border-color": "#D5D5D5",
+      "--uxp-host-text-color-secondary": "#6D6D6D",
+    },
+    lightest: {
+      "--uxp-host-background-color": "#F0F0F0",
+      "--uxp-host-text-color": "#313131",
+      "--uxp-host-border-color": "#E6E6E6",
+      "--uxp-host-link-text-color": "#0067E4",
+      "--uxp-host-link-hover-text-color": "#0056BD",
       "--uxp-host-label-text-color": "#6D6D6D",
       "--uxp-host-widget-hover-background-color": "#FFFFFF",
       "--uxp-host-widget-hover-text-color": "#464646",

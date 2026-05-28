@@ -84,3 +84,49 @@ export const getColorScheme = async () => {
   console.log("Final Colors", colors);
   return { theme, colors };
 };
+
+export const updateColorScheme = (val: {
+  theme: string;
+  colors: {
+    "--uxp-host-background-color": string;
+    "--uxp-host-text-color": string;
+    "--uxp-host-border-color": string;
+    "--uxp-host-link-text-color": string;
+    "--uxp-host-widget-hover-background-color": string;
+    "--uxp-host-widget-hover-text-color": string;
+    "--uxp-host-widget-hover-border-color": string;
+    "--uxp-host-text-color-secondary": string;
+    "--uxp-host-link-hover-text-color": string;
+    "--uxp-host-label-text-color": string;
+  };
+}) => {
+  const { theme, colors } = val;
+  console.log("update color scheme", theme, colors);
+  const root = document.querySelector(":root") as HTMLElement;
+  for (const key in colors) {
+    //@ts-ignore
+    const color = colors[key];
+    root.style.setProperty(key, color);
+  }
+  document.documentElement.dataset.theme = theme;
+  return "hello from webview";
+};
+
+//* Currently only Photoshop has working UXP variables already
+const UXP_VAR_WORKING_APPS = ["photoshop"];
+
+export const polyfillUXPVars = () => {
+  const hostName =
+    uxp.host.name.toLowerCase().replace(/\s/g, "") || ("" as string);
+
+  if (UXP_VAR_WORKING_APPS.find((app) => hostName.includes(app))) return;
+  getColorScheme().then((scheme) => {
+    updateColorScheme(scheme);
+  });
+  //@ts-ignore
+  document.theme.onUpdated.addListener(() =>
+    getColorScheme().then((scheme) => {
+      updateColorScheme(scheme);
+    }),
+  );
+};
