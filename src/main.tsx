@@ -112,16 +112,47 @@ export const App = () => {
             {/* BOLT_HYBRID_END */}
           </div>
           <div className="stack-colors">
-            <div className="stack-colors-a"></div>
-            <div className="stack-colors-b"></div>
-            <div className="stack-colors-c"></div>
-            <div className="stack-colors-d"></div>
-            <div className="stack-colors-e"></div>
-            <div className="stack-colors-f"></div>
-            <div className="stack-colors-g"></div>
-            <div className="stack-colors-h"></div>
-            <div className="stack-colors-i"></div>
-            <div className="stack-colors-j"></div>
+            <div
+              style={{ backgroundColor: "var(--uxp-host-background-color)" }}
+            ></div>
+            <div
+              style={{ backgroundColor: "var(--uxp-host-text-color)" }}
+            ></div>
+            <div
+              style={{ backgroundColor: "var(--uxp-host-border-color)" }}
+            ></div>
+            <div
+              style={{ backgroundColor: "var(--uxp-host-link-text-color)" }}
+            ></div>
+            <div
+              style={{
+                backgroundColor:
+                  "var(--uxp-host-widget-hover-background-color)",
+              }}
+            ></div>
+            <div
+              style={{
+                backgroundColor: "var(--uxp-host-widget-hover-text-color)",
+              }}
+            ></div>
+            <div
+              style={{
+                backgroundColor: "var(--uxp-host-widget-hover-border-color)",
+              }}
+            ></div>
+            <div
+              style={{
+                backgroundColor: "var(--uxp-host-text-color-secondary)",
+              }}
+            ></div>
+            <div
+              style={{
+                backgroundColor: "var(--uxp-host-link-hover-text-color)",
+              }}
+            ></div>
+            <div
+              style={{ backgroundColor: "var(--uxp-host-label-text-color)" }}
+            ></div>
           </div>
           <div>
             <p>
