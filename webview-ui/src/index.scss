@@ -34,26 +34,20 @@ main {
 }
 button {
   transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  outline: none;
 }
 button:hover {
-  filter: drop-shadow(0 0 2em #20639b);
   padding-right: 2rem;
   padding-left: 2rem;
 }
 textarea {
   width: calc(100vw - 8rem);
   height: 110px;
-  background-color: transparent;
-  border-radius: 5px;
   resize: none;
   margin-top: 1rem;
-  color: #43aaff;
   padding: 1rem;
 }
 p {
   font-size: 1rem;
-  color: $font;
 }
 .app {
   // background-color: #282c34;
@@ -105,36 +99,6 @@ p {
     transition: 1rem;
     background-color: black;
   }
-}
-.stack-colors-a {
-  background-color: var(--uxp-host-background-color) !important;
-}
-.stack-colors-b {
-  background-color: var(--uxp-host-text-color) !important;
-}
-.stack-colors-c {
-  background-color: var(--uxp-host-border-color) !important;
-}
-.stack-colors-d {
-  background-color: var(--uxp-host-link-text-color) !important;
-}
-.stack-colors-e {
-  background-color: var(--uxp-host-widget-hover-background-color) !important;
-}
-.stack-colors-f {
-  background-color: var(--uxp-host-widget-hover-text-color) !important;
-}
-.stack-colors-g {
-  background-color: var(--uxp-host-widget-hover-border-color) !important;
-}
-.stack-colors-h {
-  background-color: var(--uxp-host-text-color-secondary) !important;
-}
-.stack-colors-i {
-  background-color: var(--uxp-host-link-hover-text-color) !important;
-}
-.stack-colors-j {
-  background-color: var(--uxp-host-label-text-color) !important;
 }
 
 // BOLT_SAMPLECODE_END
