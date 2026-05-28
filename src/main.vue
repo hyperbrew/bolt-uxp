@@ -95,16 +95,24 @@ const hybridTest = async () => {
       <!-- BOLT_HYBRID_END -->
     </div>
     <div class="stack-colors">
-      <div class="stack-colors-a"></div>
-      <div class="stack-colors-b"></div>
-      <div class="stack-colors-c"></div>
-      <div class="stack-colors-d"></div>
-      <div class="stack-colors-e"></div>
-      <div class="stack-colors-f"></div>
-      <div class="stack-colors-g"></div>
-      <div class="stack-colors-h"></div>
-      <div class="stack-colors-i"></div>
-      <div class="stack-colors-j"></div>
+      <div style="background-color: var(--uxp-host-background-color)"></div>
+      <div style="background-color: var(--uxp-host-text-color)"></div>
+      <div style="background-color: var(--uxp-host-border-color)"></div>
+      <div style="background-color: var(--uxp-host-link-text-color)"></div>
+      <div
+        style="background-color: var(--uxp-host-widget-hover-background-color)"
+      ></div>
+      <div
+        style="background-color: var(--uxp-host-widget-hover-text-color)"
+      ></div>
+      <div
+        style="background-color: var(--uxp-host-widget-hover-border-color)"
+      ></div>
+      <div style="background-color: var(--uxp-host-text-color-secondary)"></div>
+      <div
+        style="background-color: var(--uxp-host-link-hover-text-color)"
+      ></div>
+      <div style="background-color: var(--uxp-host-label-text-color)"></div>
     </div>
     <div>
       <p>
