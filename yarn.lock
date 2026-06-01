@@ -6,9 +6,10 @@
   version "7.3.1"
   resolved "https://github.com/justintaylor-dev/cc-ext-uxp-types.git#7b03a25166a01f419a47fd1554f9a644ec8c5bde"
 
-"@adobe/premierepro@github:justintaylor-dev/premierepro-types":
-  version "26.3.0-beta.67"
-  resolved "https://codeload.github.com/justintaylor-dev/premierepro-types/tar.gz/a751b6a67937620c07534576cc97262dfb2e65be"
+"@adobe/premierepro@26.2.1":
+  version "26.2.1"
+  resolved "https://registry.yarnpkg.com/@adobe/premierepro/-/premierepro-26.2.1.tgz#b2893d622a72138b621d8824bd3b0f9a42a4d8b2"
+  integrity sha512-u4rSMBa65qpJPE+tNtW+99FPF+Yxf2nQDkZJKYaj/5LrC+6etH4KDstC6rGg2doOMBHH2W8+Q1J4MhP358xpRg==
 
 "@ampproject/remapping@^2.2.0":
   version "2.2.1"
@@ -1031,10 +1032,10 @@ bl@^4.0.3:
     inherits "^2.0.4"
     readable-stream "^3.4.0"
 
-bolt-uxp-utils@^1.3.4:
-  version "1.3.4"
-  resolved "https://registry.yarnpkg.com/bolt-uxp-utils/-/bolt-uxp-utils-1.3.4.tgz#5cdffa315f7c6a6b823fecb3569050444487cfe6"
-  integrity sha512-oBRC25X9WDXxVHVf5nRyt472ORsF4EFalgVRD5nWzmGz+HEoq8c98Ar5f5tNj3HB5BzyowevxsnGvM6z86YJpg==
+bolt-uxp-utils@^1.3.6:
+  version "1.3.6"
+  resolved "https://registry.yarnpkg.com/bolt-uxp-utils/-/bolt-uxp-utils-1.3.6.tgz#cdf36a200184894ee8426584d8231a35e1e97cd8"
+  integrity sha512-YRsgRrb4aNDL4F8F1sSICK+Q3Ivl2Xy2ShaK/xNc+m8lhKQAGp3JOvPpSaghSZyWBvE4xdg+TZLYw0ic0ZZrLA==
 
 brace-expansion@^1.1.7:
   version "1.1.11"

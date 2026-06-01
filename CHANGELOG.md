@@ -1,8 +1,15 @@
 # Bolt UXP Changelog
 
+## Version 1.3.6 (2026-6-1)
+
+- Use Adobe Premiere Pro Types npm package
+- Accurate CSS Variable colors per Theme, App, and OS
+
 ## Version 1.3.5 (2026-5-22)
 
 - UXP Global Error Handler Helpers
+- AE Beta Support Added
+- AME Beta Support Added
 
 ## Version 1.3.4 (2026-5-21)
 

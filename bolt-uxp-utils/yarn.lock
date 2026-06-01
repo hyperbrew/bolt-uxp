@@ -6,9 +6,10 @@
   version "7.3.1"
   resolved "https://codeload.github.com/justintaylor-dev/cc-ext-uxp-types/tar.gz/4d5d1d2b9b33729a5de44c63aba202efa575d88d"
 
-"@adobe/premierepro@github:justintaylor-dev/premierepro-types":
-  version "26.3.0-beta.67"
-  resolved "https://codeload.github.com/justintaylor-dev/premierepro-types/tar.gz/a751b6a67937620c07534576cc97262dfb2e65be"
+"@adobe/premierepro@26.2.1":
+  version "26.2.1"
+  resolved "https://registry.yarnpkg.com/@adobe/premierepro/-/premierepro-26.2.1.tgz#b2893d622a72138b621d8824bd3b0f9a42a4d8b2"
+  integrity sha512-u4rSMBa65qpJPE+tNtW+99FPF+Yxf2nQDkZJKYaj/5LrC+6etH4KDstC6rGg2doOMBHH2W8+Q1J4MhP358xpRg==
 
 "@types/node@^20.8.7":
   version "20.19.41"

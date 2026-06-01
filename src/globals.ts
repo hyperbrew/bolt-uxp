@@ -1,4 +1,5 @@
-import type { premierepro as premiereproTypes } from "./types/ppro";
+// import type { premierepro as premiereproTypes } from "./types/ppro";
+import type { premierepro as premiereproTypes } from "@adobe/premierepro";
 
 if (typeof require === "undefined") {
   //@ts-ignore

@@ -1,6 +1,6 @@
 {
   "name": "bolt-uxp-utils",
-  "version": "1.3.4",
+  "version": "1.3.6",
   "description": "Utils library to build UXP plugins for Premiere Pro and Photoshop",
   "license": "MIT",
   "type": "module",
@@ -31,7 +31,7 @@
   },
   "devDependencies": {
     "@adobe/cc-ext-uxp-types": "github:justintaylor-dev/cc-ext-uxp-types",
-    "@adobe/premierepro": "github:justintaylor-dev/premierepro-types",
+    "@adobe/premierepro": "26.2.1",
     "@types/node": "^20.8.7",
     "@types/photoshop": "^25.0.2",
     "typescript": "^5.8.3"

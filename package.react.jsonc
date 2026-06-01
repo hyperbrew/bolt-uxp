@@ -30,7 +30,7 @@
     "npm-run-all": "^4.1.5",
     "@vitejs/plugin-react": "^4.5.1",
     "@adobe/cc-ext-uxp-types": "https://github.com/justintaylor-dev/cc-ext-uxp-types.git",
-    "@adobe/premierepro": "github:justintaylor-dev/premierepro-types",
+    "@adobe/premierepro": "26.2.1",
     "@types/node": "^20.8.7",
     "@types/photoshop": "^25.0.2",
     "@types/ws": "^8.5.8",
@@ -43,6 +43,6 @@
     "@types/react-dom": "^19.1.6",
     "dotenv": "^16.4.5",
     "vite-uxp-plugin": "^1.3.4",
-    "bolt-uxp-utils": "^1.3.4"
+    "bolt-uxp-utils": "^1.3.6"
   }
 }
