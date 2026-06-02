@@ -1,5 +1,9 @@
 # Bolt UXP Changelog
 
+## Version 1.3.7 (2026-6-1)
+
+- Vue Multi-Panel Plugin Fixes
+
 ## Version 1.3.6 (2026-6-1)
 
 - Use Adobe Premiere Pro Types npm package

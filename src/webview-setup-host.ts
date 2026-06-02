@@ -26,6 +26,7 @@ export const webviewInitHost = (params: {
       );
       console.log("webviewInitHost multi pages", pages);
     }
+    console.log("setup webview for", pages);
     let apis: WebviewAPI[] = [];
     pages.map((page, i) => {
       // if (i > 0) return;
@@ -40,12 +41,21 @@ export const webviewInitHost = (params: {
       webview.src = origin;
 
       const appElement = document.getElementById("app")!;
-      const parent =
-        i === 0
-          ? appElement
-          : Array.from(document.getElementsByTagName("uxp-panel")).find(
-              (item) => item.getAttribute("panelid") === `${id}.${page}`,
-            );
+      let parent: HTMLElement | null = null;
+      if (i === 0) {
+        parent = appElement;
+      } else {
+        const panelElements = Array.from(
+          document.getElementsByTagName("uxp-panel"),
+        );
+        const found = panelElements.find((item) => {
+          return item.getAttribute("panelid") === `${id}.${page}`;
+        });
+        if (found) parent = found as HTMLElement;
+      }
+      if (parent === null) {
+        return console.error("cannot find parent");
+      }
       console.log({ parent });
       webview = parent!.appendChild(webview) as UXPHTMLWebViewElement;
 

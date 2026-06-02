@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // BOLT_SAMPLECODE_START
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { uxp, indesign, photoshop, illustrator, premierepro } from "./globals";
 import { api } from "./api/api";
 import boltUxpLogo from "./assets/bolt-uxp.png";
@@ -17,10 +17,16 @@ const id = uxp.entrypoints._pluginInfo.id;
 import { webviewInitHost } from "./webview-setup-host";
 import type { WebviewAPI } from "../webview-ui/src/webview";
 
-let webviewAPI: WebviewAPI;
-if (webviewUI) {
-  webviewInitHost().then((api) => (webviewAPI = api));
-}
+let webviewAPIs: WebviewAPI[];
+let mainWebviewAPI: WebviewAPI;
+onMounted(async () => {
+  if (webviewUI) {
+    webviewAPIs = await webviewInitHost({ multi: true });
+    [mainWebviewAPI] = webviewAPIs;
+    window.mainWebviewAPI = mainWebviewAPI;
+    // [mainWebviewAPI, settingsWebviewAPI] = webviewAPIs; // for multi webviews
+  }
+});
 // BOLT_WEBVIEW_END
 
 // BOLT_SAMPLECODE_START
@@ -129,7 +135,7 @@ const hybridTest = async () => {
 
   <!-- BOLT_SAMPLECODE_START -->
   <!-- Example of a secondary panel entrypoint -->
-  <!-- <uxp-panel panelid="{id}.settings">
+  <!-- <uxp-panel :panelid="id + '.settings'">
     <h1>Settings Panel</h1>
     <p>count is: {{ count }}</p>
   </uxp-panel> -->
