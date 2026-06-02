@@ -6,7 +6,7 @@ import type { Plugin } from "vite";
 
 import type { UXP_Config, UXP_Manifest, UXP_Config_Extra } from "./types";
 import { hotReloadServer, wsUpdate } from "./hot-reload";
-import { generateCCX } from "./cxx";
+import { generateCCX } from "./ccx";
 import { polyfills, wsListener } from "./polyfill";
 import {
   copyFileSync,
@@ -284,18 +284,41 @@ const upiaWin =
 const upiaPath = os.platform() === "darwin" ? upiaMac : upiaWin;
 
 export const runAction = (config: UXP_Config, action: string) => {
-  const outPath = process.cwd() + "/dist";
+  const outPath = path.join(process.cwd(), "ccx");
   console.log("outPath", outPath);
+  const ccxFiles = readdirSync(outPath).filter((file) => file.endsWith("ccx"));
 
   if (action === "ccx-install") {
     //* Install a CCX Plugin Package
     console.log("install");
-    const res = execSync(`"${upiaPath}" /install "${outPath}"`, {
-      encoding: "utf-8",
+    ccxFiles.map((file) => {
+      const fullPath = path.join(outPath, file);
+      console.log(`Installing ${file}`);
+      try {
+        const res = execSync(`"${upiaPath}" /install "${fullPath}"`, {
+          encoding: "utf-8",
+        });
+        console.log("res", res);
+      } catch (e) {
+        console.error(e);
+      }
     });
-    console.log("res", res);
   } else if (action === "ccx-uninstall") {
     //* Uninstall a CCX Plugin Package
+    const name = config.manifest.name;
+    let exists = true;
+    while (exists === true) {
+      console.log("Removing");
+      const removeRes = execSync(`"${upiaPath}" /remove ${name}`, {
+        encoding: "utf-8",
+      });
+      console.log(removeRes);
+      const res = execSync(`"${upiaPath}" /list all`, {
+        encoding: "utf-8",
+      });
+      exists = res.includes(name);
+      //TODO: Handle "Failed to remove errors"
+    }
     const res = execSync(`"${upiaPath}" /remove "${outPath}"`, {
       encoding: "utf-8",
     });
