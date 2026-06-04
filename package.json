@@ -17,8 +17,6 @@
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "hmr": "vite",
     "serve": "npx serve dist",
-    "connect": "cross-env BOLT_ACTION=connect vite",
-    "disconnect": "cross-env BOLT_ACTION=disconnect vite",
     "ccx-install": "cross-env BOLT_ACTION=ccx-install vite",
     "ccx-uninstall": "cross-env BOLT_ACTION=ccx-uninstall vite",
     "mac-build": "run-s mac-build-64 mac-build-arm",

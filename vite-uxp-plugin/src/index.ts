@@ -23,6 +23,7 @@ import { packageSync, zipPackage } from "meta-bolt/dist/plugin-utils";
 import { getPackageManager, execAsync } from "meta-bolt/dist/utils";
 import { resetLog } from "meta-bolt/dist/lib";
 import MagicString from "magic-string";
+import pc = require("picocolors");
 
 export type { UXP_Config, UXP_Manifest, UXP_Config_Extra };
 
@@ -285,44 +286,61 @@ const upiaPath = os.platform() === "darwin" ? upiaMac : upiaWin;
 
 export const runAction = (config: UXP_Config, action: string) => {
   const outPath = path.join(process.cwd(), "ccx");
-  console.log("outPath", outPath);
   const ccxFiles = readdirSync(outPath).filter((file) => file.endsWith("ccx"));
 
   if (action === "ccx-install") {
     //* Install a CCX Plugin Package
-    console.log("install");
     ccxFiles.map((file) => {
       const fullPath = path.join(outPath, file);
-      console.log(`Installing ${file}`);
       try {
         const res = execSync(`"${upiaPath}" /install "${fullPath}"`, {
           encoding: "utf-8",
         });
-        console.log("res", res);
-      } catch (e) {
-        console.error(e);
+        if (res.toLowerCase().includes("successful")) {
+          console.log(pc.green("success"), `Installed ${file}`);
+        } else {
+          console.log(pc.red("error"), `Failed to install ${file}`);
+          console.log(pc.gray(res));
+        }
+      } catch (e: any) {
+        console.log(pc.red("error"), `Failed to install ${file}`);
+        console.log(pc.gray(e.toString()));
       }
     });
   } else if (action === "ccx-uninstall") {
     //* Uninstall a CCX Plugin Package
     const name = config.manifest.name;
-    let exists = true;
-    while (exists === true) {
-      console.log("Removing");
-      const removeRes = execSync(`"${upiaPath}" /remove ${name}`, {
+    let lastListing = "";
+    const checkExists = (name: string) => {
+      lastListing = execSync(`"${upiaPath}" /list all`, {
         encoding: "utf-8",
       });
-      console.log(removeRes);
-      const res = execSync(`"${upiaPath}" /list all`, {
-        encoding: "utf-8",
-      });
-      exists = res.includes(name);
-      //TODO: Handle "Failed to remove errors"
+      return lastListing.includes(name);
+    };
+    let exists = checkExists(name);
+    if (!exists) console.log(pc.yellow("No Matching Plugins to Uninstall"));
+    let i = 0;
+    let failedRemoval = false;
+    while (exists === true && failedRemoval === false) {
+      i++;
+      try {
+        const removeRes = execSync(`"${upiaPath}" /remove "${name}"`, {
+          encoding: "utf-8",
+        });
+        if (removeRes.toLowerCase().includes("successful")) {
+          console.log(pc.green("success"), `Removed ${name}`);
+        } else {
+          console.log(pc.red("error"), `Failed to install ${name}`);
+          console.log(pc.gray(removeRes));
+          failedRemoval = true;
+        }
+      } catch (error: any) {
+        console.log(pc.red("error"), `Failed to install ${name}`);
+        console.log(pc.gray(error.toString()));
+        failedRemoval = true;
+      }
+      exists = checkExists(name);
     }
-    const res = execSync(`"${upiaPath}" /remove "${outPath}"`, {
-      encoding: "utf-8",
-    });
-    console.log("res", res);
   } else if (action === "dependencyCheck") {
     packageSync();
   } else {
