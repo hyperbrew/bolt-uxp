@@ -277,25 +277,42 @@ export const uxp = (config: UXP_Config, mode?: string): Plugin => {
   };
 };
 
-const upiaMac =
-  "/Library/Application Support/Adobe/Adobe Desktop Common/RemoteComponents/UPI/UnifiedPluginInstallerAgent/UnifiedPluginInstallerAgent.app/Contents/MacOS/UnifiedPluginInstallerAgent";
-const upiaWin =
-  "C:/Program Files/Common Files/Adobe/Adobe Desktop Common/RemoteComponents/UPI/UnifiedPluginInstallerAgent/UnifiedPluginInstallerAgent.exe";
-
-const upiaPath = os.platform() === "darwin" ? upiaMac : upiaWin;
-
 export const runAction = (config: UXP_Config, action: string) => {
+  const finish = (errorMessage?: string) => {
+    if (errorMessage) {
+      console.log(pc.red("error"), errorMessage);
+    }
+    resetLog();
+    process.exit();
+  };
+
+  const upiaMac =
+    "/Library/Application Support/Adobe/Adobe Desktop Common/RemoteComponents/UPI/UnifiedPluginInstallerAgent/UnifiedPluginInstallerAgent.app/Contents/MacOS/UnifiedPluginInstallerAgent";
+  const upiaWin =
+    "C:/Program Files/Common Files/Adobe/Adobe Desktop Common/RemoteComponents/UPI/UnifiedPluginInstallerAgent/UnifiedPluginInstallerAgent.exe";
+
+  const upiaPath = os.platform() === "darwin" ? upiaMac : upiaWin;
+  const upiaExists = existsSync(upiaPath);
+  
+  const flagPrefix = os.platform() === "darwin" ? "--" : "/";
+
   const outPath = path.join(process.cwd(), "ccx");
   const ccxFiles = readdirSync(outPath).filter((file) => file.endsWith("ccx"));
 
   if (action === "ccx-install") {
     //* Install a CCX Plugin Package
+    if (!upiaExists) {
+      return finish(`UPIA does not exist at "${upiaPath}". Ensure UPIA is correctly installed.`);
+    }
     ccxFiles.map((file) => {
       const fullPath = path.join(outPath, file);
       try {
-        const res = execSync(`"${upiaPath}" /install "${fullPath}"`, {
-          encoding: "utf-8",
-        });
+        const res = execSync(
+          `"${upiaPath}" ${flagPrefix}install "${fullPath}"`,
+          {
+            encoding: "utf-8",
+          },
+        );
         if (res.toLowerCase().includes("successful")) {
           console.log(pc.green("success"), `Installed ${file}`);
         } else {
@@ -309,10 +326,13 @@ export const runAction = (config: UXP_Config, action: string) => {
     });
   } else if (action === "ccx-uninstall") {
     //* Uninstall a CCX Plugin Package
+    if (!upiaExists) {
+      return finish(`UPIA does not exist at "${upiaPath}". Ensure UPIA is correctly installed.`);
+    }
     const name = config.manifest.name;
     let lastListing = "";
     const checkExists = (name: string) => {
-      lastListing = execSync(`"${upiaPath}" /list all`, {
+      lastListing = execSync(`"${upiaPath}" ${flagPrefix}list all`, {
         encoding: "utf-8",
       });
       return lastListing.includes(name);
@@ -324,9 +344,12 @@ export const runAction = (config: UXP_Config, action: string) => {
     while (exists === true && failedRemoval === false) {
       i++;
       try {
-        const removeRes = execSync(`"${upiaPath}" /remove "${name}"`, {
-          encoding: "utf-8",
-        });
+        const removeRes = execSync(
+          `"${upiaPath}" ${flagPrefix}remove "${name}"`,
+          {
+            encoding: "utf-8",
+          },
+        );
         if (removeRes.toLowerCase().includes("successful")) {
           console.log(pc.green("success"), `Removed ${name}`);
         } else {
@@ -346,6 +369,5 @@ export const runAction = (config: UXP_Config, action: string) => {
   } else {
     console.warn(`Unknown Action: ${action}`);
   }
-  resetLog();
-  process.exit();
+  finish();
 };
