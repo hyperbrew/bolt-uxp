@@ -21,7 +21,6 @@ dist-ssr
 *.suo
 *.ntvs*
 *.njsproj
-*.sln
 *.sw?
 _other-bundlers
 _dummy

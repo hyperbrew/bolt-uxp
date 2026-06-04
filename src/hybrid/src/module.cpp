@@ -28,6 +28,7 @@ namespace {
 
     std::string execWin(const char* cmd) {
         #ifdef _WIN32
+        try {
             std::string result;
             HANDLE hPipeRead, hPipeWrite;
 
@@ -59,7 +60,8 @@ namespace {
             if (!CreateProcessA(NULL, (LPSTR)commandStr.c_str(), NULL, NULL, TRUE, 0, NULL, NULL, &si, &pi)) {
                 CloseHandle(hPipeWrite);
                 CloseHandle(hPipeRead);
-                throw std::runtime_error("Failed to create process");
+                std::string msg = "Failed to create process";
+                return msg;                
             }
 
             CloseHandle(hPipeWrite);  // Close the write end of the pipe before reading from the read end of the pipe.
@@ -86,13 +88,17 @@ namespace {
             CloseHandle(pi.hThread);
 
             return result;
+        }
+        catch (int err) {
+            return std::to_string(err);
+        }
         #else
         // For non-Windows systems, return an empty string or handle differently as needed
         return "";
         #endif
     }
 
-std::string exec(const char* cmd) {
+std::string execMac(const char* cmd) {
     char buffer[128];
     std::string result = "";
     
@@ -157,7 +163,7 @@ addon_value ExecSync(addon_env env, addon_callback_info info)
 
 #ifdef __APPLE__
     // Mac Code
-    output = exec(name);
+    output = execMac(name);
 #elif _WIN32
     output = execWin(name);
 #else

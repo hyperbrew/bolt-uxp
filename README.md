@@ -547,7 +547,7 @@ Currently there is no way to automate this process in UDT, but we have requested
 
 More info on Hybrid Plugins can be found here: https://developer.adobe.com/photoshop/uxp/2022/guides/hybrid-plugins/
 
-Currently, hybrid plugins are only supported in Photoshop.
+Currently, hybrid plugins are only supported in Photoshop, InDesign, and Premiere.
 
 ---
 
