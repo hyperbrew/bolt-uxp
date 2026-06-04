@@ -10,6 +10,8 @@
     "zip": "cross-env MODE=zip vite build",
     "preview": "vite preview",
     "check": "svelte-check --tsconfig ./tsconfig.json",
+    "ccx-install": "cross-env BOLT_ACTION=ccx-install vite",
+    "ccx-uninstall": "cross-env BOLT_ACTION=ccx-uninstall vite",
     // BOLT_HYBRID_START
     "mac-build": "run-s mac-build-64 mac-build-arm",
     "mac-build-64": "xcodebuild -project src/hybrid/mac/bolt-uxp-hybrid.xcodeproj -target x64",
@@ -43,7 +45,7 @@
     "vite": "^6.3.5",
     "ws": "^8.14.2",
     "dotenv": "^16.4.5",
-    "vite-uxp-plugin": "^1.3.4",
+    "vite-uxp-plugin": "^1.3.8",
     "bolt-uxp-utils": "^1.3.6"
   }
 }

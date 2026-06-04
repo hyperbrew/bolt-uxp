@@ -1,5 +1,10 @@
 # Bolt UXP Changelog
 
+## Version 1.3.8 (2026-6-4)
+
+- Added "ccx-install" command
+- Added "ccx-uninstall" command
+
 ## Version 1.3.7 (2026-6-1)
 
 - Vue Multi-Panel Plugin Fixes

@@ -293,7 +293,7 @@ export const runAction = (config: UXP_Config, action: string) => {
 
   const upiaPath = os.platform() === "darwin" ? upiaMac : upiaWin;
   const upiaExists = existsSync(upiaPath);
-  
+
   const flagPrefix = os.platform() === "darwin" ? "--" : "/";
 
   const outPath = path.join(process.cwd(), "ccx");
@@ -302,7 +302,9 @@ export const runAction = (config: UXP_Config, action: string) => {
   if (action === "ccx-install") {
     //* Install a CCX Plugin Package
     if (!upiaExists) {
-      return finish(`UPIA does not exist at "${upiaPath}". Ensure UPIA is correctly installed.`);
+      return finish(
+        `UPIA does not exist at "${upiaPath}". Ensure UPIA is correctly installed.`,
+      );
     }
     ccxFiles.map((file) => {
       const fullPath = path.join(outPath, file);
@@ -327,7 +329,9 @@ export const runAction = (config: UXP_Config, action: string) => {
   } else if (action === "ccx-uninstall") {
     //* Uninstall a CCX Plugin Package
     if (!upiaExists) {
-      return finish(`UPIA does not exist at "${upiaPath}". Ensure UPIA is correctly installed.`);
+      return finish(
+        `UPIA does not exist at "${upiaPath}". Ensure UPIA is correctly installed.`,
+      );
     }
     const name = config.manifest.name;
     let lastListing = "";
@@ -338,7 +342,8 @@ export const runAction = (config: UXP_Config, action: string) => {
       return lastListing.includes(name);
     };
     let exists = checkExists(name);
-    if (!exists) console.log(pc.yellow("No Matching Plugins to Uninstall"));
+    if (!exists)
+      console.log(pc.yellow("warning"), "no matching plugins to uninstall");
     let i = 0;
     let failedRemoval = false;
     while (exists === true && failedRemoval === false) {

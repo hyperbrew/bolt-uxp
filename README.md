@@ -130,6 +130,18 @@ Bundles your packaged ccx file(s) and specified assets from `copyZipAssets` to a
 - npm `npm run zip`
 - pnpm `pnpm zip`
 
+Install all CCX files possible in the CCX folder (must run `yarn ccx` prior)
+
+- yarn `yarn ccx-install`
+- npm `npm run ccx-install`
+- pnpm `pnpm ccx-install`
+
+Uninstall all installed UXP plugins matching manifest name
+
+- yarn `yarn ccx-uninstall`
+- npm `npm run ccx-uninstall`
+- pnpm `pnpm ccx-uninstall`
+
 ## UDT Setup
 
 _Install Note: The Adobe UXP Developer Tools (UDT) can be downloaded from the Adobe CC app_
