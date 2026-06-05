@@ -305,7 +305,33 @@ addon_value Exec(addon_env env, addon_callback_info info) {
         // ptr to another context
         std::shared_ptr<Value> valuePtr(std::make_shared<Value>(std::move(stdValue)));
 
-        auto scriptThreadHandler = [](Task& task, addon_env env, addon_deferred deferred, std::string str) {
+        auto scriptThreadHandlerFinal = [](Task& task, addon_env env, addon_deferred deferred) {
+            try {
+                HandlerScope scope(env);
+                bool isError = false;
+                const Value& result = task.GetResult(isError);
+                addon_value resultValue = result.Convert(env);
+                //addon_status status;
+
+                /*status = UxpAddonApis.uxp_addon_create_string_utf8(env, output.c_str(), output.size(), &resultValue);
+
+                if (status != addon_ok)
+                {
+                    UxpAddonApis.uxp_addon_throw_error(env, NULL, "Failed to pass the arguments");
+                    isError = true;
+                }*/
+                if (isError) {
+                    Check(UxpAddonApis.uxp_addon_reject_deferred(env, deferred, resultValue));
+                }
+                else {
+                    Check(UxpAddonApis.uxp_addon_resolve_deferred(env, deferred, resultValue));
+                }
+            }
+            catch (...) {
+            }
+         };
+
+        auto middleThreadHandler = [valuePtr, scriptThreadHandlerFinal](Task& task, addon_env env, addon_deferred deferred, std::string str) {
             try {
                 HandlerScope scope(env);
 
@@ -323,20 +349,19 @@ addon_value Exec(addon_env env, addon_callback_info info) {
                     output = execWin(name);
                 #else
                 #endif
+                
 
-                status = UxpAddonApis.uxp_addon_create_string_utf8(env, output.c_str(), output.size(), &resultValue);
-      
-                if (status != addon_ok)
-                {
-                    UxpAddonApis.uxp_addon_throw_error(env, NULL, "Failed to pass the arguments");
-                    isError = true;
+
+
+                try {
+                    //!!!!!!!!!!!!!!!!!!!!!!!!!TODO: Pass output into setResult
+                    //task.SetResult(output, false);
+                    task.ScheduleOnScriptingThread(scriptThreadHandlerFinal);
                 }
-                if (isError) {
-                    Check(UxpAddonApis.uxp_addon_reject_deferred(env, deferred, resultValue));
+                catch (...) {
                 }
-                else {
-                    Check(UxpAddonApis.uxp_addon_resolve_deferred(env, deferred, resultValue));
-                }
+
+
             }
             catch (...) {
                 std::string errMsg = "There was an error.";
@@ -347,7 +372,7 @@ addon_value Exec(addon_env env, addon_callback_info info) {
             }
         };
 
-        auto mainThreadHandler = [valuePtr, scriptThreadHandler](Task& task) {
+        auto mainThreadHandler = [valuePtr, middleThreadHandler, scriptThreadHandlerFinal](Task& task) {
             try {
                 // Access `mEnv` and `mDeferred` directly (updated get methods in UxpTask.h)
                 addon_env env = task.GetEnv();
@@ -360,8 +385,8 @@ addon_value Exec(addon_env env, addon_callback_info info) {
 
 
                 // Launch scriptThreadHandler on a native thread
-                std::thread nativeThread([&task, env, deferred, str, scriptThreadHandler]() {
-                    scriptThreadHandler(task, env, deferred, str);
+                std::thread nativeThread([&task, env, deferred, str, middleThreadHandler]() {
+                    middleThreadHandler(task, env, deferred, str);
                     });
                 nativeThread.detach();
             }
