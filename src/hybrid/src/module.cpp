@@ -313,14 +313,12 @@ addon_value Exec(addon_env env, addon_callback_info info) {
                 addon_value resultValue;
                 addon_status status;
 
-                //status = UxpAddonApis.uxp_addon_create_string_utf8(env, str.c_str(), str.size(), &resultValue);
-
                 std::string output;
                 char* name = &str[0];
                 name[str.length()] = '\0';
 
                 #ifdef __APPLE__
-                    output = execMac(result);
+                    output = execMac(name);
                 #elif _WIN32
                     output = execWin(name);
                 #else
@@ -333,8 +331,6 @@ addon_value Exec(addon_env env, addon_callback_info info) {
                     UxpAddonApis.uxp_addon_throw_error(env, NULL, "Failed to pass the arguments");
                     isError = true;
                 }
-                // std::this_thread::sleep_for(std::chrono::seconds(5)); // Test Delay
-
                 if (isError) {
                     Check(UxpAddonApis.uxp_addon_reject_deferred(env, deferred, resultValue));
                 }
