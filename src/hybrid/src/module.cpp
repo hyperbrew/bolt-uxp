@@ -245,7 +245,7 @@ addon_value ExecAsync(addon_env env, addon_callback_info info) {
 
                 #ifdef __APPLE__
                     // Mac Code
-                    output = execMac(result);
+                    output = execMac(name);
                 #elif _WIN32
                     output = execWin(name);
                 #else

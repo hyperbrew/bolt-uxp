@@ -93,6 +93,7 @@ const notarize = async (binPath, id, project) => {
     const res8 = fs.copyFileSync(tmpBinPath, binPath);
 
     fs.rmSync(appPath, { recursive: true });
+    fs.rmSync('./bolt-uxp-hybrid.zip', { recursive: true });
     console.log(`SIGNATURE AND NOTARIZATION COMPLETED FOR: ${binPath}`);
 }
 
