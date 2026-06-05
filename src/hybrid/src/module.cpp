@@ -15,6 +15,7 @@
 #include <cstdio>
 #include <iostream>
 #include <vector>
+#include <thread>
 
 #ifdef _WIN32
 #include <windows.h>
@@ -181,7 +182,7 @@ addon_value ExecSync(addon_env env, addon_callback_info info)
     //return nullptr;
 }
 
-// * execAsync
+// * execAsync - is blocking the UXP Plugin
 // *
 // *
 // *
@@ -282,11 +283,112 @@ addon_value ExecAsync(addon_env env, addon_callback_info info) {
 }
 
 
+// * Exec is non-blocking
 // *
 // *
 // *
 // *
-// *
+
+addon_value Exec(addon_env env, addon_callback_info info) {
+    try {        
+        // Allocate space for the first argument
+        addon_value arg1;
+        size_t argc = 1;
+        Check(UxpAddonApis.uxp_addon_get_cb_info(env, info, &argc, &arg1, nullptr, nullptr));
+
+        // Convert the first argument to a value that can be retained past the
+        // return from this function. This is needed if you want to pass arguments
+        // to an asynchronous/deferred task hand;er
+        Value stdValue(env, arg1);
+
+        // Create a heap copy using move. This prevents a deep copy of the data & we can pass that
+        // ptr to another context
+        std::shared_ptr<Value> valuePtr(std::make_shared<Value>(std::move(stdValue)));
+
+        auto scriptThreadHandler = [](Task& task, addon_env env, addon_deferred deferred, std::string str) {
+            try {
+                HandlerScope scope(env);
+
+                bool isError = false;
+                addon_value resultValue;
+                addon_status status;
+
+                //status = UxpAddonApis.uxp_addon_create_string_utf8(env, str.c_str(), str.size(), &resultValue);
+
+                std::string output;
+                char* name = &str[0];
+                name[str.length()] = '\0';
+
+                #ifdef __APPLE__
+                    output = execMac(result);
+                #elif _WIN32
+                    output = execWin(name);
+                #else
+                #endif
+
+                status = UxpAddonApis.uxp_addon_create_string_utf8(env, output.c_str(), output.size(), &resultValue);
+      
+                if (status != addon_ok)
+                {
+                    UxpAddonApis.uxp_addon_throw_error(env, NULL, "Failed to pass the arguments");
+                    isError = true;
+                }
+                // std::this_thread::sleep_for(std::chrono::seconds(5)); // Test Delay
+
+                if (isError) {
+                    Check(UxpAddonApis.uxp_addon_reject_deferred(env, deferred, resultValue));
+                }
+                else {
+                    Check(UxpAddonApis.uxp_addon_resolve_deferred(env, deferred, resultValue));
+                }
+            }
+            catch (...) {
+                std::string errMsg = "There was an error.";
+                addon_value resultValue;
+                addon_status status;
+                status = UxpAddonApis.uxp_addon_create_string_utf8(env, errMsg.c_str(), errMsg.size(), &resultValue);
+                Check(UxpAddonApis.uxp_addon_resolve_deferred(env, deferred, resultValue));
+            }
+        };
+
+        auto mainThreadHandler = [valuePtr, scriptThreadHandler](Task& task) {
+            try {
+                // Access `mEnv` and `mDeferred` directly (updated get methods in UxpTask.h)
+                addon_env env = task.GetEnv();
+                addon_deferred deferred = task.GetDeferred();
+                
+                // manually pass string to new thread
+                auto resultOg = valuePtr.get();
+                const Value& result = *resultOg;
+                auto str = result.GetString();                
+
+
+                // Launch scriptThreadHandler on a native thread
+                std::thread nativeThread([&task, env, deferred, str, scriptThreadHandler]() {
+                    scriptThreadHandler(task, env, deferred, str);
+                    });
+                nativeThread.detach();
+            }
+            catch (...) {
+                
+                addon_env env = task.GetEnv();
+                addon_deferred deferred = task.GetDeferred();
+
+                std::string errMsg = "There was an error.";
+                addon_value resultValue;
+                addon_status status;                
+                status = UxpAddonApis.uxp_addon_create_string_utf8(env, errMsg.c_str(), errMsg.size(), &resultValue);
+                Check(UxpAddonApis.uxp_addon_resolve_deferred(env, deferred, resultValue));
+            }
+        };
+
+        auto task = Task::Create();
+        return task->ScheduleOnMainThread(env, mainThreadHandler);
+    }
+    catch (...) {
+        return CreateErrorFromException(env);
+    }
+}
 
 /*
  * The function is used to return 'hello world' message.
@@ -452,6 +554,19 @@ addon_value Init(addon_env env, addon_value exports, const addon_apis& addonAPIs
         }
 
         status = addonAPIs.uxp_addon_set_named_property(env, exports, "execAsync", fn);
+        if (status != addon_ok) {
+            addonAPIs.uxp_addon_throw_error(env, NULL, "Unable to populate exports");
+        }
+    }
+
+    // exec
+    {
+        status = addonAPIs.uxp_addon_create_function(env, NULL, 0, Exec, NULL, &fn);
+        if (status != addon_ok) {
+            addonAPIs.uxp_addon_throw_error(env, NULL, "Unable to wrap native function");
+        }
+
+        status = addonAPIs.uxp_addon_set_named_property(env, exports, "exec", fn);
         if (status != addon_ok) {
             addonAPIs.uxp_addon_throw_error(env, NULL, "Unable to populate exports");
         }
