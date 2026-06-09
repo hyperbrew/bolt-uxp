@@ -490,7 +490,11 @@ Supported platforms include:
 
 ### What's in the Current Hybrid Plugin?
 
-The main exported function inside the current Hybrid Plugin is `execSync()` which works like Node.js's `execSync()` function. It takes a string and returns the output of the command. This is useful for running system commands and getting the output back to your UXP plugin, which is currently not possible via the UXP APIs.
+The current Hybrid Plugin comes with 2 functions:
+
+- `execSync()` which works like Node.js's `child_process.execSync()` function. It synchronously accepts a string a string and returns the output of the command. This is useful for running system commands and getting the output back to your UXP plugin, which is currently not possible via the UXP APIs.
+
+- `exec()` which works like Node.js's `child_process.exec()` function, except it is promise-based rather than callback based. It is a non-blocking asynchronous function that accepts a string a string and resolves the output of the command. This is useful for running system commands which take longer without blocking the app UI or plugin UI. This is also not currently possible via the UXP APIs.
 
 ### Xcode Notes
 
