@@ -65,6 +65,18 @@
   };
 
   // BOLT_HYBRID_START
+  const hybridTestExecSync = async () => {
+    let hybridModule: {
+      execSync: (cmd: string) => string;
+      execAsync: (cmd: string) => Promise<string>;
+      exec: (cmd: string) => Promise<string>;
+    } = await require("bolt-uxp-hybrid.uxpaddon");
+
+    let execSyncRes = hybridModule.execSync("sleep 2 && echo done");
+    console.log(`execSyncRes = `, execSyncRes);
+    api.notify(`execSyncRes = ${execSyncRes}`);
+  };
+
   const hybridTest = async () => {
     try {
       let hybridModule: {
@@ -90,7 +102,7 @@
         i++;
         try {
           console.log(`testing exec #${i}`);
-          const res3 = await hybridModule.exec("sleep .5 && echo done");
+          const res3 = await hybridModule.exec("sleep .5 && echo done").catch(err => console.error(err))
           console.log(res3);
         } catch (error) {
           break;
@@ -125,7 +137,8 @@
       </button>
       <button onclick={simpleAlert}>Alert</button>
       <!-- BOLT_HYBRID_START -->
-      <button onclick={hybridTest}>Hybrid</button>
+      <button onclick={hybridTestExecSync}>Hybrid execSync()</button>
+      <button onclick={hybridTest}>Hybrid exec()</button>
       <!-- BOLT_HYBRID_END -->
     </div>
     <div class="stack-colors">

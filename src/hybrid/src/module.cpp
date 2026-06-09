@@ -1049,7 +1049,7 @@ namespace
                 addon_value resultValue;
 
                 Check(UxpAddonApis.uxp_addon_create_string_utf8(env, outputPtr->c_str(), outputPtr->size(), &resultValue));
-                if (isErrorPtr)
+                if (*isErrorPtr == true)
                 {
                     Check(UxpAddonApis.uxp_addon_reject_deferred(env, deferred, resultValue));
                 }
@@ -1077,10 +1077,8 @@ namespace
                 try
                 {
                     auto taskPtr = task.shared_from_this();
-                    addon_env env = task.GetEnv();
 
                     std::string command = valuePtr->GetString();
-
                     std::thread([taskPtr, outputPtr, isErrorPtr, command, scriptThreadHandler]()
                                 {
                             try

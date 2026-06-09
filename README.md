@@ -521,13 +521,15 @@ _Requires an Apple Developer ID certificate installed on the machine_
 2.1 (once) Fill out all Apple Signing Credentials in `.env` including APPLE_ID, APPLE_TEAM_ID, APPLE_PASSWORD, APPLE_SIGNING_IDENTITY
 2.2 Launch `Adobe Photoshop 2026-dev.app` from previous step
 2.3 Disconnect UXP Plugin from host app in UDT
-2.4 `yarn mac-build` - Build the hybrid plugin
+2.4 `yarn mac-build-debug` - Build the hybrid plugin in debug mode
 2.5 `yarn mac-sign` - Sign and notorize the hybrid plugin
 2.6 `yarn build` - Build the project including copying hybrid files
 2.7 Attach UXP plugin to host app in UDT
 2.8 In Xcode run Debug > Attach to Process > Adobe Photoshop 2026 (or equivalent app)
 
 Now you can set breakpoints and debug your Hybrid Plugin in Xcode. After making changes to your Hybrid Plugin C++ code, repeat steps 2.3 - 2.8
+
+_Note: Once completed with debugging, always build Hybrid Binaries in standard release mode with `yarn mac-build`_
 
 ### Visual Studio Notes
 
@@ -543,12 +545,14 @@ To debug your Hybrid Plugin in Visual Studio, follow the steps below:
    1.3 Configuration Properties > Debugging
    1.4 Command `C:\Program Files\Adobe\Adobe Photoshop 2026\Photoshop.exe` (or path to targeted host app)
 2. Close target app if running
-3. `yarn win-build` - Build the hybrid plugin
+3. `yarn win-build-debug` - Build the hybrid plugin in debug mode
 4. `yarn build` - Build the project including copying hybrid files
 5. Select `Debug > Start Debugging` in Visual Studio
 6. Attach UXP plugin to host app in UDT
 
 Now you can set breakpoints and debug your Hybrid Plugin in Visual Studio. After making changes to your Hybrid Plugin C++ code, repeat steps 2 - 6
+
+_Note: Once completed with debugging, always build Hybrid Binaries in standard release mode with `yarn win-build`_
 
 ### Hybrid Build Scripts
 
