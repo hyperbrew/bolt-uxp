@@ -63,10 +63,12 @@ button {
 }
 button:hover {
   border-color: #646cff;
+  /* background-color: red; */
 }
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+  background-color: red;
 }
 
 @media (prefers-color-scheme: light) {

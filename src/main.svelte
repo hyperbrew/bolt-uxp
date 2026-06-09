@@ -79,8 +79,14 @@
       // console.log("testing execAsync");
       // const res = await hybridModule.execAsync("sleep 5 && echo done");
       // console.log(res);
+      // console.log("about to run exec");
+      // const res3 = hybridModule.exec("sleep 2 && echo done").then((res3) => {
+      //   console.log(res3);
+      // });
+      // console.log(res3);
+
       let i = 0;
-      while (i < 50) {
+      while (i < 100) {
         i++;
         try {
           console.log(`testing exec #${i}`);
