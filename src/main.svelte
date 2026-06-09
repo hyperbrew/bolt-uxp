@@ -68,41 +68,32 @@
   const hybridTestExecSync = async () => {
     let hybridModule: {
       execSync: (cmd: string) => string;
-      execAsync: (cmd: string) => Promise<string>;
       exec: (cmd: string) => Promise<string>;
     } = await require("bolt-uxp-hybrid.uxpaddon");
 
+    // execSync will lock up the plugin UI
     let execSyncRes = hybridModule.execSync("sleep 2 && echo done");
     console.log(`execSyncRes = `, execSyncRes);
     api.notify(`execSyncRes = ${execSyncRes}`);
+
+    // exec will not lock up the plugin UI or the app
   };
 
   const hybridTest = async () => {
     try {
       let hybridModule: {
         execSync: (cmd: string) => string;
-        execAsync: (cmd: string) => Promise<string>;
         exec: (cmd: string) => Promise<string>;
       } = await require("bolt-uxp-hybrid.uxpaddon");
-      // let execSyncRes = hybridModule.execSync("echo test");
-      // console.log(`execSyncRes = `, execSyncRes);
-      // api.notify(`execSyncRes = ${execSyncRes}`);
-
-      // console.log("testing execAsync");
-      // const res = await hybridModule.execAsync("sleep 5 && echo done");
-      // console.log(res);
-      // console.log("about to run exec");
-      // const res3 = hybridModule.exec("sleep 2 && echo done").then((res3) => {
-      //   console.log(res3);
-      // });
-      // console.log(res3);
 
       let i = 0;
       while (i < 100) {
         i++;
         try {
           console.log(`testing exec #${i}`);
-          const res3 = await hybridModule.exec("sleep .5 && echo done").catch(err => console.error(err))
+          const res3 = await hybridModule
+            .exec("sleep .5 && echo done")
+            .catch((err) => console.error(err));
           console.log(res3);
         } catch (error) {
           break;
