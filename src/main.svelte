@@ -65,43 +65,25 @@
   };
 
   // BOLT_HYBRID_START
-  const hybridTestExecSync = async () => {
+  const hybridTest = async () => {
     let hybridModule: {
       execSync: (cmd: string) => string;
       exec: (cmd: string) => Promise<string>;
     } = await require("bolt-uxp-hybrid.uxpaddon");
 
-    // execSync will lock up the plugin UI
-    let execSyncRes = hybridModule.execSync("sleep 2 && echo done");
+    // execSync() will lock up the plugin UI while running
+    let execSyncRes = hybridModule.execSync("echo done");
     console.log(`execSyncRes = `, execSyncRes);
     api.notify(`execSyncRes = ${execSyncRes}`);
 
-    // exec will not lock up the plugin UI or the app
-  };
-
-  const hybridTest = async () => {
-    try {
-      let hybridModule: {
-        execSync: (cmd: string) => string;
-        exec: (cmd: string) => Promise<string>;
-      } = await require("bolt-uxp-hybrid.uxpaddon");
-
-      let i = 0;
-      while (i < 100) {
-        i++;
-        try {
-          console.log(`testing exec #${i}`);
-          const res3 = await hybridModule
-            .exec("sleep .5 && echo done")
-            .catch((err) => console.error(err));
-          console.log(res3);
-        } catch (error) {
-          break;
-        }
-      }
-    } catch (err) {
-      console.log("Execute as execSync command failed", err);
-    }
+    // exec() will not lock up the plugin UI or the app
+    hybridModule
+      .exec("sleep 5 && echo done")
+      .then((execRes) => {
+        console.log(`execRes = `, execRes);
+        api.notify(`execRes = ${execRes}`);
+      })
+      .catch(console.error);
   };
   // BOLT_HYBRID_END
   // BOLT_SAMPLECODE_END
@@ -128,8 +110,7 @@
       </button>
       <button onclick={simpleAlert}>Alert</button>
       <!-- BOLT_HYBRID_START -->
-      <button onclick={hybridTestExecSync}>Hybrid execSync()</button>
-      <button onclick={hybridTest}>Hybrid exec()</button>
+      <button onclick={hybridTest}>Hybrid</button>
       <!-- BOLT_HYBRID_END -->
     </div>
     <div class="stack-colors">

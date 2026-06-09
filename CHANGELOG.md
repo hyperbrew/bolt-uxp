@@ -1,5 +1,11 @@
 # Bolt UXP Changelog
 
+## Version 1.3.9 (2026-6-9)
+
+- Improved hybrid synchronous execSync() error hanlding
+- Added new hybrid asynchronous exec() function
+- New Documentation for debugging in Visual Studio & Xcode
+
 ## Version 1.3.8 (2026-6-4)
 
 - Added "ccx-install" command

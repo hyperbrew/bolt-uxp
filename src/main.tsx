@@ -73,16 +73,24 @@ export const App = () => {
   };
   // BOLT_HYBRID_START
   const hybridTest = async () => {
-    try {
-      let hybridModule: {
-        execSync: (cmd: string) => string;
-      } = await require("bolt-uxp-hybrid.uxpaddon");
-      let execSyncRes = hybridModule.execSync("echo test");
-      console.log(`execSyncRes = `, execSyncRes);
-      api.notify(`execSyncRes = ${execSyncRes}`);
-    } catch (err) {
-      console.log("Execute as execSync command failed", err);
-    }
+    let hybridModule: {
+      execSync: (cmd: string) => string;
+      exec: (cmd: string) => Promise<string>;
+    } = await require("bolt-uxp-hybrid.uxpaddon");
+
+    // execSync() will lock up the plugin UI while running
+    let execSyncRes = hybridModule.execSync("echo done");
+    console.log(`execSyncRes = `, execSyncRes);
+    api.notify(`execSyncRes = ${execSyncRes}`);
+
+    // exec() will not lock up the plugin UI or the app
+    hybridModule
+      .exec("sleep 5 && echo done")
+      .then((execRes) => {
+        console.log(`execRes = `, execRes);
+        api.notify(`execRes = ${execRes}`);
+      })
+      .catch(console.error);
   };
 
   // BOLT_HYBRID_END
