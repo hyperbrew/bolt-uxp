@@ -512,24 +512,24 @@ _Requires an Apple Developer ID certificate installed on the machine_
 
 **1. Create a dev version of Photoshop**
 
-1.1 Make a copy of the application: "/Applications/Adobe Photoshop 2026/Adobe Photoshop 2026.app" to "/Applications/Adobe Photoshop 2026/Adobe Photoshop 2026-dev.app"
-1.2 Create an `entitlements.xml` file with `codesign -d --entitlements :- '/Applications/Adobe Photoshop 2026-developer/Adobe Photoshop 2026.app'  > entitlements.xml`
-1.3 Ensure the XML file is not saved inside the `.app` package
-1.4 Add the following line to the XML file: `<key>com.apple.security.get-task-allow</key> <true/>`
-1.5 Save the `entitlements.xml` file
-1.6 Validate the XML file with: `plutil -convert xml1 entitlements.xml `
-1.7 Re-apply the codesign with `sudo codesign --force --deep --options runtime --entitlements '/Applications/Adobe Photoshop 2026/entitlements.xml' --sign "Developer ID Application: NAME_OF_COMPANY_CERT" "/Applications/Adobe Photoshop 2026/Adobe Photoshop 2026-dev.app"
+- 1.1 Make a copy of the application: "/Applications/Adobe Photoshop 2026/Adobe Photoshop 2026.app" to "/Applications/Adobe Photoshop 2026/Adobe Photoshop 2026-dev.app"
+- 1.2 Create an `entitlements.xml` file with `codesign -d --entitlements :- '/Applications/Adobe Photoshop 2026-developer/Adobe Photoshop 2026.app'  > entitlements.xml`
+- 1.3 Ensure the XML file is not saved inside the `.app` package
+- 1.4 Add the following line to the XML file: `<key>com.apple.security.get-task-allow</key> <true/>`
+- 1.5 Save the `entitlements.xml` file
+- 1.6 Validate the XML file with: `plutil -convert xml1 entitlements.xml `
+- 1.7 Re-apply the codesign with `sudo codesign --force --deep --options runtime --entitlements '/Applications/Adobe Photoshop 2026/entitlements.xml' --sign "Developer ID Application: NAME_OF_COMPANY_CERT" "/Applications/Adobe Photoshop 2026/Adobe Photoshop 2026-dev.app"
 
 **2. Debug and Attach to the Process**
 
-2.1 (once) Fill out all Apple Signing Credentials in `.env` including APPLE_ID, APPLE_TEAM_ID, APPLE_PASSWORD, APPLE_SIGNING_IDENTITY
-2.2 Launch `Adobe Photoshop 2026-dev.app` from previous step
-2.3 Disconnect UXP Plugin from host app in UDT
-2.4 `yarn mac-build-debug` - Build the hybrid plugin in debug mode
-2.5 `yarn mac-sign` - Sign and notorize the hybrid plugin
-2.6 `yarn build` - Build the project including copying hybrid files
-2.7 Attach UXP plugin to host app in UDT
-2.8 In Xcode run Debug > Attach to Process > Adobe Photoshop 2026 (or equivalent app)
+- 2.1 (once) Fill out all Apple Signing Credentials in `.env` including APPLE_ID, APPLE_TEAM_ID, APPLE_PASSWORD, APPLE_SIGNING_IDENTITY
+- 2.2 Launch `Adobe Photoshop 2026-dev.app` from previous step
+- 2.3 Disconnect UXP Plugin from host app in UDT
+- 2.4 `yarn mac-build-debug` - Build the hybrid plugin in debug mode
+- 2.5 `yarn mac-sign` - Sign and notorize the hybrid plugin
+- 2.6 `yarn build` - Build the project including copying hybrid files
+- 2.7 Attach UXP plugin to host app in UDT
+- 2.8 In Xcode run Debug > Attach to Process > Adobe Photoshop 2026 (or equivalent app)
 
 Now you can set breakpoints and debug your Hybrid Plugin in Xcode. After making changes to your Hybrid Plugin C++ code, repeat steps 2.3 - 2.8
 
@@ -543,16 +543,16 @@ The project is set up for Visual Studio 2019. A post-build action will copy the 
 
 To debug your Hybrid Plugin in Visual Studio, follow the steps below:
 
-1. (once) Configure Visual Studio
-   1.1 Project Menu > bolt-uxp-hybrid Properties
-   1.2 Config: Debug
-   1.3 Configuration Properties > Debugging
-   1.4 Command `C:\Program Files\Adobe\Adobe Photoshop 2026\Photoshop.exe` (or path to targeted host app)
-2. Close target app if running
-3. `yarn win-build-debug` - Build the hybrid plugin in debug mode
-4. `yarn build` - Build the project including copying hybrid files
-5. Select `Debug > Start Debugging` in Visual Studio
-6. Attach UXP plugin to host app in UDT
+- 1. (once) Configure Visual Studio
+  - 1.1 Project Menu > bolt-uxp-hybrid Properties
+  - 1.2 Config: Debug
+  - 1.3 Configuration Properties > Debugging
+  - 1.4 Command `C:\Program Files\Adobe\Adobe Photoshop 2026\Photoshop.exe` (or path to targeted host app)
+- 2. Close target app if running
+- 3. `yarn win-build-debug` - Build the hybrid plugin in debug mode
+- 4. `yarn build` - Build the project including copying hybrid files
+- 5. Select `Debug > Start Debugging` in Visual Studio
+- 6. Attach UXP plugin to host app in UDT
 
 Now you can set breakpoints and debug your Hybrid Plugin in Visual Studio. After making changes to your Hybrid Plugin C++ code, repeat steps 2 - 6
 
