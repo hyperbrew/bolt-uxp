@@ -22,8 +22,13 @@ A lightning-fast boilerplate for building Adobe UXP Plugins in Svelte, React, or
 
 Huge thanks to our backers who have made this project possible!
 
+<div style="display:flex; gap: 1rem;align-items:center">
 <a href="https://aescripts.com/" target="_blank">
-<img src="https://aescripts.com/media/wysiwyg/aescripts_aeplugins_Logo_Stack_300.png" alt="aescripts + aeplugins" title="aescripts + aeplugins" width="200" /></a>
+<img src="https://aescripts.com/media/wysiwyg/aescripts_aeplugins_Logo_Stack_300.png" alt="aescripts + aeplugins" title="aescripts + aeplugins" height="100" /></a>
+
+<a href="https://developer.adobe.com/fund-for-design/" target="_blank">
+<img src="https://developer.adobe.com/fund-for-design/media_16349b44cedb9a674b4b4acee670cb09ec8e0e4b0.png?width=1200&format=pjpg&optimize=medium" style="border-radius:25px" alt="Adobe Fund for Design" title="Adobe Fund for Design" height="120" /></a>
+</div>
 
 If you're interested in supporting this open-source project, please [see our sponsor page](https://github.com/sponsors/hyperbrew).
 
@@ -154,8 +159,12 @@ _Install Note: The Adobe UXP Developer Tools (UDT) can be downloaded from the Ad
 
 ### Load and Debug Plugin
 
-1. Click `Load` button on your plugin item
-2. Click `Debug` button on your plugin item
+1. Ensure Developer Mode is enabled for your host app (e.g. Photoshop, Premiere, etc)
+
+- Setting is typically found in Preferences > Plugins > "Enable Developer Mode"
+
+2. Click `Load` button on your plugin item
+3. Click `Debug` button on your plugin item
 
 _Note: You only need to "Load" a plugin, do not use the "Load and Watch" feature. The bulit-in UDT file watcher aka "Load and Watch" does not reliably update on changes so we recommend avoiding it. Instead, Bolt UXP comes with it's own built-in WebSocket system to trigger a reload on each update which is more consistent and less error-prone._
 
