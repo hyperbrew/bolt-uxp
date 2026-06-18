@@ -1,5 +1,9 @@
 # Bolt UXP Changelog
 
+## Version 1.3.10 (2026-6-18)
+
+- Color Theme Fix for InDesign UXP
+
 ## Version 1.3.9 (2026-6-9)
 
 - Improved hybrid synchronous execSync() error hanlding

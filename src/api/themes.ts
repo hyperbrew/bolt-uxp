@@ -53,17 +53,37 @@ const colorTable = {
   },
 };
 
-export const getColorScheme = async () => {
+const getTheme = (hostName: string) => {
   //@ts-ignore
-  const theme = document.theme.getCurrent() as
+  let theme = document.theme.getCurrent() as
     | "light"
     | "dark"
     | "lightest"
     | "darkest";
-  let colors = colorTable[theme];
-  const platform = os.platform ? os.platform() : "";
+
+  // App-Specific-Overrides
+  if (hostName === "indesign") {
+    const INDESIGN_THEME_TABLE = {
+      1: "lightest",
+      0.51: "light",
+      0.5: "dark",
+      0: "darkest",
+    };
+    const overrideThemeValue = require("indesign").app.generalPreferences
+      .uiBrightnessPreference as number;
+    console.log({ overrideThemeValue });
+    const overrideTheme = INDESIGN_THEME_TABLE[overrideThemeValue];
+    if (overrideTheme) theme = overrideTheme;
+  }
+  return theme;
+};
+
+export const getColorScheme = async () => {
   const hostName =
     uxp.host.name.toLowerCase().replace(/\s/g, "") || ("" as string);
+  const theme = getTheme(hostName);
+  let colors = colorTable[theme];
+  const platform = os.platform ? os.platform() : "";
 
   // Overrides
   if (hostName.startsWith("premierepro")) {
