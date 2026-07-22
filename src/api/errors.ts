@@ -1,7 +1,9 @@
 /** Temporary polyfill Global Error Handler until Adobe adds it natively to UXP
- *  Must be manually triggered with safe() or safeAsync() function */
+ *  Must be manually triggered with safe() or safeAsync() function
+ * @param {function} callback optional callback to send error reports to an error tracking or logging service
+ *  */
 
-export const polyFillGlobalErrorHandler = () => {
+export const polyFillGlobalErrorHandler = (callback?: (error: any) => void) => {
   if (!Object.hasOwn(window, "onerror")) {
     //@ts-ignore
     window.onerror = (error: {
@@ -11,6 +13,7 @@ export const polyFillGlobalErrorHandler = () => {
     }) => {
       console.error(error);
       //* Add any Global actions for Handlers like Sentry / Logging here
+      if (callback) callback(error);
       return true;
     };
   }

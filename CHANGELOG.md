@@ -1,5 +1,9 @@
 # Bolt UXP Changelog
 
+## Version 1.3.11 (2026-7-22)
+
+- Added optional callback to polyFillGlobalErrorHandler
+
 ## Version 1.3.10 (2026-6-18)
 
 - Color Theme Fix for InDesign UXP
