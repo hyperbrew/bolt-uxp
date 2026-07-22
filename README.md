@@ -630,7 +630,18 @@ _Note: This does not apply Webview, only to the UXP portion of your plugin. Webv
 
 **1. Error Handler** - `polyFillGlobalErrorHandler()`
 
-First step is the error handler. This function polyfills `window.onerror()`. You can easily append any other logging or handling such as Sentry hooks to integrate other error handling services in this function.
+First step is the error handler. This function polyfills `window.onerror()`. You can easily pass a callback function to send any errors to an error tracking service like Sentry or logging service.
+
+`src/api/uxp.ts`
+
+```ts
+// 1. Initialize the ErrorHandler once
+export const initUXP = () => {
+  polyFillGlobalErrorHandler((error: Error) => {
+    // sendToSentry(error);
+  });
+};
+```
 
 **2. Throw Error** - `throwErr()`
 
