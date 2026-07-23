@@ -4,7 +4,7 @@ import { version } from "./package.json";
 const extraPrefs: UXP_Config_Extra = {
   hotReloadPort: 8080,
   // BOLT_WEBVIEW_START
-  webviewUi: false, //!Tmp
+  webviewUi: true,
   webviewReloadPort: 8082,
   // BOLT_WEBVIEW_END
   copyZipAssets: ["public-zip/*"],
