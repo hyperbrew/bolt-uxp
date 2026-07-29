@@ -1,5 +1,13 @@
 # Bolt UXP Changelog
 
+## Version 1.3.13 (2026-7-29)
+
+- AME & AE Type Fixes
+
+## Version 1.3.12 (2026-7-22)
+
+- Webview UI Default Fix
+
 ## Version 1.3.11 (2026-7-22)
 
 - Added optional callback to polyFillGlobalErrorHandler
