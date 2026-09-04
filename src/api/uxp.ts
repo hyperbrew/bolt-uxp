@@ -36,6 +36,20 @@ export const psHideResizeHandle = async () => {
   }
 };
 
+export const openUXPPanel = async (id: string) => {
+  const plugins = Array.from(uxp.pluginManager.plugins);
+  const plugin = plugins.find(
+    (plugin) => plugin.id === uxp.entrypoints._pluginInfo.id,
+  );
+  if (plugin) {
+    await plugin.showPanel(id);
+    return true;
+  } else {
+    console.error("No plugin found");
+    return false;
+  }
+};
+
 export const initUXP = () => {
   psHideResizeHandle();
   polyFillGlobalErrorHandler();
