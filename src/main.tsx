@@ -34,7 +34,7 @@ export const App = () => {
   let webviewAPI: WebviewAPI;
   if (webviewUI) {
     useEffect(() => {
-      webviewInitHost().then((res) => (webviewAPI = res));
+      webviewInitHost({ multi: true }).then((res) => (webviewAPI = res));
     }, []);
   }
   // BOLT_WEBVIEW_END
