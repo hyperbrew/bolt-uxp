@@ -13,8 +13,8 @@ import * as webviewAPI from "./webview-api";
 
 import { initWebview } from "./webview-setup";
 
+const { api, page } = initWebview(webviewAPI);
 export const App = () => {
-  const { api, page } = initWebview(webviewAPI);
   // BOLT_SAMPLECODE_START
   const [count, setCount] = useState(0);
   const increment = () => setCount((prev) => prev + 1);
