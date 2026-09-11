@@ -12,6 +12,14 @@ export const uxp = require("uxp") as typeof import("uxp");
 export const os = require("os") as typeof import("os");
 const hostName = uxp && uxp?.host?.name?.toLowerCase();
 
+// BOLT_HYBRID_START
+export const hybridPlugin = async () =>
+  (await require("bolt-uxp-hybrid.uxpaddon")) as {
+    execSync: (cmd: string) => string;
+    exec: (cmd: string) => Promise<string>;
+  };
+// BOLT_HYBRID_END
+
 export const photoshop = (
   hostName === "photoshop" ? require("photoshop") : {}
 ) as typeof import("photoshop");

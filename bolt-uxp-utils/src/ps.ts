@@ -3,13 +3,16 @@ import type {
   BatchPlayCommandOptions,
 } from "photoshop/dom/CoreModules";
 
-const photoshop = require("photoshop") as typeof import("photoshop");
+export const uxp = require("uxp") as typeof import("uxp");
+const hostName = uxp && uxp?.host?.name?.toLowerCase();
 
-const { executeAsModal } = photoshop.core;
-const { batchPlay } = photoshop.action;
+const photoshop = (
+  hostName === "photoshop" ? require("photoshop") : {}
+) as typeof import("photoshop");
 
 /** Run function in a Modal scope */
 export const asModal = async (commandName: string, callback: Function) => {
+  const { executeAsModal } = photoshop.core;
   return await executeAsModal(async () => await callback(), { commandName });
 };
 
@@ -19,6 +22,8 @@ export const bpModal = async (
   commands: ActionDescriptor[],
   options?: BatchPlayCommandOptions,
 ): Promise<Array<ActionDescriptor>> => {
+  const { executeAsModal } = photoshop.core;
+  const { batchPlay } = photoshop.action;
   return await executeAsModal(
     async () => await batchPlay(commands, options || {}),
     { commandName },

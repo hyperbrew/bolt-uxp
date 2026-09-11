@@ -7,7 +7,14 @@ import tsLogo from "./assets/typescript.png";
 import sassLogo from "./assets/sass.png";
 import reactLogo from "./assets/react.png";
 
-import { uxp, indesign, photoshop, premierepro, illustrator } from "./globals";
+import {
+  uxp,
+  indesign,
+  photoshop,
+  premierepro,
+  illustrator,
+  hybridPlugin,
+} from "./globals";
 import { api } from "./api/api";
 // BOLT_SAMPLECODE_END
 
@@ -73,19 +80,15 @@ export const App = () => {
   };
   // BOLT_HYBRID_START
   const hybridTest = async () => {
-    let hybridModule: {
-      execSync: (cmd: string) => string;
-      exec: (cmd: string) => Promise<string>;
-    } = await require("bolt-uxp-hybrid.uxpaddon");
+    const { exec, execSync } = await hybridPlugin();
 
     // execSync() will lock up the plugin UI while running
-    let execSyncRes = hybridModule.execSync("echo done");
+    let execSyncRes = execSync("echo done");
     console.log(`execSyncRes = `, execSyncRes);
     api.notify(`execSyncRes = ${execSyncRes}`);
 
     // exec() will not lock up the plugin UI or the app
-    hybridModule
-      .exec("sleep 5 && echo done")
+    exec("sleep 5 && echo done")
       .then((execRes) => {
         console.log(`execRes = `, execRes);
         api.notify(`execRes = ${execRes}`);

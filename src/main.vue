@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // BOLT_SAMPLECODE_START
 import { ref, onMounted } from "vue";
-import { uxp, indesign, photoshop, illustrator, premierepro } from "./globals";
+import { uxp, indesign, photoshop, illustrator, premierepro, hybridPlugin } from "./globals";
 import { api } from "./api/api";
 import boltUxpLogo from "./assets/bolt-uxp.png";
 import viteLogo from "./assets/vite.png";
@@ -63,19 +63,15 @@ const simpleAlert = () => {
 
 // BOLT_HYBRID_START
 const hybridTest = async () => {
-  let hybridModule: {
-    execSync: (cmd: string) => string;
-    exec: (cmd: string) => Promise<string>;
-  } = await require("bolt-uxp-hybrid.uxpaddon");
+  const { exec, execSync } = await hybridPlugin();
 
   // execSync() will lock up the plugin UI while running
-  let execSyncRes = hybridModule.execSync("echo done");
+  let execSyncRes = execSync("echo done");
   console.log(`execSyncRes = `, execSyncRes);
   api.notify(`execSyncRes = ${execSyncRes}`);
 
   // exec() will not lock up the plugin UI or the app
-  hybridModule
-    .exec("sleep 5 && echo done")
+  exec("sleep 5 && echo done")
     .then((execRes) => {
       console.log(`execRes = `, execRes);
       api.notify(`execRes = ${execRes}`);

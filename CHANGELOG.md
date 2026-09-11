@@ -1,5 +1,19 @@
 # Bolt UXP Changelog
 
+## Version 1.3.22 (2026-9-10)
+
+- Hybrid Import Update
+
+## Version 1.3.21 (2026-9-10)
+
+- PPRO Type Defs Bump
+
+## Version 1.3.20 (2026-9-10)
+
+- Cross App Utils import fixes
+- React Webview Setup Fix
+- openUXPPanel() restored
+
 ## Version 1.3.13 (2026-7-29)
 
 - AME & AE Type Fixes

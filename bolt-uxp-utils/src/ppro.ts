@@ -16,8 +16,12 @@ import type {
   premierepro as PremiereproType,
 } from "@adobe/premierepro";
 
-const premierepro = require("premierepro") as PremiereproType;
-const uxp = require("uxp") as typeof import("uxp");
+export const uxp = require("uxp") as typeof import("uxp");
+const hostName = uxp && uxp?.host?.name?.toLowerCase();
+
+export const premierepro = (
+  hostName === "premierepro" ? require("premierepro") : {}
+) as PremiereproType;
 
 /**
  * premierepro-utils
@@ -743,17 +747,37 @@ export const decToDb = (x: number) => 20 * Math.log(x) * Math.LOG10E + 15;
 
 export default {
   lockedTransactionSafe,
-  forEachAudioTrack, forEachVideoTrack, forEachClip,
+  forEachAudioTrack,
+  forEachVideoTrack,
+  forEachClip,
   cloneSequence,
-  forEachChild, forEachDescendant,
-  resolveToFolderItem, getActiveRoot, resolveOrGetRoot,
-  getChildByName, findItemByPath, getChildById, getDescendantById,
-  getItemById, getItemByNameChain, deleteItem,
-  itemToSequence, getItemDuration,
-  getFrameRate, getFrameDuration,
-  timecodeToTime, timeToFrames, timeToTimecode,
-  isSequenceDropFrame, getTimecodeFromSequence, getSequenceLengthInFrames,
-  getPrMetadata, listPrMetadataIds, setPrMetadata, removePrMetadata,
+  forEachChild,
+  forEachDescendant,
+  resolveToFolderItem,
+  getActiveRoot,
+  resolveOrGetRoot,
+  getChildByName,
+  findItemByPath,
+  getChildById,
+  getDescendantById,
+  getItemById,
+  getItemByNameChain,
+  deleteItem,
+  itemToSequence,
+  getItemDuration,
+  getFrameRate,
+  getFrameDuration,
+  timecodeToTime,
+  timeToFrames,
+  timeToTimecode,
+  isSequenceDropFrame,
+  getTimecodeFromSequence,
+  getSequenceLengthInFrames,
+  getPrMetadata,
+  listPrMetadataIds,
+  setPrMetadata,
+  removePrMetadata,
   findColumnIdByName,
-  dbToDec, decToDb,
+  dbToDec,
+  decToDb,
 };
