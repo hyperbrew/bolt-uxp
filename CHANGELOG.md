@@ -1,5 +1,9 @@
 # Bolt UXP Changelog
 
+## Version 1.3.23 (2026-9-10)
+
+- Versions Fix
+
 ## Version 1.3.22 (2026-9-10)
 
 - Hybrid Import Update
