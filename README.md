@@ -505,6 +505,29 @@ The current Hybrid Plugin comes with 2 functions:
 
 - `exec()` which works like Node.js's `child_process.exec()` function, except it is promise-based rather than callback based. It is a non-blocking asynchronous function that accepts a string a string and resolves the output of the command. This is useful for running system commands which take longer without blocking the app UI or plugin UI. This is also not currently possible via the UXP APIs.
 
+You can use the Hybrid Plugin functions by awaiting the Hybrid Plugin wrapper:
+
+```typescript
+const { execSync, exec } = await hybridPlugin();
+
+// execSync() is sync
+// It will lock up the plugin UI while running
+// Best for instant operations
+const execSyncRes = execSync("echo done");
+console.log(`execSyncRes = `, execSyncRes);
+
+// exec() is async
+// It will not lock up the plugin UI or the app
+// Best for longer operations
+exec("sleep 5 && echo done")
+  .then((execRes) => {
+    console.log(`execRes done after 5s = `, execRes);
+  })
+  .catch(console.error);
+
+// do other stuff in the meantime
+```
+
 ### Xcode Notes
 
 The Xcode project is designed to build a universal binary from an arm64 (M1, M2, M3) machine that works for both arm machines and x64 machines. If you are not on an arm machine, you will need to change the copy build settings to only build for x64, and note that your hybrid plugin will not work on arm machines.
