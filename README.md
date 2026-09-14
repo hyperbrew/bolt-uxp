@@ -277,12 +277,12 @@ Currently the following Adobe apps support UXP plugins:
 - Photoshop
 - InDesign
 - Premiere Pro
+- Media Encoder (Beta)
 
 If you have UXP Beta access to any of the other Adobe apps, you can add them as well, including:
 
-- Illustrator (beta)
-- After Effects (beta)
-- Media Encoder (beta)
+- Illustrator (Beta)
+- After Effects (Beta)
 
 _Note: Bolt UXP will not work out of-the-box for apps in UXP beta, you will need beta access from Adobe app teams as they become available. Hyper Brew cannot assist you in this, you will need to contact Adobe app teams directly for access._
 
@@ -296,8 +296,6 @@ To add additional windows to a UXP Plugin, you'll need to do 2 things:
 Note: Unlike CEP Extensions which multi-panel extensions behave as separate isolated panels/websites, a multi-panel UXP plugin is all in 1 space with certain sections of the markup rendered in different panels (identified by the `<uxp-panel />` tag)
 
 ## Webview UI Option
-
-_⚠️ Webview UI is currently in Beta_
 
 Bolt UXP now comes with the option of enabling a Webview UI when you create a new project.
 

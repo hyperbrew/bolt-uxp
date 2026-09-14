@@ -61,6 +61,11 @@ const appOptions: ArgOpt[] = [
     files: ["src/api/premierepro.ts"],
   },
   {
+    value: "ame",
+    label: "Media Encoder (Beta)",
+    files: ["src/api/mediaencoder.ts"],
+  },
+  {
     value: "ilst",
     label: "Illustrator (Beta)",
     files: ["src/api/illustrator.ts"],
@@ -69,11 +74,6 @@ const appOptions: ArgOpt[] = [
     value: "aeft",
     label: "After Effects (Beta)",
     files: ["src/api/aftereffects.ts"],
-  },
-  {
-    value: "ame",
-    label: "Media Encoder (Beta)",
-    files: ["src/api/mediaencoder.ts"],
   },
 ];
 
@@ -190,7 +190,7 @@ const initData: BoltInitData = {
       name: "hybrid",
       type: "boolean",
       message:
-        "Do you want to include UXP Hybrid Plugin (C++) files? (PS & ID only)",
+        "Hybrid Plugin: Do you want to include UXP Hybrid Plugin (C++) files?",
       initialValue: true,
       required: true,
       alias: "h",
@@ -208,7 +208,7 @@ const initData: BoltInitData = {
       name: "webview",
       type: "boolean",
       message:
-        "(BETA) Do you want to use a Webview UI Beta with full CSS/HTML support but 2 separate contexts?\n( more info: https://github.com/hyperbrew/bolt-uxp#webview-ui-option )",
+        "WebView UI: Do you want to use a WebView UI with full CSS/HTML support but 2 separate contexts?\n( more info: https://github.com/hyperbrew/bolt-uxp#webview-ui-option )",
       initialValue: false,
       required: true,
       alias: "w",

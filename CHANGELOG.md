@@ -1,5 +1,9 @@
 # Bolt UXP Changelog
 
+## Version 1.3.24 (2026-9-14)
+
+- AME Docs Update
+
 ## Version 1.3.23 (2026-9-10)
 
 - Versions Fix

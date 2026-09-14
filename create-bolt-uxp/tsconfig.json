@@ -7,8 +7,10 @@
     "allowJs": true,
     "skipLibCheck": true,
     "newLine": "lf",
-    "outDir": "dist"
+    "rootDir": "src",
+    "outDir": "dist",
+    "types":["node"]
   },
   "files": ["src/index.ts"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
 }
