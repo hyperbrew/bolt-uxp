@@ -26,7 +26,7 @@ if (hostName.startsWith("photoshop")) host = photoshop; // BOLT_PHXS_ONLY
 if (hostName.startsWith("indesign")) host = indesign; // BOLT_IDSN_ONLY
 if (hostName.startsWith("premierepro")) host = premierepro; // BOLT_PPRO_ONLY
 if (hostName.startsWith("illustrator")) host = illustrator; // BOLT_ILST_ONLY
-if (hostName.startsWith("illustrator")) host = mediaencoder; // BOLT_AME_ONLY
-if (hostName.startsWith("illustrator")) host = aftereffects; // BOLT_AEFT_ONLY
+if (hostName.startsWith("ame")) host = mediaencoder; // BOLT_AME_ONLY
+if (hostName.startsWith("aftereffects")) host = aftereffects; // BOLT_AEFT_ONLY
 
 export const api = { ...uxpLib, ...host };

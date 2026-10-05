@@ -43,7 +43,7 @@ const manifest: UXP_Manifest = {
     // BOLT_ILST_START
     {
       app: "AI",
-      minVersion: "18.5",
+      minVersion: "27.0",
     },
     // BOLT_ILST_END
     // BOLT_AEFT_START
