@@ -1,5 +1,11 @@
 import { os, uxp } from "../globals";
-import { photoshop, premiere, indesign } from "./themes-data";
+import {
+  photoshop,
+  premiere,
+  aftereffects,
+  mediaencoder,
+  indesign,
+} from "./themes-data";
 
 // Default Table
 const colorTable = {
@@ -90,6 +96,14 @@ export const getColorScheme = async () => {
     console.log("Color Override Premiere", { platform, theme });
     if (platform === "darwin") colors = premiere.mac[theme];
     else if (platform.includes("win")) colors = premiere.win[theme];
+  } else if (hostName.startsWith("aftereffects")) {
+    console.log("Color Override After Effects", { platform, theme });
+    if (platform === "darwin") colors = aftereffects.mac[theme];
+    else if (platform.includes("win")) colors = aftereffects.win[theme];
+  } else if (hostName.startsWith("mediaencoder")) {
+    console.log("Color Override Media Encoder", { platform, theme });
+    if (platform === "darwin") colors = mediaencoder.mac[theme];
+    else if (platform.includes("win")) colors = mediaencoder.win[theme];
   } else if (hostName.startsWith("indesign")) {
     console.log("Color Override InDesign", { platform, theme });
     if (platform === "darwin") colors = indesign.mac[theme];
