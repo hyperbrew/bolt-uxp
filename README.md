@@ -1,6 +1,6 @@
 <img src="src/assets/bolt-uxp.svg" alt="Bolt UXP" title="Bolt UXP" width="400" />
 
-A lightning-fast boilerplate for building Adobe UXP Plugins in Svelte, React, or Vue built on Vite + TypeScript + Sass
+A lightning-fast framework for building Adobe UXP Plugins in Svelte, React, or Vue built on Vite + TypeScript + Sass
 
 ![npm](https://img.shields.io/npm/v/bolt-uxp)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/hyperbrew/bolt-uxp/blob/master/LICENSE)
@@ -9,14 +9,15 @@ A lightning-fast boilerplate for building Adobe UXP Plugins in Svelte, React, or
 ## Features
 
 - Lightning Fast Hot Reloading on changes
-- Setup with TypeScript Definitions for UXP and Photoshop APIs
+- Setup with TypeScript Definitions for UXP and app APIs
 - Easily configure in uxp.config.ts
 - Comes with multi-host-app configuration
 - Optimized Build Size
 - Template for UXP Hybrid C++ Plugins
+- WebView UI option for complex user interfaces
 - Easy Publish to CCX for Distribution
 - Easy Package to ZIP archive with sidecar assets
-- GitHub Actions ready-to-go for CCX Releases
+- GitHub Actions ready-to-go for CCX Releases + Zip packaging
 
 ## Backers
 
@@ -279,12 +280,12 @@ Currently the following Adobe apps support UXP plugins:
 - Premiere Pro
 - Media Encoder (Beta)
 
-If you have UXP Beta access to any of the other Adobe apps, you can add them as well, including:
+If you have UXP Private Beta access to any of the other Adobe apps, you can add them as well, including:
 
 - Illustrator (Beta)
 - After Effects (Beta)
 
-_Note: Bolt UXP will not work out of-the-box for apps in UXP beta, you will need beta access from Adobe app teams as they become available. Hyper Brew cannot assist you in this, you will need to contact Adobe app teams directly for access._
+_Note: Bolt UXP will not work out of-the-box for apps in UXP private beta, you will need beta access from Adobe app teams as they become available. Hyper Brew cannot assist you in this, you will need to contact Adobe app teams directly for access._
 
 ## Multi-Window panels
 

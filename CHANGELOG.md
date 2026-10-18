@@ -1,5 +1,11 @@
 # Bolt UXP Changelog
 
+## Version 1.3.25 (2026-10-17)
+
+- After Effects & Media Encoder API Routes Updates
+- After Effects & Media Encoder Theme Colors Updates
+- After Effects & Media Encoder Docs updates
+
 ## Version 1.3.24 (2026-9-14)
 
 - AME Docs Update
