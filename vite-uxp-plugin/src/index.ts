@@ -209,6 +209,7 @@ export const uxp = (config: UXP_Config, mode?: string): Plugin => {
           code: s.toString(),
           map: s.generateMap({
             source: id,
+            hires: true,
             file: `${id}.map`,
             includeContent: true,
           }),
@@ -242,17 +243,18 @@ export const uxp = (config: UXP_Config, mode?: string): Plugin => {
     // },
 
     generateBundle(output: any, bundle: any) {
-      if (config.debugger === "udt") {
-        for (const fileName in bundle) {
-          const chunk = bundle[fileName];
-          if (chunk.type === "chunk" && chunk.map) {
-            const sourceURLComment = `//# sourceURL=uxp-script://${fileName}`;
-            chunk.code = `${chunk.code}\n${sourceURLComment}`;
-          }
+      // if (config.debugger === "udt") {
+      // Always add this line now since it will now work in both
+      for (const fileName in bundle) {
+        const chunk = bundle[fileName];
+        if (chunk.type === "chunk" && chunk.map) {
+          const sourceURLComment = `//# sourceURL=uxp-script://${fileName}`;
+          chunk.code = `${chunk.code}\n${sourceURLComment}`;
         }
-      } else if (config.debugger === "vscode") {
-        // leave out sourceURL comment
       }
+      // } else if (config.debugger === "vscode") {
+      //   // leave out sourceURL comment
+      // }
 
       //@ts-ignore
       this.emitFile(generateManifest(config));

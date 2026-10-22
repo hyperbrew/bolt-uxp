@@ -1,5 +1,11 @@
 # Bolt UXP Changelog
 
+## Version 1.3.26 (2026-10-22)
+
+- Added support for UXP Debugger v2.2.0
+- Improved SourceMap Accuracy
+- Removed the need for config.debugger prop
+
 ## Version 1.3.25 (2026-10-17)
 
 - After Effects & Media Encoder API Routes Updates

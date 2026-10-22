@@ -221,22 +221,12 @@ You cannot write UXP plugins directly into the directories above like you could 
 
 Bolt UXP supports 2 different routes for debugging: UDT & VS Code
 
-UDT is set as the default debugger, however you can change to VS Code in `uxp.config.ts`
-
-```ts
-const extraPrefs: UXP_Config_Extra = {
-  [...]
-  debugger: "udt", // 'udt' or 'vscode'
-};
-```
-
-Note: You cannot debug in both at the same time you must pick one or the other. Upon switching debuggers, always unload the plugin from UDT and re-run `yarn build`, then you're free to follow the below instructions for the desired debugger.
+As of v1.3.26, no additional configuration is needed, just ensure you only debug in either UDT or VS Code and don't try to debug with both at the same time.
 
 ### A: UDT (UXP Debugger Tool)
 
-The default debugger is UDT aka the UXP Debugger Tool from Adobe. With the debugger set to `"udt"` in the config, all built JS files will be ready for line-by-line debugging in UDT. Follow the steps below to get started:
+All built JS files will be ready for line-by-line debugging in UDT. Follow the steps below to get started:
 
-- Enable `debugger: "udt"` in the `uxp.config.ts`
 - Run `yarn build` (at least once) and then run `yarn build` or `yarn dev` after
 - Open UDT
   - Press "Load" to load the plugin
@@ -249,27 +239,26 @@ The default debugger is UDT aka the UXP Debugger Tool from Adobe. With the debug
 **UDT Debugger Additional Details**
 
 - UDT Debugger requires inline sourcemaps
-- UDT Debugger requires `//# sourceURL=uxp-script://` to be appended to JS files
+- UDT Debugger requires `//# sourceURL=uxp-script://` are appended to JS files
 
 ### B: VS Code (UXP Debugger by Jaroslav Bereza)
 
-There is a 3rd party UXP Debugger for VS Code publised by Jaroslav Bereza. This tool does require patching UDT (e.g. modifying the program files) in order to function. You'll need admin access on your machine in order to do this.
+There is a 3rd party UXP Debugger for VS Code publised by Jaroslav Bereza.
 
 - Install the VS Code UXP Debugger following the instructions here: https://marketplace.visualstudio.com/items?itemName=JaroslavBereza.uxpdebugger
-- Once fully installed, enable `debugger: "vscode"` in the `uxp.config.ts`
 - Run `yarn build` (at least once) and then run `yarn build` or `yarn dev` after
-- Open UDT
-  - Press "Load" to load the plugin (Note: Do not press "Debug", this will break the connection)
 - Open VS Code
-  - Press Sidebar > Debug > "Attach to UXP Plugin"
+  - Ensure UDT is not running, close if it is opened
+  - Press Sidebar > "UXP Devtools" > "+" > "Browse for manifest.json..."
+  - Select your manifest file in `dist/manifest.json`
   - Set a breakpoint in the desired line of code
+  - Press the "Debug" button
   - Code will now halt on Breakpoints for line-by-line debugging in `build` or `dev` mode
 
 **VS Code Debugger Additional Details**
 
-- VS Code Debugger config setup in `.vscode\launch.json`
-- VS Code Debugger requires inline sourcemaps
-- VS Code Debugger will not allow `//# sourceURL=uxp-script://` to be appended to JS files
+- UDT Debugger requires inline sourcemaps
+- UDT Debugger requires `//# sourceURL=uxp-script://` are appended to JS files
 
 ## Supported Adobe Apps
 
