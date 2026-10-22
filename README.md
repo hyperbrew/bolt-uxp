@@ -227,7 +227,7 @@ As of v1.3.26, no additional configuration is needed, just ensure you only debug
 
 All built JS files will be ready for line-by-line debugging in UDT. Follow the steps below to get started:
 
-- Run `yarn build` (at least once) and then run `yarn build` or `yarn dev` after
+- Run `yarn build` or `yarn dev`
 - Open UDT
   - Press "Load" to load the plugin
   - Press "Debug" top open the Dev Tools
@@ -246,7 +246,7 @@ All built JS files will be ready for line-by-line debugging in UDT. Follow the s
 There is a 3rd party UXP Debugger for VS Code publised by Jaroslav Bereza.
 
 - Install the VS Code UXP Debugger following the instructions here: https://marketplace.visualstudio.com/items?itemName=JaroslavBereza.uxpdebugger
-- Run `yarn build` (at least once) and then run `yarn build` or `yarn dev` after
+- Run `yarn build` or `yarn dev`
 - Open VS Code
   - Ensure UDT is not running, close if it is opened
   - Press Sidebar > "UXP Devtools" > "+" > "Browse for manifest.json..."
