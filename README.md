@@ -255,11 +255,6 @@ There is a 3rd party UXP Debugger for VS Code publised by Jaroslav Bereza.
   - Press the "Debug" button
   - Code will now halt on Breakpoints for line-by-line debugging in `build` or `dev` mode
 
-**VS Code Debugger Additional Details**
-
-- UDT Debugger requires inline sourcemaps
-- UDT Debugger requires `//# sourceURL=uxp-script://` are appended to JS files
-
 ## Supported Adobe Apps
 
 Currently the following Adobe apps support UXP plugins:
