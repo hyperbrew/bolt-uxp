@@ -36,7 +36,7 @@ export const webviewInitHost = (params: {
       webview.uxpAllowInspector = "true";
       const origin =
         import.meta.env.VITE_BOLT_MODE === "dev"
-          ? `http://localhost:${import.meta.env.VITE_BOLT_WEBVIEW_PORT}/?page=${page}`
+          ? `http://127.0.0.1:${import.meta.env.VITE_BOLT_WEBVIEW_PORT}/?page=${page}`
           : `plugin:/webview-ui/${page}.html`;
       webview.src = origin;
 

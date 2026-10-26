@@ -27,6 +27,7 @@ export default defineConfig({
     vue(), // BOLT_VUE_ONLY
     svelte(), // BOLT_SVELTE_ONLY
   ],
+
   build: {
     sourcemap: mode && ["dev", "build"].includes(mode) ? "inline" : false,
     minify: false,

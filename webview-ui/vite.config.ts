@@ -12,9 +12,7 @@ export default defineConfig({
     svelte(), // BOLT_SVELTE_ONLY
     viteSingleFile(),
   ],
-  server: {
-    port: 8081,
-  },
+  server: { host: "127.0.0.1", port: 8081 },
   build: {
     outDir: "../public/webview-ui",
   },
