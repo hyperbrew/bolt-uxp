@@ -1,5 +1,9 @@
 # Bolt UXP Changelog
 
+## Version 1.3.27 (2026-10-26)
+
+- Update WebView dev IP for MacOS 26.5 compatibility
+
 ## Version 1.3.26 (2026-10-22)
 
 - Added support for UXP Debugger v2.2.0
