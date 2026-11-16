@@ -752,11 +752,11 @@ https://www.npmjs.com/package/@spectrum-web-components/bundle
 
 **Developer Tools**
 
-- Adobe UXP Developer Tool Overview [https://developer.adobe.com/photoshop/uxp/2022/guides/devtool/](https://developer.adobe.com/photoshop/uxp/2022/guides/devtool/)
-- Alchemist by Jarda for BatchPlay in Photoshop UXP [https://github.com/jardicc/alchemist](https://github.com/jardicc/alchemist)
-- UXP Validator for VS Code by Jarda [https://github.com/jardicc/vscode-uxp-validator](https://github.com/jardicc/vscode-uxp-validator)
+- [Adobe UXP Developer Tool Overview](https://developer.adobe.com/photoshop/uxp/2022/guides/devtool/) - Official debugger - By Adobe
+- [UXP Debugger for VS Code](https://marketplace.visualstudio.com/items?itemName=JaroslavBereza.uxpdebugger) - Debug and manage plugins and scripts directly in VS Code - By Jaroslav Bereza
+- [UXP Validator for VS Code](https://marketplace.visualstudio.com/items?itemName=JaroslavBereza.uxpvalidator) - CSS Style Validator for UXP Plugins - By Jaroslav Bereza
+- [Alchemist for BatchPlay in Photoshop UXP](https://github.com/jardicc/alchemist) - Toolkit for Capturing Photoshop BatchPlay commands - By Jaroslav Bereza
 
----
 
 ---
 
