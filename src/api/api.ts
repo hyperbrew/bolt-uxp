@@ -4,11 +4,10 @@ import * as premierepro from "./premierepro"; // BOLT_PPRO_ONLY
 import * as mediaencoder from "./mediaencoder"; // BOLT_AME_ONLY
 import * as aftereffects from "./aftereffects"; // BOLT_AEFT_ONLY
 import * as illustrator from "./illustrator"; // BOLT_ILST_ONLY
-import { uxp } from "../globals";
 import * as uxpLib from "./uxp";
+import { getUXPHostName } from "./uxp-simple-utils";
 
-const hostName =
-  uxp?.host?.name.toLowerCase().replace(/\s/g, "") || ("" as string);
+const hostName = getUXPHostName();
 
 // prettier-ignore
 let host = {} as 

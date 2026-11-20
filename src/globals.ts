@@ -1,5 +1,6 @@
 // import type { premierepro as premiereproTypes } from "./types/ppro";
 import type { premierepro as premiereproTypes } from "@adobe/premierepro";
+import { getUXPHostName } from "./api/uxp-simple-utils";
 
 if (typeof require === "undefined") {
   //@ts-ignore
@@ -10,7 +11,8 @@ if (typeof require === "undefined") {
 
 export const uxp = require("uxp") as typeof import("uxp");
 export const os = require("os") as typeof import("os");
-const hostName = uxp && uxp?.host?.name?.toLowerCase();
+
+let hostName = getUXPHostName();
 
 // BOLT_HYBRID_START
 export const hybridPlugin = async () =>

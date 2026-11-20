@@ -5,7 +5,9 @@ import {
   aftereffects,
   mediaencoder,
   indesign,
+  illustrator,
 } from "./themes-data";
+import { getUXPHostName } from "./uxp-simple-utils";
 
 // Default Table
 const colorTable = {
@@ -85,8 +87,7 @@ const getTheme = (hostName: string) => {
 };
 
 export const getColorScheme = async () => {
-  const hostName =
-    uxp.host.name.toLowerCase().replace(/\s/g, "") || ("" as string);
+  const hostName = getUXPHostName();
   const theme = getTheme(hostName);
   let colors = colorTable[theme];
   const platform = os.platform ? os.platform() : "";
@@ -112,6 +113,10 @@ export const getColorScheme = async () => {
     console.log("Color Override Photoshop", { platform, theme });
     if (platform === "darwin") colors = photoshop.mac[theme];
     else if (platform.includes("win")) colors = photoshop.win[theme];
+  } else if (hostName.startsWith("illustrator")) {
+    console.log("Color Override Illustrator", { platform, theme });
+    if (platform === "darwin") colors = illustrator.mac[theme];
+    else if (platform.includes("win")) colors = illustrator.win[theme];
   } else {
     console.warn("unknown host");
   }
@@ -150,8 +155,7 @@ export const updateColorScheme = (val: {
 const UXP_VAR_WORKING_APPS = ["photoshop"];
 
 export const polyfillUXPVars = () => {
-  const hostName =
-    uxp.host.name.toLowerCase().replace(/\s/g, "") || ("" as string);
+  const hostName = getUXPHostName();
 
   if (UXP_VAR_WORKING_APPS.find((app) => hostName.includes(app))) return;
   getColorScheme().then((scheme) => {
