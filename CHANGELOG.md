@@ -1,5 +1,14 @@
 # Bolt UXP Changelog
 
+## Version 1.3.29 (2026-11-24)
+
+- Comment out secondary example panel
+- AE UXP updates
+
+## Version 1.3.28 (2026-11-20)
+
+- Illustrator UXP fixes
+
 ## Version 1.3.27 (2026-10-26)
 
 - Update WebView dev IP for MacOS 26.5 compatibility

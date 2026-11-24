@@ -66,14 +66,14 @@ const appOptions: ArgOpt[] = [
     files: ["src/api/mediaencoder.ts"],
   },
   {
-    value: "ilst",
-    label: "Illustrator (Beta)",
-    files: ["src/api/illustrator.ts"],
-  },
-  {
     value: "aeft",
     label: "After Effects (Beta)",
     files: ["src/api/aftereffects.ts"],
+  },
+  {
+    value: "ilst",
+    label: "Illustrator (Beta)",
+    files: ["src/api/illustrator.ts"],
   },
 ];
 

@@ -263,11 +263,11 @@ Currently the following Adobe apps support UXP plugins:
 - InDesign
 - Premiere Pro
 - Media Encoder (Beta)
+- After Effects (Beta)
 
 If you have UXP Private Beta access to any of the other Adobe apps, you can add them as well, including:
 
 - Illustrator (Beta)
-- After Effects (Beta)
 
 _Note: Bolt UXP will not work out of-the-box for apps in UXP private beta, you will need beta access from Adobe app teams as they become available. Hyper Brew cannot assist you in this, you will need to contact Adobe app teams directly for access._
 
